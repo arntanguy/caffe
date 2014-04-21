@@ -1,0 +1,227 @@
+name: "Sunyi-test"
+layers {
+  layer {
+    name: "sunyi001"
+    type: "data"
+    source: "001.db"
+    batchsize: 100
+    scale: 1.0
+  }
+  top: "data"
+  top: "label"
+}
+layers {
+  layer {
+    name: "conv1"
+    type: "conv"
+    num_output: 20
+    kernelsize: 4
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+  bottom: "data"
+  top: "conv1"
+}
+layers {
+  layer {
+    name: "relu1"
+    type: "relu"
+  }
+  bottom: "conv1"
+  top: "conv1"
+}
+layers {
+  layer {
+    name: "pool1"
+    type: "pool"
+    kernelsize: 2
+    stride: 2
+    pool: MAX
+  }
+  bottom: "conv1"
+  top: "pool1"
+}
+layers {
+  layer {
+    name: "conv2"
+    type: "conv"
+    num_output: 40
+    kernelsize: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+  bottom: "pool1"
+  top: "conv2"
+}
+layers {
+  layer {
+    name: "relu1"
+    type: "relu"
+  }
+  bottom: "conv2"
+  top: "conv2"
+}
+layers {
+  layer {
+    name: "pool2"
+    type: "pool"
+    kernelsize: 2
+    stride: 2
+    pool: MAX
+  }
+  bottom: "conv2"
+  top: "pool2"
+}
+layers {
+  layer {
+    name: "conv3"
+    type: "conv"
+    num_output: 60
+    kernelsize: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+  bottom: "pool2"
+  top: "conv3"
+}
+layers {
+  layer {
+    name: "relu1"
+    type: "relu"
+  }
+  bottom: "conv3"
+  top: "conv3"
+}
+layers {
+  layer {
+    name: "pool3"
+    type: "pool"
+    kernelsize: 2
+    stride: 2
+    pool: MAX
+  }
+  bottom: "conv3"
+  top: "pool3"
+}
+layers {
+	layer{
+		name: "flat1"
+		type: "flatten"
+	}
+	bottom: "pool3"
+	top: "flat1"
+}
+layers {
+  layer {
+    name: "conv4"
+    type: "conv"
+    num_output: 80
+    kernelsize: 2
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+  bottom: "pool3"
+  top: "conv4"
+}
+layers {
+  layer {
+    name: "relu1"
+    type: "relu"
+  }
+  bottom: "conv4"
+  top: "conv4"
+}
+layers {
+	layer{
+		name: "flat2"
+		type: "flatten"
+	}
+	bottom: "conv4"
+	top: "flat2"
+}
+layers {
+	layer{
+		name: "concat1"
+		type: "concat"
+		concat_dim: 1
+	}
+	bottom: "flat1"
+	bottom: "flat2"
+	top: "concat1"
+}
+layers {
+  layer {
+    name: "ip1"
+    type: "innerproduct"
+    num_output: 160
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+  bottom: "concat1"
+  top: "ip1"
+}
+layers {
+  layer {
+    name: "relu1"
+    type: "relu"
+  }
+  bottom: "ip1"
+  top: "ip1"
+}
+layers {
+  layer {
+    name: "ip2"
+    type: "innerproduct"
+    num_output: 23
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+  bottom: "ip1"
+  top: "ip2"
+}
+layers {
+  layer {
+    name: "prob"
+    type: "softmax"
+  }
+  bottom: "ip2"
+  top: "prob"
+}
+layers {
+  layer {
+    name: "accuracy"
+    type: "accuracy"
+  }
+  bottom: "prob"
+  bottom: "label"
+  top: "accuracy"
+}
+
