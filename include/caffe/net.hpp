@@ -42,6 +42,7 @@ class Net {
   // computes the gradient w.r.t the parameters, and the data has already
   // been provided during the forward pass.
   Dtype Backward();
+  Dtype BackwardBetween(int layer_top, int layer_bottom);
 
   Dtype ForwardBackward(const vector<Blob<Dtype>* > & bottom) {
     Forward(bottom);
@@ -53,6 +54,7 @@ class Net {
 
   // For an already initialized net, CopyTrainedLayersFrom() copies the already
   // trained layers from another net parameter instance.
+  void CopyLayersFrom(const Net<Dtype>& rhs, bool copy_diff);
   void CopyTrainedLayersFrom(const NetParameter& param);
   void CopyTrainedLayersFrom(const string trained_filename);
   // Writes the net to a proto.

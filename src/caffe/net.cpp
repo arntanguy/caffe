@@ -262,6 +262,44 @@ Dtype Net<Dtype>::Backward() {
 }
 
 template <typename Dtype>
+Dtype Net<Dtype>::BackwardBetween(int layer_top, int layer_bottom)
+{
+  Dtype loss = 0;
+  CHECK_GE(layer_top, layer_bottom);
+  CHECK_LE(layer_top, layers_.size());
+  CHECK_GE(layer_bottom, 0);
+  for (int i = layer_top; i >= layer_bottom; --i) {
+    if (layer_need_backward_[i]) {
+      Dtype layer_loss = layers_[i]->Backward(
+          top_vecs_[i], true, &bottom_vecs_[i]);
+      loss += layer_loss;
+    }
+  }
+  return loss;
+}
+
+template <typename Dtype>
+void Net<Dtype>::CopyLayersFrom(const Net<Dtype>& rhs, bool copy_diff)
+{
+	CHECK_EQ(layers_.size(), rhs.layers_.size());
+  	for (int i = 0; i < layers_.size(); ++i) {
+    		vector<shared_ptr<Blob<Dtype> > >& target_blobs =
+        		layers_[i]->blobs();
+  		const shared_ptr<Layer<Dtype> >& source_layer = rhs.layers_[i];
+    		CHECK_EQ(target_blobs.size(), source_layer->blobs().size());
+    		const vector<shared_ptr<Blob<Dtype> > >& source_blobs =
+			source_layer->blobs();
+		for (int j = 0; j < target_blobs.size(); ++j) {
+			CHECK_EQ(target_blobs[j]->num(), source_blobs[j]->num());
+			CHECK_EQ(target_blobs[j]->channels(), source_blobs[j]->channels());
+			CHECK_EQ(target_blobs[j]->height(), source_blobs[j]->height());
+			CHECK_EQ(target_blobs[j]->width(), source_blobs[j]->width());
+			target_blobs[j]->CopyFrom(*source_blobs[j], copy_diff);
+		}
+	}
+}
+
+template <typename Dtype>
 void Net<Dtype>::CopyTrainedLayersFrom(const NetParameter& param) {
   int num_source_layers = param.layers_size();
   for (int i = 0; i < num_source_layers; ++i) {
