@@ -2,10 +2,12 @@ name: "Sunyi-train"
 layers {
   layer {
     name: "sunyi001"
-    type: "data"
-    source: "001.db"
+    type: "shuffle_data"
+    source: "c_001.db"
     batchsize: 64
-    scale: 1.0
+    scale: 1.6
+    data_count: 173401
+    source_list: "shuffle_list.txt"
   }
   top: "data"
   top: "label"
@@ -69,7 +71,7 @@ layers {
 }
 layers {
   layer {
-    name: "relu1"
+    name: "relu2"
     type: "relu"
   }
   bottom: "conv2"
@@ -90,7 +92,7 @@ layers {
   layer {
     name: "conv3"
     type: "conv"
-    num_output: 60
+    num_output: 80
     kernelsize: 3
     stride: 1
     weight_filler {
@@ -107,7 +109,7 @@ layers {
 }
 layers {
   layer {
-    name: "relu1"
+    name: "relu3"
     type: "relu"
   }
   bottom: "conv3"
@@ -125,18 +127,10 @@ layers {
   top: "pool3"
 }
 layers {
-	layer{
-		name: "flat1"
-		type: "flatten"
-	}
-	bottom: "pool3"
-	top: "flat1"
-}
-layers {
   layer {
     name: "conv4"
     type: "conv"
-    num_output: 80
+    num_output: 120
     kernelsize: 2
     stride: 1
     weight_filler {
@@ -153,29 +147,11 @@ layers {
 }
 layers {
   layer {
-    name: "relu1"
+    name: "relu4"
     type: "relu"
   }
   bottom: "conv4"
   top: "conv4"
-}
-layers {
-	layer{
-		name: "flat2"
-		type: "flatten"
-	}
-	bottom: "conv4"
-	top: "flat2"
-}
-layers {
-	layer{
-		name: "concat1"
-		type: "concat"
-		concat_dim: 1
-	}
-	bottom: "flat1"
-	bottom: "flat2"
-	top: "concat1"
 }
 layers {
   layer {
@@ -189,12 +165,12 @@ layers {
       type: "constant"
     }
   }
-  bottom: "concat1"
+  bottom: "conv4"
   top: "ip1"
 }
 layers {
   layer {
-    name: "relu1"
+    name: "relu5"
     type: "relu"
   }
   bottom: "ip1"
@@ -204,7 +180,7 @@ layers {
   layer {
     name: "ip2"
     type: "innerproduct"
-    num_output: 23
+    num_output: 8700
     weight_filler {
       type: "xavier"
     }
@@ -215,14 +191,14 @@ layers {
   bottom: "ip1"
   top: "ip2"
 }
-layers {
-  layer {
-    name: "prob"
-    type: "softmax"
-  }
-  bottom: "ip2"
-  top: "prob"
-}
+#layers {
+#  layer {
+#    name: "prob"
+#    type: "softmax"
+#  }
+#  bottom: "ip2"
+#  top: "prob"
+#}
 #layers {
 #  layer {
 #    name: "accuracy"
@@ -237,6 +213,6 @@ layers {
     name: "loss"
     type: "softmax_loss"
   }
-  bottom: "prob"
+  bottom: "ip2"
   bottom: "label"
 }

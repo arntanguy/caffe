@@ -125,6 +125,10 @@ message LayerParameter {
   // the other dimensions must be the same for all the bottom blobs.
   // By default it will concatenate blobs along the channels dimension.
   optional uint32 concat_dim = 65 [default = 1];
+
+  optional string source_list = 66;
+  optional bool share_data = 67 [default = false];
+  optional uint32 data_count = 68;
 }
 
 message LayerConnection {

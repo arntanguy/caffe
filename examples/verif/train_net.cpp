@@ -22,23 +22,63 @@ using namespace std;
 template <typename Dtype>
 class VeriSGDSolver : public Solver<Dtype> {
 	public:
-		explicit VeriSGDSolver(const SolverParameter& param)
+		explicit VeriSGDSolver(const SolverParameter& param, const string &input2)
 			: Solver<Dtype>(param) {
 				/* build shadow */
 				LOG(INFO) << "BUILD SHADOW NET";
+				DATA_LAYER_IDX = 0;
 				NetParameter train_net_param;
 				ReadProtoFromTextFile(param.train_net(), &train_net_param);
+				LOG(INFO) << "INPUT1 " << train_net_param.layers(DATA_LAYER_IDX).layer().source();
+				LOG(INFO) << "INPUT2 " << input2;
+				train_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_source_list(input2);
+				train_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_share_data(true);
+
 				shadow_net_.reset(new Net<Dtype>(train_net_param));
+				const ShuffleDataLayer<Dtype> *data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->net_->layers()[DATA_LAYER_IDX].get());
+				ShuffleDataLayer<Dtype> *shadow_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->shadow_net_->mutable_layers()[DATA_LAYER_IDX].get());
+				CHECK(data_layer != NULL);
+				shadow_data_layer->CopyDataPtrFrom(*data_layer);
 
 				feature_layer_id = -1;
 				for(int i=0;i<this->net_->layers().size();i++){
-					if(this->net_->layer_names()[i] == "relu1"){
+					if(this->net_->layer_names()[i] == "relu5"){
 						feature_layer_id = i;
 						break;
 					}
 				}
 				CHECK_GE(feature_layer_id, 0);
 				LOG(INFO) << "feature layer id " << feature_layer_id;
+
+				//Setup loss layer
+				vector<Blob<Dtype>*> & feat_vec1 = this->net_->top_vecs()[feature_layer_id];
+				vector<Blob<Dtype>*> & feat_vec2 = this->shadow_net_->top_vecs()[feature_layer_id];
+				CHECK_EQ(feat_vec1.size(), 1);
+				CHECK_EQ(feat_vec2.size(), 1);
+				TOP_LAYER_ID = this->net_->top_vecs().size() - 1;
+				CHECK_EQ(this->net_->top_vecs()[DATA_LAYER_IDX].size(), 2);
+				CHECK_EQ(this->net_->top_vecs()[TOP_LAYER_ID].size(), 0);
+
+				Blob<Dtype>* & label_vec1 = this->net_->top_vecs()[DATA_LAYER_IDX][1];
+				Blob<Dtype>* & label_vec2 = this->shadow_net_->top_vecs()[DATA_LAYER_IDX][1];
+
+				//Blob<Dtype>* & top_vec1 = this->net_->top_vecs()[TOP_LAYER_ID][0];
+				//Blob<Dtype>* & top_vec2 = this->shadow_net_->top_vecs()[TOP_LAYER_ID][0];
+
+				LayerParameter __dummy_lp;
+				loss_layer.reset(new VerificationLossLayer<Dtype>(__dummy_lp));
+
+				loss_bottom.push_back(feat_vec1[0]);
+				loss_bottom.push_back(label_vec1);
+				loss_bottom.push_back(feat_vec2[0]);
+				loss_bottom.push_back(label_vec2);
+
+				loss_layer->SetUp(loss_bottom, &loss_top);
+
+				loss_layer->ALPHA = Dtype(0.1);
+				loss_layer->M = Dtype(16);
+				LOG(INFO) << "BUILD LOSS DONE";
+
 			}
 
 		/* overload, hide Solve in base class */
@@ -51,13 +91,17 @@ class VeriSGDSolver : public Solver<Dtype> {
 		virtual void RestoreSolverState(const SolverState& state);
 
 		void SyncNet();
-		void BP(Net<Dtype> &net, vector<Blob<Dtype>*> &loss_bottom);
 		// history maintains the historical momentum data.
 		vector<shared_ptr<Blob<Dtype> > > history_;
 
 		shared_ptr<Net<Dtype> > shadow_net_;
 
+		shared_ptr<VerificationLossLayer<Dtype> > loss_layer;
 		int feature_layer_id;
+		int DATA_LAYER_IDX;
+		int TOP_LAYER_ID;
+		vector<Blob<Dtype>*> loss_bottom;
+		vector<Blob<Dtype>*> loss_top;
 
 		DISABLE_COPY_AND_ASSIGN(VeriSGDSolver);
 };
@@ -83,37 +127,8 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		this->Restore(resume_file);
 	}
 
-	//Setup loss layer
-	vector<Blob<Dtype>*> & feat_vec1 = this->net_->top_vecs()[feature_layer_id];
-	vector<Blob<Dtype>*> & feat_vec2 = this->shadow_net_->top_vecs()[feature_layer_id];
-	CHECK_EQ(feat_vec1.size(), 1);
-	CHECK_EQ(feat_vec2.size(), 1);
-	const int DATA_LAYER_IDX = 0;
-	const int TOP_LAYER_ID = this->net_->top_vecs().size() - 1;
-	CHECK_EQ(this->net_->top_vecs()[DATA_LAYER_IDX].size(), 2);
-	CHECK_EQ(this->net_->top_vecs()[TOP_LAYER_ID].size(), 1);
-
-	Blob<Dtype>* & label_vec1 = this->net_->top_vecs()[DATA_LAYER_IDX][1];
-	Blob<Dtype>* & label_vec2 = this->shadow_net_->top_vecs()[DATA_LAYER_IDX][1];
-
-	Blob<Dtype>* & top_vec1 = this->net_->top_vecs()[TOP_LAYER_ID][0];
-	Blob<Dtype>* & top_vec2 = this->shadow_net_->top_vecs()[TOP_LAYER_ID][0];
-
-	LayerParameter __dummy_lp;
-	vector<Blob<Dtype>*> loss_bottom;
-	vector<Blob<Dtype>*> loss_top;
-
-	loss_bottom.push_back(feat_vec1[0]);
-	loss_bottom.push_back(label_vec1);
-	loss_bottom.push_back(top_vec1);
-	loss_bottom.push_back(feat_vec2[0]);
-	loss_bottom.push_back(label_vec2);
-	loss_bottom.push_back(top_vec2);
-
-	VerificationLossLayer<Dtype> loss_layer(__dummy_lp);
-	loss_layer.SetUp(loss_bottom, &loss_top);
-
-	LOG(INFO) << "BUILD LOSS DONE";
+	CHECK_EQ(this->net_->bottom_vecs()[feature_layer_id+1][0]->cpu_diff(), 
+		loss_bottom[0]->cpu_diff());
 
 	// For a network that is trained by the solver, no bottom or top vecs
 	// should be given, and we will just provide dummy vecs.
@@ -125,16 +140,16 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		this->net_->Forward(bottom_vec);
 		shadow_net_->Forward(bottom_vec);
 
-		loss_layer.Forward(loss_bottom, &loss_top);
+		loss_layer->Forward(loss_bottom, &loss_top);
 		//BP
 		//get diff
-		this->net_->BackwardBetween(TOP_LAYER_ID, feature_layer_id+1);
-		this->shadow_net_->BackwardBetween(TOP_LAYER_ID, feature_layer_id+1);
+		loss += this->net_->BackwardBetween(TOP_LAYER_ID, feature_layer_id+1);
+		loss += this->shadow_net_->BackwardBetween(TOP_LAYER_ID, feature_layer_id+1);
 		//gradient add to bottom layer
-		loss_layer.Backward(loss_top, true, &loss_bottom);
+		loss += loss_layer->Backward(loss_top, true, &loss_bottom);
 
-		this->net_->BackwardBetween(feature_layer_id, 0);
-		this->shadow_net_->BackwardBetween(feature_layer_id, 0);
+		loss += this->net_->BackwardBetween(feature_layer_id, 0);
+		loss += this->shadow_net_->BackwardBetween(feature_layer_id, 0);
 
 		//XXX
 		ComputeUpdateValue();
@@ -224,6 +239,11 @@ void VeriSGDSolver<Dtype>::ComputeUpdateValue() {
 				// Compute the value to history, and then copy them to the blob's diff.
 				Dtype local_rate = rate * net_params_lr[param_id];
 				Dtype local_decay = weight_decay * net_params_weight_decay[param_id];
+				//add diff from net2 to net1
+				caffe_axpy(net_params[param_id]->count(), Dtype(1.),
+						this->shadow_net_->params()[param_id]->cpu_diff(),
+						net_params[param_id]->mutable_cpu_diff());
+
 				caffe_axpby(net_params[param_id]->count(), local_rate,
 						net_params[param_id]->cpu_diff(), momentum,
 						history_[param_id]->mutable_cpu_data());
@@ -245,6 +265,11 @@ void VeriSGDSolver<Dtype>::ComputeUpdateValue() {
 				// Compute the value to history, and then copy them to the blob's diff.
 				Dtype local_rate = rate * net_params_lr[param_id];
 				Dtype local_decay = weight_decay * net_params_weight_decay[param_id];
+				//add diff from net2 to net1
+				caffe_gpu_axpy(net_params[param_id]->count(), Dtype(1.),
+						this->shadow_net_->params()[param_id]->gpu_diff(),
+						net_params[param_id]->mutable_gpu_diff());
+
 				caffe_gpu_axpby(net_params[param_id]->count(), local_rate,
 						net_params[param_id]->gpu_diff(), momentum,
 						history_[param_id]->mutable_gpu_data());
@@ -288,18 +313,18 @@ void VeriSGDSolver<Dtype>::RestoreSolverState(const SolverState& state) {
 
 
 int main(int argc, char** argv) {
-	if (argc < 2) {
+	if (argc < 3) {
 		LOG(ERROR) << "argc";
 		return -1;
 	}
 
-	cudaSetDevice(0);
+	//cudaSetDevice(0);
 	//Caffe::set_phase(Caffe::TEST);
 	Caffe::set_mode(Caffe::GPU);
 
 	SolverParameter solver_param;
 	ReadProtoFromTextFile(argv[1], &solver_param);
-	VeriSGDSolver<float> solver(solver_param);
+	VeriSGDSolver<float> solver(solver_param, argv[2]);
 
 	LOG(INFO) << ">>> NET BUILD";
 

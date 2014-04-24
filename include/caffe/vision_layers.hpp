@@ -408,6 +408,44 @@ class DataLayer : public Layer<Dtype> {
   Blob<Dtype> data_mean_;
 };
 
+template <typename Dtype>
+class ShuffleDataLayer : public Layer<Dtype> {
+ public:
+  explicit ShuffleDataLayer(const LayerParameter& param)
+      : Layer<Dtype>(param) {}
+  virtual ~ShuffleDataLayer();
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  void CopyDataPtrFrom(const ShuffleDataLayer<Dtype>& source){
+	  prefetch_data_ = source.prefetch_data_;
+	  prefetch_label_ = source.prefetch_label_;
+  }
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual Dtype Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const bool propagate_down, vector<Blob<Dtype>*>* bottom);
+  virtual Dtype Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const bool propagate_down, vector<Blob<Dtype>*>* bottom);
+
+  shared_ptr<leveldb::DB> db_;
+  shared_ptr<leveldb::Iterator> iter_;
+  int datum_channels_;
+  int datum_height_;
+  int datum_width_;
+  int datum_size_;
+
+  int DATA_COUNT_;
+  shared_ptr<Blob<Dtype> > prefetch_data_;
+  shared_ptr<Blob<Dtype> > prefetch_label_;
+  int current_;
+  vector<int> idx_;
+
+};
+
 // This function is used to create a pthread that prefetches the data.
 template <typename Dtype>
 void* ImagesLayerPrefetch(void* layer_pointer);
@@ -586,6 +624,8 @@ class VerificationLossLayer : public Layer<Dtype> {
   virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
 
+  Dtype M;
+  Dtype ALPHA;
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
@@ -595,6 +635,10 @@ class VerificationLossLayer : public Layer<Dtype> {
       const bool propagate_down, vector<Blob<Dtype>*>* bottom);
   virtual Dtype Backward_gpu(const vector<Blob<Dtype>*>& top,
      const bool propagate_down, vector<Blob<Dtype>*>* bottom);
+
+  Blob<Dtype> diffy1_;
+  Blob<Dtype> diffy2_;
+
 
 };
 
