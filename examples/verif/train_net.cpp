@@ -22,23 +22,25 @@ using namespace std;
 template <typename Dtype>
 class VeriSGDSolver : public Solver<Dtype> {
 	public:
-		explicit VeriSGDSolver(const SolverParameter& param, const string &input2)
+		explicit VeriSGDSolver(const SolverParameter& param)
 			: Solver<Dtype>(param) {
 				/* build shadow */
 				LOG(INFO) << "BUILD SHADOW NET";
 				DATA_LAYER_IDX = 0;
 				NetParameter train_net_param;
 				ReadProtoFromTextFile(param.train_net(), &train_net_param);
-				LOG(INFO) << "INPUT1 " << train_net_param.layers(DATA_LAYER_IDX).layer().source();
-				LOG(INFO) << "INPUT2 " << input2;
-				train_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_source_list(input2);
+				LOG(INFO) << "INPUT " << train_net_param.layers(DATA_LAYER_IDX).layer().source();
+				//train_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_source_list(input2);
 				train_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_share_data(true);
 
 				shadow_net_.reset(new Net<Dtype>(train_net_param));
 				const ShuffleDataLayer<Dtype> *data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->net_->layers()[DATA_LAYER_IDX].get());
 				ShuffleDataLayer<Dtype> *shadow_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->shadow_net_->mutable_layers()[DATA_LAYER_IDX].get());
+
 				CHECK(data_layer != NULL);
 				shadow_data_layer->CopyDataPtrFrom(*data_layer);
+
+				shadow_data_layer->SetOutputChannel(1);
 
 				feature_layer_id = -1;
 				for(int i=0;i<this->net_->layers().size();i++){
@@ -79,12 +81,45 @@ class VeriSGDSolver : public Solver<Dtype> {
 				loss_layer->M = Dtype(16);
 				LOG(INFO) << "BUILD LOSS DONE";
 
+				//Build test accuracy
+				NetParameter test_net_param;
+				ReadProtoFromTextFile(param.test_net(), &test_net_param);
+				test_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_share_data(true);
+
+				LOG(INFO) << "TEST_INPUT " << test_net_param.layers(DATA_LAYER_IDX).layer().source();
+				shadow_test_net_.reset(new Net<Dtype>(test_net_param));
+
+				const ShuffleDataLayer<Dtype> *test_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->test_net_->layers()[DATA_LAYER_IDX].get());
+				ShuffleDataLayer<Dtype> *shadow_test_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->shadow_test_net_->mutable_layers()[DATA_LAYER_IDX].get());
+				CHECK(test_data_layer != NULL);
+				shadow_test_data_layer->CopyDataPtrFrom(*test_data_layer);
+				shadow_data_layer->SetOutputChannel(1);
+
+				accuracy_layer.reset(new VerificationAccuracyLayer<Dtype>(__dummy_lp));
+
+				feat_vec1 = this->test_net_->output_blobs();
+				feat_vec2 = this->shadow_test_net_->output_blobs();
+				CHECK_EQ(feat_vec1.size(), 2);
+				CHECK_EQ(feat_vec2.size(), 2);
+
+				accuracy_bottom.push_back(feat_vec1[0]);
+				accuracy_bottom.push_back(feat_vec1[1]);
+				accuracy_bottom.push_back(feat_vec2[0]);
+				accuracy_bottom.push_back(feat_vec2[1]);
+
+				accuracy_top.push_back(&accuracy_out);
+
+				accuracy_layer->SetUp(accuracy_bottom, &accuracy_top);
+				accuracy_layer->M = Dtype(16);
+				LOG(INFO) << "BUILD ACC DONE";
+
 			}
 
 		/* overload, hide Solve in base class */
 		void Solve(const char* resume_file);
 	protected:
 		virtual void PreSolve();
+		void TestDual();
 		Dtype GetLearningRate();
 		virtual void ComputeUpdateValue();
 		virtual void SnapshotSolverState(SolverState * state);
@@ -95,13 +130,20 @@ class VeriSGDSolver : public Solver<Dtype> {
 		vector<shared_ptr<Blob<Dtype> > > history_;
 
 		shared_ptr<Net<Dtype> > shadow_net_;
+		shared_ptr<Net<Dtype> > shadow_test_net_;
 
 		shared_ptr<VerificationLossLayer<Dtype> > loss_layer;
+		shared_ptr<VerificationAccuracyLayer<Dtype> > accuracy_layer;
+
 		int feature_layer_id;
 		int DATA_LAYER_IDX;
 		int TOP_LAYER_ID;
 		vector<Blob<Dtype>*> loss_bottom;
 		vector<Blob<Dtype>*> loss_top;
+
+		vector<Blob<Dtype>*> accuracy_bottom;
+		vector<Blob<Dtype>*> accuracy_top;
+		Blob<Dtype> accuracy_out;
 
 		DISABLE_COPY_AND_ASSIGN(VeriSGDSolver);
 };
@@ -110,6 +152,47 @@ template <typename Dtype>
 void VeriSGDSolver<Dtype>::SyncNet() {
 	shadow_net_->CopyLayersFrom(*this->net_, false);
 }
+
+template <typename Dtype>
+void VeriSGDSolver<Dtype>::TestDual() {
+	LOG(INFO) << "Iteration " << this->iter_ << ", Testing net(dual)";
+	NetParameter net_param;
+	this->net_->ToProto(&net_param);
+	CHECK_NOTNULL(this->test_net_.get())->CopyTrainedLayersFrom(net_param);
+	vector<Dtype> test_score;
+	vector<Blob<Dtype>*> bottom_vec;
+
+	for (int i = 0; i < this->param_.test_iter(); ++i) {
+		this->test_net_->Forward(bottom_vec);
+		this->shadow_test_net_->Forward(bottom_vec);
+		this->accuracy_layer->Forward(accuracy_bottom, &accuracy_top);
+
+#if 0
+		if (i == 0) {
+			for (int j = 0; j < result.size(); ++j) {
+				const Dtype* result_vec = result[j]->cpu_data();
+				for (int k = 0; k < result[j]->count(); ++k) {
+					test_score.push_back(result_vec[k]);
+				}
+			}
+		} else {
+			int idx = 0;
+			for (int j = 0; j < result.size(); ++j) {
+				const Dtype* result_vec = result[j]->cpu_data();
+				for (int k = 0; k < result[j]->count(); ++k) {
+					test_score[idx++] += result_vec[k];
+				}
+			}
+		}
+#endif
+	}
+	for (int i = 0; i < test_score.size(); ++i) {
+		//LOG(INFO) << "Test score #" << i << ": "
+		//	<< test_score[i] / this->param_.test_iter();
+	}
+
+}
+
 
 template <typename Dtype>
 void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
@@ -128,7 +211,7 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 	}
 
 	CHECK_EQ(this->net_->bottom_vecs()[feature_layer_id+1][0]->cpu_diff(), 
-		loss_bottom[0]->cpu_diff());
+			loss_bottom[0]->cpu_diff());
 
 	// For a network that is trained by the solver, no bottom or top vecs
 	// should be given, and we will just provide dummy vecs.
@@ -161,7 +244,7 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		if (this->param_.test_interval() && this->iter_ % this->param_.test_interval() == 0) {
 			// We need to set phase to test before running.
 			Caffe::set_phase(Caffe::TEST);
-			this->Test();
+			this->TestDual();
 			Caffe::set_phase(Caffe::TRAIN);
 		}
 		// Check if we need to do snapshot
@@ -313,7 +396,7 @@ void VeriSGDSolver<Dtype>::RestoreSolverState(const SolverState& state) {
 
 
 int main(int argc, char** argv) {
-	if (argc < 3) {
+	if (argc < 2) {
 		LOG(ERROR) << "argc";
 		return -1;
 	}
@@ -324,7 +407,7 @@ int main(int argc, char** argv) {
 
 	SolverParameter solver_param;
 	ReadProtoFromTextFile(argv[1], &solver_param);
-	VeriSGDSolver<float> solver(solver_param, argv[2]);
+	VeriSGDSolver<float> solver(solver_param);
 
 	LOG(INFO) << ">>> NET BUILD";
 

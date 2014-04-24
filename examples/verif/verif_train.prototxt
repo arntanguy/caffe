@@ -3,11 +3,11 @@ layers {
   layer {
     name: "sunyi001"
     type: "shuffle_data"
-    source: "c_001.db"
+    source: "train_c_001.db"
     batchsize: 64
     scale: 1.6
-    data_count: 173401
-    source_list: "shuffle_list.txt"
+    data_count: 405198
+    source_list: "trainimagelist.txt"
   }
   top: "data"
   top: "label"

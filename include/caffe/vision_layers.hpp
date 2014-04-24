@@ -420,6 +420,22 @@ class ShuffleDataLayer : public Layer<Dtype> {
   void CopyDataPtrFrom(const ShuffleDataLayer<Dtype>& source){
 	  prefetch_data_ = source.prefetch_data_;
 	  prefetch_label_ = source.prefetch_label_;
+	  idx_[0] = source.idx_[0];
+	  idx_[1] = source.idx_[1];
+  }
+
+  /*
+  int GetCurrent() const {return current_;}
+  void SetCurrent(int cur) {
+	  CHECK_LT(cur, idx_[0]->size());
+	  CHECK_GE(cur, 0);
+	  current_ = cur;
+  }
+  */
+  void SetOutputChannel(int n){
+	  CHECK(n == 0 || n == 1);
+	  OUTPUT_CHANNEL_ = n;
+	  LOG(INFO) << "Set output ch " << n;
   }
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
@@ -439,10 +455,11 @@ class ShuffleDataLayer : public Layer<Dtype> {
   int datum_size_;
 
   int DATA_COUNT_;
+  int OUTPUT_CHANNEL_;
   shared_ptr<Blob<Dtype> > prefetch_data_;
   shared_ptr<Blob<Dtype> > prefetch_label_;
-  int current_;
-  vector<int> idx_;
+  int current_[2];
+  shared_ptr<vector<int> > idx_[2];
 
 };
 
@@ -684,6 +701,28 @@ class AccuracyLayer : public Layer<Dtype> {
     return Dtype(0.);
   }
 };
+
+template <typename Dtype>
+class VerificationAccuracyLayer : public Layer<Dtype> {
+ public:
+  explicit VerificationAccuracyLayer(const LayerParameter& param)
+      : Layer<Dtype>(param), M(Dtype(0.)) {}
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  Dtype M;
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  // The accuracy layer should not be used to compute backward operations.
+  virtual Dtype Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const bool propagate_down, vector<Blob<Dtype>*>* bottom) {
+    NOT_IMPLEMENTED;
+    return Dtype(0.);
+  }
+  Blob<Dtype> diffy_;
+};
+
 
 // This function is used to create a pthread that prefetches the window data.
 template <typename Dtype>

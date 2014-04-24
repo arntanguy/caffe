@@ -168,9 +168,45 @@ void AccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   (*top)[0]->mutable_cpu_data()[1] = logprob / num;
 }
 
+template <typename Dtype>
+void VerificationAccuracyLayer<Dtype>::SetUp(
+  const vector<Blob<Dtype>*>& bottom, vector<Blob<Dtype>*>* top) {
+  CHECK_EQ(bottom.size(), 4) << "VerificationAccuracyLayer takes four blobs as input.";
+  CHECK_EQ(top->size(), 1) << "VerificationAccuracy Layer takes 1 output.";
+  CHECK_EQ(bottom[0]->num(), bottom[1]->num())
+      << "The data and label should have the same number.";
+  //CHECK_EQ(bottom[1]->channels(), 1);
+  CHECK_EQ(bottom[1]->height(), 1);
+  CHECK_EQ(bottom[1]->width(), 1);
+  (*top)[0]->Reshape(1, 2, 1, 1);
+  diffy_.Reshape(bottom[0]->num(), bottom[0]->channels(), 1, 1);
+}
+
+template <typename Dtype>
+void VerificationAccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+    vector<Blob<Dtype>*>* top) {
+  Dtype accuracy = 0;
+  Dtype logprob = 0;
+  const Dtype* bottom_data = bottom[0]->cpu_data();
+  const Dtype* bottom_label = bottom[1]->cpu_data();
+  int num = bottom[0]->num();
+  int dim = bottom[0]->count() / bottom[0]->num();
+  for (int i = 0; i < num; ++i) {
+    // Accuracy
+    //if (max_id == static_cast<int>(bottom_label[i])) {
+      ++accuracy;
+    //}
+  }
+  // LOG(INFO) << "Accuracy: " << accuracy;
+  (*top)[0]->mutable_cpu_data()[0] = accuracy / num;
+  (*top)[0]->mutable_cpu_data()[1] = logprob / num;
+}
+
+
 INSTANTIATE_CLASS(MultinomialLogisticLossLayer);
 INSTANTIATE_CLASS(InfogainLossLayer);
 INSTANTIATE_CLASS(EuclideanLossLayer);
 INSTANTIATE_CLASS(AccuracyLayer);
+INSTANTIATE_CLASS(VerificationAccuracyLayer);
 
 }  // namespace caffe

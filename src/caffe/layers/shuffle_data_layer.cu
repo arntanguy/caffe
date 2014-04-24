@@ -28,18 +28,8 @@ void ShuffleDataLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
       prefetch_label_->cpu_data(), sizeof(Dtype) * prefetch_label_->count(),
       cudaMemcpyHostToDevice));
       */
-	CHECK(prefetch_data_.get() != NULL);
-	CHECK(prefetch_label_.get() != NULL);
-	//gather data in CPU
-	const Dtype *ptr = prefetch_data_->cpu_data();
-	for(int i=0;i<(*top)[0]->num();i++){
-		int idx = idx_[current_];
-		memcpy((*top)[0]->mutable_cpu_data() + i * datum_size_, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
-		(*top)[1]->mutable_cpu_data()[i] = prefetch_label_->cpu_data()[idx];
-		current_++;
-		if(current_ >= idx_.size())
-			current_ = 0;
-	}
+	Forward_cpu(bottom, top);
+
 	//sync
 	(*top)[0]->gpu_data();
 	(*top)[1]->gpu_data();

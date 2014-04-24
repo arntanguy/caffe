@@ -28,6 +28,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   const Dtype scale = this->layer_param_.scale();
   CHECK_EQ(bottom.size(), 0) << "Shuffle Data Layer takes no input blobs.";
   CHECK_EQ(top->size(), 2) << "Shuffle Data Layer takes two blobs as output.";
+  OUTPUT_CHANNEL_ = 0;
   leveldb::DB* db_temp;
   leveldb::Options options;
   options.create_if_missing = false;
@@ -83,46 +84,52 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 	  }
 	  CHECK_EQ(nd, i);
 	  LOG(INFO) << "Read Done";
+          FILE *f = fopen(this->layer_param_.source_list().c_str(), "r");
+	  CHECK(f != NULL);
+	  int r = fscanf(f, "%d", &n);
+	  CHECK_EQ(r, 1);
+	  LOG(INFO) << n << " records in shuffle list";
+	  idx_[0].reset(new vector<int>(n));
+	  idx_[1].reset(new vector<int>(n));
+	  for(int i=0;i<n;i++){
+		  int d1, d2;
+		  r = fscanf(f, "%d%d", &d1, &d2);
+		  CHECK_EQ(r, 2);
+		  CHECK_GT(nd, d1);
+		  CHECK_GT(nd, d2);
+		  (*idx_[0])[i] = d1;
+		  (*idx_[1])[i] = d1;
+	  }
+	  fclose(f);
+	  LOG(INFO) << "read list done";
   }else{
 	  LOG(INFO) << "skip read";
   }
-  FILE *f = fopen(this->layer_param_.source_list().c_str(), "r");
-  CHECK(f != NULL);
-  int r = fscanf(f, "%d", &n);
-  CHECK_EQ(r, 1);
-  LOG(INFO) << n << " records in shuffle list";
-  idx_.resize(n);
-  for(int i=0;i<n;i++){
-	  r = fscanf(f, "%d", &idx_[i]);
-	  CHECK_EQ(r, 1);
-	  CHECK(idx_[i] < nd);
-  }
-  fclose(f);
-
-  current_ = 0;
+  current_[0] = current_[1] = 0;
 }
 
 template <typename Dtype>
 void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
-      vector<Blob<Dtype>*>* top) {
+		vector<Blob<Dtype>*>* top) {
 	CHECK(prefetch_data_.get() != NULL);
 	CHECK(prefetch_label_.get() != NULL);
+	CHECK(idx_[0].get() != NULL);
 	const Dtype *ptr = prefetch_data_->cpu_data();
 	for(int i=0;i<(*top)[0]->num();i++){
-		int idx = idx_[current_];
+		int idx = (*idx_[OUTPUT_CHANNEL_])[current_[OUTPUT_CHANNEL_]];
 		memcpy((*top)[0]->mutable_cpu_data() + i * datum_size_, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
 		(*top)[1]->mutable_cpu_data()[i] = prefetch_label_->cpu_data()[idx];
-		current_++;
-		if(current_ >= idx_.size())
-			current_ = 0;
+		current_[OUTPUT_CHANNEL_]++;
+		if(current_[OUTPUT_CHANNEL_] >= idx_[OUTPUT_CHANNEL_]->size())
+			current_[OUTPUT_CHANNEL_] = 0;
 	}
 }
 
 
 template <typename Dtype>
 Dtype ShuffleDataLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
-      const bool propagate_down, vector<Blob<Dtype>*>* bottom) {
-  return Dtype(0.);
+		const bool propagate_down, vector<Blob<Dtype>*>* bottom) {
+	return Dtype(0.);
 }
 
 INSTANTIATE_CLASS(ShuffleDataLayer);

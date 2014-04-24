@@ -1,11 +1,13 @@
-name: "Sunyi-train"
+name: "Sunyi-test"
 layers {
   layer {
     name: "sunyi001"
-    type: "data"
-    source: "c_001.db"
-    batchsize: 64
-    scale: 1.0
+    type: "shuffle_data"
+    source: "test_c_001.db"
+    batchsize: 128
+    scale: 1.6
+    data_count: 26466
+    source_list: "testimagelist.txt"
   }
   top: "data"
   top: "label"
@@ -174,38 +176,38 @@ layers {
   bottom: "ip1"
   top: "ip1"
 }
-layers {
-  layer {
-    name: "ip2"
-    type: "innerproduct"
-    num_output: 8700
-    weight_filler {
-      type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-    }
-  }
-  bottom: "ip1"
-  top: "ip2"
-}
-layers {
-  layer {
-    name: "prob"
-    type: "softmax"
-  }
-  bottom: "ip2"
-  top: "prob"
-}
-layers {
-  layer {
-    name: "accuracy"
-    type: "accuracy"
-  }
-  bottom: "prob"
-  bottom: "label"
-  top: "accuracy"
-}
+#layers {
+#  layer {
+#    name: "ip2"
+#    type: "innerproduct"
+#    num_output: 8700
+#    weight_filler {
+#      type: "xavier"
+#    }
+#    bias_filler {
+#      type: "constant"
+#    }
+#  }
+#  bottom: "ip1"
+#  top: "ip2"
+#}
+#layers {
+#  layer {
+#    name: "prob"
+#    type: "softmax"
+#  }
+#  bottom: "ip2"
+#  top: "prob"
+#}
+#layers {
+#  layer {
+#    name: "accuracy"
+#    type: "verif_accuracy"
+#  }
+#  bottom: "prob"
+#  bottom: "label"
+#  top: "accuracy"
+#}
 #layers {
 #  layer {
 #    name: "loss"
