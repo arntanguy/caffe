@@ -408,6 +408,7 @@ int main(int argc, char** argv) {
 
 	SolverParameter solver_param;
 	ReadProtoFromTextFile(argv[1], &solver_param);
+	Caffe::SetDevice(solver_param.device_id());
 	VeriSGDSolver<float> solver(solver_param);
 
 	LOG(INFO) << ">>> NET BUILD";
