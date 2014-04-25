@@ -19,6 +19,8 @@
 using namespace caffe;  // NOLINT(build/namespaces)
 using namespace std;
 
+#define THR 16
+
 template <typename Dtype>
 class VeriSGDSolver : public Solver<Dtype> {
 	public:
@@ -42,19 +44,19 @@ class VeriSGDSolver : public Solver<Dtype> {
 
 				shadow_data_layer->SetOutputChannel(1);
 
-				feature_layer_id = -1;
+				FEATURE_LAYER_ID = -1;
 				for(int i=0;i<this->net_->layers().size();i++){
 					if(this->net_->layer_names()[i] == "relu5"){
-						feature_layer_id = i;
+						FEATURE_LAYER_ID = i;
 						break;
 					}
 				}
-				CHECK_GE(feature_layer_id, 0);
-				LOG(INFO) << "feature layer id " << feature_layer_id;
+				CHECK_GE(FEATURE_LAYER_ID, 0);
+				LOG(INFO) << "feature layer id " << FEATURE_LAYER_ID;
 
 				//Setup loss layer
-				vector<Blob<Dtype>*> & feat_vec1 = this->net_->top_vecs()[feature_layer_id];
-				vector<Blob<Dtype>*> & feat_vec2 = this->shadow_net_->top_vecs()[feature_layer_id];
+				vector<Blob<Dtype>*> & feat_vec1 = this->net_->top_vecs()[FEATURE_LAYER_ID];
+				vector<Blob<Dtype>*> & feat_vec2 = this->shadow_net_->top_vecs()[FEATURE_LAYER_ID];
 				CHECK_EQ(feat_vec1.size(), 1);
 				CHECK_EQ(feat_vec2.size(), 1);
 				TOP_LAYER_ID = this->net_->top_vecs().size() - 1;
@@ -78,7 +80,7 @@ class VeriSGDSolver : public Solver<Dtype> {
 				loss_layer->SetUp(loss_bottom, &loss_top);
 
 				loss_layer->ALPHA = Dtype(0.1);
-				loss_layer->M = Dtype(16);
+				loss_layer->M = Dtype(THR);
 				LOG(INFO) << "BUILD LOSS DONE";
 
 				//Build test accuracy
@@ -93,7 +95,7 @@ class VeriSGDSolver : public Solver<Dtype> {
 				ShuffleDataLayer<Dtype> *shadow_test_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->shadow_test_net_->mutable_layers()[DATA_LAYER_IDX].get());
 				CHECK(test_data_layer != NULL);
 				shadow_test_data_layer->CopyDataPtrFrom(*test_data_layer);
-				shadow_data_layer->SetOutputChannel(1);
+				shadow_test_data_layer->SetOutputChannel(1);
 
 				accuracy_layer.reset(new VerificationAccuracyLayer<Dtype>(__dummy_lp));
 
@@ -110,7 +112,7 @@ class VeriSGDSolver : public Solver<Dtype> {
 				accuracy_top.push_back(&accuracy_out);
 
 				accuracy_layer->SetUp(accuracy_bottom, &accuracy_top);
-				accuracy_layer->M = Dtype(16);
+				accuracy_layer->M = Dtype(THR);
 				LOG(INFO) << "BUILD ACC DONE";
 
 			}
@@ -135,7 +137,7 @@ class VeriSGDSolver : public Solver<Dtype> {
 		shared_ptr<VerificationLossLayer<Dtype> > loss_layer;
 		shared_ptr<VerificationAccuracyLayer<Dtype> > accuracy_layer;
 
-		int feature_layer_id;
+		int FEATURE_LAYER_ID;
 		int DATA_LAYER_IDX;
 		int TOP_LAYER_ID;
 		vector<Blob<Dtype>*> loss_bottom;
@@ -159,6 +161,7 @@ void VeriSGDSolver<Dtype>::TestDual() {
 	NetParameter net_param;
 	this->net_->ToProto(&net_param);
 	CHECK_NOTNULL(this->test_net_.get())->CopyTrainedLayersFrom(net_param);
+	CHECK_NOTNULL(this->shadow_test_net_.get())->CopyTrainedLayersFrom(net_param);
 	vector<Dtype> test_score;
 	vector<Blob<Dtype>*> bottom_vec;
 
@@ -167,28 +170,26 @@ void VeriSGDSolver<Dtype>::TestDual() {
 		this->shadow_test_net_->Forward(bottom_vec);
 		this->accuracy_layer->Forward(accuracy_bottom, &accuracy_top);
 
-#if 0
 		if (i == 0) {
-			for (int j = 0; j < result.size(); ++j) {
-				const Dtype* result_vec = result[j]->cpu_data();
-				for (int k = 0; k < result[j]->count(); ++k) {
+			for (int j = 0; j < accuracy_top.size(); ++j) {
+				const Dtype* result_vec = accuracy_top[j]->cpu_data();
+				for (int k = 0; k < accuracy_top[j]->count(); ++k) {
 					test_score.push_back(result_vec[k]);
 				}
 			}
 		} else {
 			int idx = 0;
-			for (int j = 0; j < result.size(); ++j) {
-				const Dtype* result_vec = result[j]->cpu_data();
-				for (int k = 0; k < result[j]->count(); ++k) {
+			for (int j = 0; j < accuracy_top.size(); ++j) {
+				const Dtype* result_vec = accuracy_top[j]->cpu_data();
+				for (int k = 0; k < accuracy_top[j]->count(); ++k) {
 					test_score[idx++] += result_vec[k];
 				}
 			}
 		}
-#endif
 	}
 	for (int i = 0; i < test_score.size(); ++i) {
-		//LOG(INFO) << "Test score #" << i << ": "
-		//	<< test_score[i] / this->param_.test_iter();
+		LOG(INFO) << "Test score #" << i << ": "
+			<< test_score[i] / this->param_.test_iter();
 	}
 
 }
@@ -210,7 +211,7 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		this->Restore(resume_file);
 	}
 
-	CHECK_EQ(this->net_->bottom_vecs()[feature_layer_id+1][0]->cpu_diff(), 
+	CHECK_EQ(this->net_->bottom_vecs()[FEATURE_LAYER_ID+1][0]->cpu_diff(), 
 			loss_bottom[0]->cpu_diff());
 
 	// For a network that is trained by the solver, no bottom or top vecs
@@ -226,13 +227,13 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		loss_layer->Forward(loss_bottom, &loss_top);
 		//BP
 		//get diff
-		loss += this->net_->BackwardBetween(TOP_LAYER_ID, feature_layer_id+1);
-		loss += this->shadow_net_->BackwardBetween(TOP_LAYER_ID, feature_layer_id+1);
+		loss += this->net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
+		loss += this->shadow_net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		//gradient add to bottom layer
 		loss += loss_layer->Backward(loss_top, true, &loss_bottom);
 
-		loss += this->net_->BackwardBetween(feature_layer_id, 0);
-		loss += this->shadow_net_->BackwardBetween(feature_layer_id, 0);
+		loss += this->net_->BackwardBetween(FEATURE_LAYER_ID, 0);
+		loss += this->shadow_net_->BackwardBetween(FEATURE_LAYER_ID, 0);
 
 		//XXX
 		ComputeUpdateValue();

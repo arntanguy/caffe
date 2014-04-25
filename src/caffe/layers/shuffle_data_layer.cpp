@@ -98,13 +98,14 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 		  CHECK_GT(nd, d1);
 		  CHECK_GT(nd, d2);
 		  (*idx_[0])[i] = d1;
-		  (*idx_[1])[i] = d1;
+		  (*idx_[1])[i] = d2;
 	  }
 	  fclose(f);
 	  LOG(INFO) << "read list done";
   }else{
 	  LOG(INFO) << "skip read";
   }
+  db_.reset();
   current_[0] = current_[1] = 0;
 }
 

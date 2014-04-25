@@ -44,6 +44,7 @@ Dtype SoftmaxWithLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   int dim = prob_.count() / num;
   Dtype loss = 0;
   for (int i = 0; i < num; ++i) {
+	  CHECK_LT(label[i], dim);
     bottom_diff[i * dim + static_cast<int>(label[i])] -= 1;
     loss += -log(max(prob_data[i * dim + static_cast<int>(label[i])],
                      Dtype(FLT_MIN)));

@@ -720,6 +720,8 @@ class VerificationAccuracyLayer : public Layer<Dtype> {
     NOT_IMPLEMENTED;
     return Dtype(0.);
   }
+  virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
   Blob<Dtype> diffy_;
 };
 

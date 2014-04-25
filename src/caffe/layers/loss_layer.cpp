@@ -187,15 +187,27 @@ void VerificationAccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& b
     vector<Blob<Dtype>*>* top) {
   Dtype accuracy = 0;
   Dtype logprob = 0;
-  const Dtype* bottom_data = bottom[0]->cpu_data();
-  const Dtype* bottom_label = bottom[1]->cpu_data();
+  const Dtype* bottom_data1 = bottom[0]->cpu_data();
+  const Dtype* bottom_label1 = bottom[1]->cpu_data();
+  const Dtype* bottom_data2 = bottom[2]->cpu_data();
+  const Dtype* bottom_label2 = bottom[3]->cpu_data();
   int num = bottom[0]->num();
   int dim = bottom[0]->count() / bottom[0]->num();
+
+  int count = bottom[0]->count();
+  Dtype* diffy = diffy_.mutable_cpu_data();
+  caffe_sub(count, bottom_data1, bottom_data2, diffy);
+
+  Dtype M2 = M*M;
   for (int i = 0; i < num; ++i) {
-    // Accuracy
-    //if (max_id == static_cast<int>(bottom_label[i])) {
-      ++accuracy;
-    //}
+	int l1 = static_cast<int>(bottom_label1[i]);
+	int l2 = static_cast<int>(bottom_label2[i]);
+	int offset = i*dim;
+	Dtype norm2 = caffe_cpu_dot(dim, diffy+offset, diffy+offset);
+	if(l1 == l2 && norm2 <= M2)
+		accuracy++;
+	else if(l1 != l2 && norm2 > M2)
+		accuracy++;
   }
   // LOG(INFO) << "Accuracy: " << accuracy;
   (*top)[0]->mutable_cpu_data()[0] = accuracy / num;

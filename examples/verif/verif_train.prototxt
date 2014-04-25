@@ -180,7 +180,7 @@ layers {
   layer {
     name: "ip2"
     type: "innerproduct"
-    num_output: 8700
+    num_output: 10177
     weight_filler {
       type: "xavier"
     }

@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
 
   SolverParameter solver_param;
   ReadProtoFromTextFile(argv[1], &solver_param);
+  Caffe::SetDevice(solver_param.device_id());
 
   LOG(INFO) << "Starting Optimization";
   SGDSolver<float> solver(solver_param);
