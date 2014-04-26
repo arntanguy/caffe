@@ -24,8 +24,8 @@ using namespace std;
 template <typename Dtype>
 class VeriSGDSolver : public Solver<Dtype> {
 	public:
-		explicit VeriSGDSolver(const SolverParameter& param)
-			: Solver<Dtype>(param) {
+		explicit VeriSGDSolver(const SolverParameter& param, const LayerParameter &extra_param)
+			: Solver<Dtype>(param), extra_layer_params_(extra_param) {
 				/* build shadow */
 				LOG(INFO) << "BUILD SHADOW NET";
 				DATA_LAYER_IDX = 0;
@@ -59,7 +59,7 @@ class VeriSGDSolver : public Solver<Dtype> {
 				vector<Blob<Dtype>*> & feat_vec2 = this->shadow_net_->top_vecs()[FEATURE_LAYER_ID];
 				CHECK_EQ(feat_vec1.size(), 1);
 				CHECK_EQ(feat_vec2.size(), 1);
-				TOP_LAYER_ID = this->net_->top_vecs().size() - 1;
+				TOP_LAYER_ID = this->net_->layers().size() - 1;
 				CHECK_EQ(this->net_->top_vecs()[DATA_LAYER_IDX].size(), 2);
 				CHECK_EQ(this->net_->top_vecs()[TOP_LAYER_ID].size(), 0);
 
@@ -69,8 +69,7 @@ class VeriSGDSolver : public Solver<Dtype> {
 				//Blob<Dtype>* & top_vec1 = this->net_->top_vecs()[TOP_LAYER_ID][0];
 				//Blob<Dtype>* & top_vec2 = this->shadow_net_->top_vecs()[TOP_LAYER_ID][0];
 
-				LayerParameter __dummy_lp;
-				loss_layer.reset(new VerificationLossLayer<Dtype>(__dummy_lp));
+				loss_layer.reset(new VerificationLossLayer<Dtype>(extra_layer_params_));
 
 				loss_bottom.push_back(feat_vec1[0]);
 				loss_bottom.push_back(label_vec1);
@@ -79,8 +78,6 @@ class VeriSGDSolver : public Solver<Dtype> {
 
 				loss_layer->SetUp(loss_bottom, &loss_top);
 
-				loss_layer->ALPHA = Dtype(0.1);
-				loss_layer->M = Dtype(THR);
 				LOG(INFO) << "BUILD LOSS DONE";
 
 				//Build test accuracy
@@ -97,22 +94,21 @@ class VeriSGDSolver : public Solver<Dtype> {
 				shadow_test_data_layer->CopyDataPtrFrom(*test_data_layer);
 				shadow_test_data_layer->SetOutputChannel(1);
 
-				accuracy_layer.reset(new VerificationAccuracyLayer<Dtype>(__dummy_lp));
+				accuracy_layer.reset(new VerificationAccuracyLayer<Dtype>(extra_layer_params_));
 
-				feat_vec1 = this->test_net_->output_blobs();
-				feat_vec2 = this->shadow_test_net_->output_blobs();
-				CHECK_EQ(feat_vec1.size(), 2);
-				CHECK_EQ(feat_vec2.size(), 2);
+				vector<Blob<Dtype>*> test_out_vec1 = this->test_net_->output_blobs();
+				vector<Blob<Dtype>*> test_out_vec2 = this->shadow_test_net_->output_blobs();
+				CHECK_EQ(test_out_vec1.size(), 2);
+				CHECK_EQ(test_out_vec2.size(), 2);
 
-				accuracy_bottom.push_back(feat_vec1[0]);
-				accuracy_bottom.push_back(feat_vec1[1]);
-				accuracy_bottom.push_back(feat_vec2[0]);
-				accuracy_bottom.push_back(feat_vec2[1]);
+				accuracy_bottom.push_back(test_out_vec1[0]);
+				accuracy_bottom.push_back(test_out_vec1[1]);
+				accuracy_bottom.push_back(test_out_vec2[0]);
+				accuracy_bottom.push_back(test_out_vec2[1]);
 
 				accuracy_top.push_back(&accuracy_out);
 
 				accuracy_layer->SetUp(accuracy_bottom, &accuracy_top);
-				accuracy_layer->M = Dtype(THR);
 				LOG(INFO) << "BUILD ACC DONE";
 
 			}
@@ -146,6 +142,8 @@ class VeriSGDSolver : public Solver<Dtype> {
 		vector<Blob<Dtype>*> accuracy_bottom;
 		vector<Blob<Dtype>*> accuracy_top;
 		Blob<Dtype> accuracy_out;
+		
+		LayerParameter extra_layer_params_;
 
 		DISABLE_COPY_AND_ASSIGN(VeriSGDSolver);
 };
@@ -211,14 +209,17 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		this->Restore(resume_file);
 	}
 
+	/*
 	CHECK_EQ(this->net_->bottom_vecs()[FEATURE_LAYER_ID+1][0]->cpu_diff(), 
 			loss_bottom[0]->cpu_diff());
+			*/
 
 	// For a network that is trained by the solver, no bottom or top vecs
 	// should be given, and we will just provide dummy vecs.
 	vector<Blob<Dtype>*> bottom_vec;
 	while (this->iter_++ < this->param_.max_iter()) {
 		//Dtype loss = this->net_->ForwardBackward(bottom_vec);
+#if 1
 		Dtype loss = 0.;
 		SyncNet();
 		this->net_->Forward(bottom_vec);
@@ -230,10 +231,15 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		loss += this->net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		loss += this->shadow_net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		//gradient add to bottom layer
-		loss += loss_layer->Backward(loss_top, true, &loss_bottom);
+		if(extra_layer_params_.dual_lamda() > Dtype(0.0)){
+			loss += loss_layer->Backward(loss_top, true, &loss_bottom);
+		}
 
 		loss += this->net_->BackwardBetween(FEATURE_LAYER_ID, 0);
 		loss += this->shadow_net_->BackwardBetween(FEATURE_LAYER_ID, 0);
+#else
+    Dtype loss = this->net_->ForwardBackward(bottom_vec);
+#endif
 
 		//XXX
 		ComputeUpdateValue();
@@ -324,6 +330,13 @@ void VeriSGDSolver<Dtype>::ComputeUpdateValue() {
 				Dtype local_rate = rate * net_params_lr[param_id];
 				Dtype local_decay = weight_decay * net_params_weight_decay[param_id];
 				//add diff from net2 to net1
+#if 0
+				LOG(INFO) << "_-------- " << param_id;
+				for(int i=0;i<10;i++)
+					LOG(INFO) << this->net_->params()[param_id]->cpu_diff()[i] << ' '
+						<< this->shadow_net_->params()[param_id]->cpu_diff()[i] ;
+#endif
+
 				caffe_axpy(net_params[param_id]->count(), Dtype(1.),
 						this->shadow_net_->params()[param_id]->cpu_diff(),
 						net_params[param_id]->mutable_cpu_diff());
@@ -397,23 +410,30 @@ void VeriSGDSolver<Dtype>::RestoreSolverState(const SolverState& state) {
 
 
 int main(int argc, char** argv) {
-	if (argc < 2) {
+	if (argc < 3) {
 		LOG(ERROR) << "argc";
 		return -1;
 	}
 
 	//cudaSetDevice(0);
 	//Caffe::set_phase(Caffe::TEST);
-	Caffe::set_mode(Caffe::GPU);
+	//Caffe::set_mode(Caffe::GPU);
 
 	SolverParameter solver_param;
 	ReadProtoFromTextFile(argv[1], &solver_param);
-	Caffe::SetDevice(solver_param.device_id());
-	VeriSGDSolver<float> solver(solver_param);
+	//Caffe::SetDevice(solver_param.device_id());
+	LayerParameter extra_param;
+	ReadProtoFromTextFile(argv[2], &extra_param);
+	VeriSGDSolver<float> solver(solver_param, extra_param);
 
 	LOG(INFO) << ">>> NET BUILD";
-
-	solver.Solve(0);
+	if (argc == 4) {
+		LOG(INFO) << "Resuming from " << argv[3];
+		solver.Solve(argv[3]);
+	} else {
+		solver.Solve(0);
+	}
+	LOG(INFO) << "Optimization Done.";
 	//Net<float> train_net0(cnn_train);
 	//Net<float> train_net1(cnn_train);
 

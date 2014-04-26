@@ -129,6 +129,9 @@ message LayerParameter {
   optional string source_list = 66;
   optional bool share_data = 67 [default = false];
   optional uint32 data_count = 68;
+
+  optional float dual_lamda = 69 [default = 16];
+  optional float dual_threshold = 70 [default = 0];
 }
 
 message LayerConnection {

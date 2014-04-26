@@ -180,6 +180,8 @@ void VerificationAccuracyLayer<Dtype>::SetUp(
   CHECK_EQ(bottom[1]->width(), 1);
   (*top)[0]->Reshape(1, 2, 1, 1);
   diffy_.Reshape(bottom[0]->num(), bottom[0]->channels(), 1, 1);
+  M_ = this->layer_param_.dual_threshold();
+  LOG(INFO) << "Initial: " << M_;
 }
 
 template <typename Dtype>
@@ -198,7 +200,7 @@ void VerificationAccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& b
   Dtype* diffy = diffy_.mutable_cpu_data();
   caffe_sub(count, bottom_data1, bottom_data2, diffy);
 
-  Dtype M2 = M*M;
+  Dtype M2 = M_*M_;
   for (int i = 0; i < num; ++i) {
 	int l1 = static_cast<int>(bottom_label1[i]);
 	int l2 = static_cast<int>(bottom_label2[i]);

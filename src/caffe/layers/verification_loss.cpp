@@ -20,8 +20,9 @@ void VerificationLossLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 
   diffy1_.Reshape(bottom[0]->num(), bottom[0]->channels(), 1, 1);
   diffy2_.Reshape(bottom[0]->num(), bottom[0]->channels(), 1, 1);
-  M = Dtype(0.);
-  ALPHA = Dtype(0.);
+  M_ = this->layer_param_.dual_threshold();
+  LAMDA_ = this->layer_param_.dual_lamda();
+  LOG(INFO) << "Initial: threshold " << M_ << ", " << "lamda: " << LAMDA_;
 }
 
 template <typename Dtype>
@@ -43,6 +44,7 @@ Dtype VerificationLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top
   Dtype* bottom_diff1 = diffy1_.mutable_cpu_data();
   Dtype* bottom_diff2 = diffy2_.mutable_cpu_data();
 
+  int num = (*bottom)[0]->num();
   int count = (*bottom)[0]->count();
   //y1 - y2
   caffe_sub(count, feat_1, feat_2, bottom_diff1);
@@ -59,11 +61,11 @@ Dtype VerificationLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top
 	}else{
 		Dtype norm2 = caffe_cpu_dot(feat_len, bottom_diff1+offset, bottom_diff1+offset);
 		Dtype norm = sqrt(norm2);
-		if(norm > M){
+		if(norm > M_){
 			memset(bottom_diff1+offset,0, sizeof(Dtype)*feat_len);
 			memset(bottom_diff2+offset,0, sizeof(Dtype)*feat_len);
 		}else{
-			norm = (M - norm) / (norm+Dtype(FLT_MIN));
+			norm = (M_ - norm) / (norm+Dtype(FLT_MIN));
 			caffe_scal(feat_len, -norm, bottom_diff1+offset);
 			caffe_scal(feat_len, -norm, bottom_diff2+offset);
 		}
@@ -73,8 +75,15 @@ Dtype VerificationLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top
   //Add gradien to original
   Dtype* _bottom_diff1 = (*bottom)[0]->mutable_cpu_diff();
   Dtype* _bottom_diff2 = (*bottom)[2]->mutable_cpu_diff();
-  caffe_axpy(count, ALPHA, bottom_diff1, _bottom_diff1);
-  caffe_axpy(count, ALPHA, bottom_diff2, _bottom_diff2);
+#if 0
+  for(int i=0;i<(*bottom)[0]->count();i++){
+	  printf("%d %f %f\n", num, _bottom_diff1[i], bottom_diff1[i] / num);
+  }
+#endif
+
+  // Scale down gradient
+  caffe_axpy(count, LAMDA_/num, bottom_diff1, _bottom_diff1);
+  caffe_axpy(count, LAMDA_/num, bottom_diff2, _bottom_diff2);
   return Dtype(0.);
 }
 

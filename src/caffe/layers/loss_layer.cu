@@ -23,7 +23,7 @@ void VerificationAccuracyLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& b
   Dtype* diffy = diffy_.mutable_gpu_data();
   caffe_gpu_sub(count, bottom_data1, bottom_data2, diffy);
 
-  Dtype M2 = M*M;
+  Dtype M2 = M_*M_;
   for (int i = 0; i < num; ++i) {
 	int l1 = static_cast<int>(bottom_label1[i]);
 	int l2 = static_cast<int>(bottom_label2[i]);

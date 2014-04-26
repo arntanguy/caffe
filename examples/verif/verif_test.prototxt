@@ -1,11 +1,11 @@
 name: "Sunyi-test"
 layers {
   layer {
-    name: "sunyi001"
+    name: "verif_dual_001"
     type: "shuffle_data"
-    source: "test_c_001.db"
-    batchsize: 128
-    scale: 1.6
+    source: "001.db"
+    batchsize: 64
+    scale: 0.625
     data_count: 26466
     source_list: "testimagelist.txt"
   }

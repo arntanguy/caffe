@@ -641,8 +641,8 @@ class VerificationLossLayer : public Layer<Dtype> {
   virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
 
-  Dtype M;
-  Dtype ALPHA;
+  void SetThreshold(Dtype t) { M_ = t; }
+  Dtype GetThreshold(Dtype t) { return M_ ; }
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
@@ -656,6 +656,8 @@ class VerificationLossLayer : public Layer<Dtype> {
   Blob<Dtype> diffy1_;
   Blob<Dtype> diffy2_;
 
+  Dtype M_;
+  Dtype LAMDA_;
 
 };
 
@@ -706,11 +708,12 @@ template <typename Dtype>
 class VerificationAccuracyLayer : public Layer<Dtype> {
  public:
   explicit VerificationAccuracyLayer(const LayerParameter& param)
-      : Layer<Dtype>(param), M(Dtype(0.)) {}
+      : Layer<Dtype>(param) {}
   virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
 
-  Dtype M;
+  void SetThreshold(Dtype t) { M_ = t; }
+  Dtype GetThreshold(Dtype t) { return M_ ; }
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
@@ -723,6 +726,8 @@ class VerificationAccuracyLayer : public Layer<Dtype> {
   virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
   Blob<Dtype> diffy_;
+
+  Dtype M_;
 };
 
 

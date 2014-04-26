@@ -49,25 +49,26 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
 		caffe_gpu_dot(feat_len, bottom_diff1+offset,
 				bottom_diff1+offset, &norm2);
 		Dtype norm = sqrt(norm2);
-		if(norm > M){
+		if(norm > M_){
 			//XXX
 			CUDA_CHECK(cudaMemset(bottom_diff1+offset,0,
 						sizeof(Dtype)*feat_len));
 			CUDA_CHECK(cudaMemset(bottom_diff2+offset,0,
 					sizeof(Dtype)*feat_len));
 		}else{
-			norm = (M - norm) / (norm+Dtype(FLT_MIN));
+			norm = (M_ - norm) / (norm+Dtype(FLT_MIN));
 			caffe_gpu_scal(feat_len, -norm, bottom_diff1+offset);
 			caffe_gpu_scal(feat_len, -norm, bottom_diff2+offset);
 		}
 	}
   }
 
+  int num = (*bottom)[0]->num();
   //Add gradien to original
   Dtype* _bottom_diff1 = (*bottom)[0]->mutable_gpu_diff();
   Dtype* _bottom_diff2 = (*bottom)[2]->mutable_gpu_diff();
-  caffe_gpu_axpy(count, ALPHA, bottom_diff1, _bottom_diff1);
-  caffe_gpu_axpy(count, ALPHA, bottom_diff2, _bottom_diff2);
+  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff1, _bottom_diff1);
+  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff2, _bottom_diff2);
 
   return Dtype(0.); 
 }

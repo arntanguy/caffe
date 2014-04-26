@@ -1,13 +1,15 @@
 name: "Sunyi-train"
 layers {
   layer {
-    name: "sunyi001"
+    name: "verif_dual_001"
     type: "shuffle_data"
-    source: "train_c_001.db"
+    source: "c_001.db"
     batchsize: 64
-    scale: 1.6
-    data_count: 405198
-    source_list: "trainimagelist.txt"
+    scale: 0.625
+    rand_skip: 30
+    data_count: 325540
+    source_list: "trainimagelist_.txt"
+    #source_list: "shuffle_list.txt"
   }
   top: "data"
   top: "label"
@@ -180,7 +182,7 @@ layers {
   layer {
     name: "ip2"
     type: "innerproduct"
-    num_output: 10177
+    num_output: 8192
     weight_filler {
       type: "xavier"
     }

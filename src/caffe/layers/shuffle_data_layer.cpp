@@ -105,6 +105,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   }else{
 	  LOG(INFO) << "skip read";
   }
+  iter_.reset();
   db_.reset();
   current_[0] = current_[1] = 0;
 }
