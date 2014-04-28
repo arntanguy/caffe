@@ -132,6 +132,7 @@ message LayerParameter {
 
   optional float dual_lamda = 69 [default = 16];
   optional float dual_threshold = 70 [default = 0];
+  optional float bias = 71[default = 0];
 }
 
 message LayerConnection {

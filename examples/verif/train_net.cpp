@@ -10,6 +10,8 @@
 
 #include <cstring>
 #include <cstdlib>
+#include <fenv.h>
+#include <signal.h>
 #include <vector>
 
 #include "caffe/caffe.hpp"
@@ -220,7 +222,7 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 	while (this->iter_++ < this->param_.max_iter()) {
 		//Dtype loss = this->net_->ForwardBackward(bottom_vec);
 #if 1
-		Dtype loss = 0.;
+		Dtype loss = 0., loss_v = 0.;
 		SyncNet();
 		this->net_->Forward(bottom_vec);
 		shadow_net_->Forward(bottom_vec);
@@ -232,7 +234,7 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		loss += this->shadow_net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		//gradient add to bottom layer
 		if(extra_layer_params_.dual_lamda() > Dtype(0.0)){
-			loss += loss_layer->Backward(loss_top, true, &loss_bottom);
+			loss_v += loss_layer->Backward(loss_top, true, &loss_bottom);
 		}
 
 		loss += this->net_->BackwardBetween(FEATURE_LAYER_ID, 0);
@@ -246,7 +248,7 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		this->net_->Update();
 
 		if (this->param_.display() && this->iter_ % this->param_.display() == 0) {
-			LOG(INFO) << "Iteration " << this->iter_ << ", loss = " << loss;
+			LOG(INFO) << "Iteration " << this->iter_ << ", loss = " << loss << ", loss_v = " << loss_v;
 		}
 		if (this->param_.test_interval() && this->iter_ % this->param_.test_interval() == 0) {
 			// We need to set phase to test before running.
@@ -408,6 +410,10 @@ void VeriSGDSolver<Dtype>::RestoreSolverState(const SolverState& state) {
 	}
 }
 
+static void sighandler(int signum)
+{
+	LOG(FATAL) << "Floating point error: " << signum;
+}
 
 int main(int argc, char** argv) {
 	if (argc < 3) {
@@ -415,6 +421,15 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 
+	struct sigaction sa;
+	/* trap overflow */
+#if 0
+	feenableexcept(FE_INVALID   | 
+			FE_DIVBYZERO | 
+			FE_OVERFLOW
+		      );
+	signal(SIGFPE, sighandler);
+#endif
 	//cudaSetDevice(0);
 	//Caffe::set_phase(Caffe::TEST);
 	//Caffe::set_mode(Caffe::GPU);

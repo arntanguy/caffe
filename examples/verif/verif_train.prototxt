@@ -5,8 +5,8 @@ layers {
     type: "shuffle_data"
     source: "c_001.db"
     batchsize: 64
-    scale: 0.625
-    rand_skip: 30
+    scale: 0.3125
+    bias: 1.6
     data_count: 325540
     source_list: "trainimagelist_.txt"
     #source_list: "shuffle_list.txt"

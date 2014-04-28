@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     LOG(ERROR) << "Dumping " << blob_names[blobid];
     BlobProto output_blob_proto;
     blobs[blobid]->ToProto(&output_blob_proto);
-    WriteProtoToBinaryFile(output_blob_proto,
+    WriteProtoToTextFile(output_blob_proto,
         output_prefix + blob_names[blobid]);
   }
 

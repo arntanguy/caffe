@@ -32,11 +32,20 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
   Dtype* bottom_diff2 = diffy2_.mutable_gpu_data();
 
   int count = (*bottom)[0]->count();
+  CHECK_EQ(count, diffy1_.count());
+  CHECK_EQ(count, diffy2_.count());
   //y1 - y2
   caffe_gpu_sub(count, feat_1, feat_2, bottom_diff1);
   caffe_gpu_sub(count, feat_2, feat_1, bottom_diff2);
 
   const int feat_len = (*bottom)[0]->channels();
+#if 0
+  Dtype tmp;
+  caffe_gpu_dot(feat_len, bottom_diff1+0,
+		bottom_diff1+0, &tmp);
+  LOG(INFO) << tmp;
+#endif
+  Dtype loss(0.);
 
   for (int i = 0; i < (*bottom)[0]->num(); ++i) {
 	int l1 = static_cast<int>(label_1[i]);
@@ -44,21 +53,28 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
 	int offset = i*feat_len;
 	if(l1 == l2){
 		/* nothing */
+		Dtype norm2 = 0;
+		caffe_gpu_dot(feat_len, bottom_diff1+offset,
+				bottom_diff1+offset, &norm2);
+		//LOG(INFO) << i << " " << norm2;
+		loss += sqrt(norm2);
 	}else{
 		Dtype norm2 = 0;
 		caffe_gpu_dot(feat_len, bottom_diff1+offset,
 				bottom_diff1+offset, &norm2);
+		//LOG(INFO) << i << " " << norm2;
 		Dtype norm = sqrt(norm2);
 		if(norm > M_){
-			//XXX
 			CUDA_CHECK(cudaMemset(bottom_diff1+offset,0,
 						sizeof(Dtype)*feat_len));
 			CUDA_CHECK(cudaMemset(bottom_diff2+offset,0,
 					sizeof(Dtype)*feat_len));
 		}else{
 			norm = (M_ - norm) / (norm+Dtype(FLT_MIN));
+			norm = std::min(norm, Dtype(100.0));
 			caffe_gpu_scal(feat_len, -norm, bottom_diff1+offset);
 			caffe_gpu_scal(feat_len, -norm, bottom_diff2+offset);
+			loss += norm*sqrt(norm2);
 		}
 	}
   }
@@ -70,7 +86,7 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
   caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff1, _bottom_diff1);
   caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff2, _bottom_diff2);
 
-  return Dtype(0.); 
+  return Dtype(LAMDA_ / num * loss); 
 }
 
 INSTANTIATE_CLASS(VerificationLossLayer);

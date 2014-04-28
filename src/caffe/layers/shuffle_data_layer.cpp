@@ -26,6 +26,7 @@ template <typename Dtype>
 void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
   const Dtype scale = this->layer_param_.scale();
+  const Dtype bias = this->layer_param_.bias();
   CHECK_EQ(bottom.size(), 0) << "Shuffle Data Layer takes no input blobs.";
   CHECK_EQ(top->size(), 2) << "Shuffle Data Layer takes two blobs as output.";
   OUTPUT_CHANNEL_ = 0;
@@ -76,7 +77,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 		Dtype *data_ptr = prefetch_data_->mutable_cpu_data() + datum_size_*i;
 		prefetch_label_->mutable_cpu_data()[i] = datum.label();
         	for (int j = 0; j < datum_size_; ++j) {
-			data_ptr[j] = datum.float_data(j) * scale;
+			data_ptr[j] = (datum.float_data(j) + bias ) * scale;
 
 		}
 		i ++;
@@ -122,8 +123,10 @@ void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 		memcpy((*top)[0]->mutable_cpu_data() + i * datum_size_, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
 		(*top)[1]->mutable_cpu_data()[i] = prefetch_label_->cpu_data()[idx];
 		current_[OUTPUT_CHANNEL_]++;
-		if(current_[OUTPUT_CHANNEL_] >= idx_[OUTPUT_CHANNEL_]->size())
+		if(current_[OUTPUT_CHANNEL_] >= idx_[OUTPUT_CHANNEL_]->size()){
 			current_[OUTPUT_CHANNEL_] = 0;
+			LOG(INFO) << "Channel " << OUTPUT_CHANNEL_ << " rewind";
+		}
 	}
 }
 

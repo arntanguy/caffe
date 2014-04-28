@@ -5,7 +5,8 @@ layers {
     type: "shuffle_data"
     source: "001.db"
     batchsize: 64
-    scale: 0.625
+    scale: 0.3125
+    bias: 1.6
     data_count: 26466
     source_list: "testimagelist.txt"
   }
