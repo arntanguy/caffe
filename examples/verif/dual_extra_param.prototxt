@@ -1,2 +1,2 @@
-dual_lamda: 0.05
+dual_lamda: 0.1
 dual_threshold: 16.0

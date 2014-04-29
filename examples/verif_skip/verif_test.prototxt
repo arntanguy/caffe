@@ -1,15 +1,11 @@
 name: "Sunyi-train"
 layers {
   layer {
-    name: "verif_dual_001"
-    type: "shuffle_data"
+    name: "sunyi001"
+    type: "data"
     source: "c_001.db"
-    batchsize: 64
-    data_count: 325540
+    batchsize: 128
     scale: 1.0
-    bias: 0.0
-    source_list: "trainimagelist_.txt"
-    #source_list: "shuffle_list.txt"
   }
   top: "data"
   top: "label"
@@ -129,6 +125,14 @@ layers {
   top: "pool3"
 }
 layers {
+	layer{
+		name: "flat1"
+		type: "flatten"
+	}
+	bottom: "pool3"
+	top: "flat1"
+}
+layers {
   layer {
     name: "conv4"
     type: "conv"
@@ -156,6 +160,24 @@ layers {
   top: "conv4"
 }
 layers {
+	layer{
+		name: "flat2"
+		type: "flatten"
+	}
+	bottom: "conv4"
+	top: "flat2"
+}
+layers {
+	layer{
+		name: "concat1"
+		type: "concat"
+		concat_dim: 1
+	}
+	bottom: "flat1"
+	bottom: "flat2"
+	top: "concat1"
+}
+layers {
   layer {
     name: "ip1"
     type: "innerproduct"
@@ -166,10 +188,8 @@ layers {
     bias_filler {
       type: "constant"
     }
-    blobs_lr: 1.
-    blobs_lr: 2.
   }
-  bottom: "conv4"
+  bottom: "concat1"
   top: "ip1"
 }
 layers {
@@ -184,41 +204,39 @@ layers {
   layer {
     name: "ip2"
     type: "innerproduct"
-    num_output: 8192
+    num_output: 8700
     weight_filler {
       type: "xavier"
     }
     bias_filler {
       type: "constant"
     }
-    blobs_lr: 1.
-    blobs_lr: 2.
   }
   bottom: "ip1"
   top: "ip2"
 }
-#layers {
-#  layer {
-#    name: "prob"
-#    type: "softmax"
-#  }
-#  bottom: "ip2"
-#  top: "prob"
-#}
-#layers {
-#  layer {
-#    name: "accuracy"
-#    type: "accuracy"
-#  }
-#  bottom: "prob"
-#  bottom: "label"
-#  top: "accuracy"
-#}
 layers {
   layer {
-    name: "loss"
-    type: "softmax_loss"
+    name: "prob"
+    type: "softmax"
   }
   bottom: "ip2"
-  bottom: "label"
+  top: "prob"
 }
+layers {
+  layer {
+    name: "accuracy"
+    type: "accuracy"
+  }
+  bottom: "prob"
+  bottom: "label"
+  top: "accuracy"
+}
+#layers {
+#  layer {
+#    name: "loss"
+#    type: "softmax_loss"
+#  }
+#  bottom: "ip2"
+#  bottom: "label"
+#}
