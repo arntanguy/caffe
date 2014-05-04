@@ -233,9 +233,7 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		loss += this->net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		loss += this->shadow_net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		//gradient add to bottom layer
-		if(extra_layer_params_.dual_lamda() > Dtype(0.0)){
-			loss_v += loss_layer->Backward(loss_top, true, &loss_bottom);
-		}
+		loss_v += loss_layer->Backward(loss_top, true, &loss_bottom);
 
 		loss += this->net_->BackwardBetween(FEATURE_LAYER_ID, 0);
 		loss += this->shadow_net_->BackwardBetween(FEATURE_LAYER_ID, 0);
@@ -252,9 +250,16 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		}
 		if (this->param_.test_interval() && this->iter_ % this->param_.test_interval() == 0) {
 			// We need to set phase to test before running.
+			vector<Dtype> means;
+			this->loss_layer->GetMeanDistance(means);
+			LOG(INFO) << "Distance mean: " << means[0] << ", " << means[1];
 			Caffe::set_phase(Caffe::TEST);
 			this->TestDual();
 			Caffe::set_phase(Caffe::TRAIN);
+		}
+		if (this->param_.update_dual_thr_interval() && this->iter_ % this->param_.update_dual_thr_interval() == 0) {
+			//XXX TODO
+			this->loss_layer->ResetDistanceStat();
 		}
 		// Check if we need to do snapshot
 		if (this->param_.snapshot() && this->iter_ % this->param_.snapshot() == 0) {

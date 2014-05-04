@@ -1,4 +1,4 @@
-name: "Sunyi-train"
+name: "Sunyi-test"
 layers {
   layer {
     name: "sunyi001"

@@ -133,6 +133,9 @@ message LayerParameter {
   optional float dual_lamda = 69 [default = 16];
   optional float dual_threshold = 70 [default = 0];
   optional float bias = 71[default = 0];
+
+  optional int32 ntile_width = 72 [default = 1];
+  optional int32 ntile_height = 73 [default = 1];
 }
 
 message LayerConnection {
@@ -183,6 +186,8 @@ message SolverParameter {
   optional int32 solver_mode = 17 [default = 1];
   // the device_id will that be used in GPU mode. Use device_id=0 in default.
   optional int32 device_id = 18 [default = 0];
+
+  optional int32 update_dual_thr_interval = 19 [default = 10000];
 }
 
 // A message that stores the solver snapshots

@@ -336,11 +336,16 @@ class ConvolutionLayer : public Layer<Dtype> {
   int NUM_OUTPUT_;
   int GROUP_;
   Blob<Dtype> col_buffer_;
+  Blob<Dtype> out_buffer_;
   shared_ptr<SyncedMemory> bias_multiplier_;
   bool biasterm_;
   int M_;
   int K_;
   int N_;
+  int NTILE_WIDTH_;
+  int NTILE_HEIGHT_;
+  int TILE_WIDTH_;
+  int TILE_HEIGHT_;
 };
 
 template <typename Dtype>
@@ -643,6 +648,18 @@ class VerificationLossLayer : public Layer<Dtype> {
 
   void SetThreshold(Dtype t) { M_ = t; }
   Dtype GetThreshold(Dtype t) { return M_ ; }
+
+  void GetMeanDistance(vector<Dtype> &dists){ 
+	  dists.clear();
+	  for(int i=0;i<2;i++)
+	 	 dists.push_back(SUM_DISTANCE_[i] / std::max(SUM_COUNT_[i], 1));
+  }
+  void ResetDistanceStat(){
+	  for(int i=0;i<2;i++){
+		  SUM_DISTANCE_[i] = 0.;
+		  SUM_COUNT_[i] = 0.;
+	  }
+  }
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
@@ -659,6 +676,8 @@ class VerificationLossLayer : public Layer<Dtype> {
   Dtype M_;
   Dtype LAMDA_;
 
+  Dtype SUM_DISTANCE_[2];
+  int SUM_COUNT_[2];
 };
 
 

@@ -22,6 +22,8 @@ void VerificationLossLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   diffy2_.Reshape(bottom[0]->num(), bottom[0]->channels(), 1, 1);
   M_ = this->layer_param_.dual_threshold();
   LAMDA_ = this->layer_param_.dual_lamda();
+
+  ResetDistanceStat();
   LOG(INFO) << "Initial: threshold " << M_ << ", " << "lamda: " << LAMDA_;
 }
 

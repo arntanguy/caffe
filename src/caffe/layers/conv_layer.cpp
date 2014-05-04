@@ -23,6 +23,8 @@ void ConvolutionLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   CHANNELS_ = bottom[0]->channels();
   HEIGHT_ = bottom[0]->height();
   WIDTH_ = bottom[0]->width();
+  NTILE_WIDTH_ = this->layer_param_.ntile_width();
+  NTILE_HEIGHT_ = this->layer_param_.ntile_height();
   NUM_OUTPUT_ = this->layer_param_.num_output();
   CHECK_GT(NUM_OUTPUT_, 0);
   CHECK_EQ(CHANNELS_ % GROUP_, 0);
@@ -30,7 +32,14 @@ void ConvolutionLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   // overly large memory usage.
   int height_out = (HEIGHT_ + 2 * PAD_ - KSIZE_) / STRIDE_ + 1;
   int width_out = (WIDTH_ + 2 * PAD_ - KSIZE_) / STRIDE_ + 1;
-  col_buffer_.Reshape(1, CHANNELS_ * KSIZE_ * KSIZE_, height_out, width_out);
+
+  CHECK(height_out % NTILE_HEIGHT_ == 0);
+  CHECK(width_out % NTILE_WIDTH_ == 0);
+  TILE_WIDTH_ = width_out / NTILE_WIDTH_;
+  TILE_HEIGHT_ = height_out / NTILE_HEIGHT_;
+
+  col_buffer_.Reshape(1, CHANNELS_ * KSIZE_ * KSIZE_, TILE_HEIGHT_, TILE_WIDTH_);
+  out_buffer_.Reshape(1, NUM_OUTPUT_, TILE_HEIGHT_, TILE_WIDTH_);
   // Set the parameters
   CHECK_EQ(NUM_OUTPUT_ % GROUP_, 0)
       << "Number of output should be multiples of group.";
@@ -38,30 +47,33 @@ void ConvolutionLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   // Figure out the dimensions for individual gemms.
   M_ = NUM_OUTPUT_ / GROUP_;
   K_ = CHANNELS_ * KSIZE_ * KSIZE_ / GROUP_;
-  N_ = height_out * width_out;
+  N_ = TILE_WIDTH_ * TILE_HEIGHT_;
   (*top)[0]->Reshape(bottom[0]->num(), NUM_OUTPUT_, height_out, width_out);
+  int ntiles = NTILE_WIDTH_ * NTILE_HEIGHT_;
   // Check if we need to set up the weights
   if (this->blobs_.size() > 0) {
     LOG(INFO) << "Skipping parameter initialization";
   } else {
     if (biasterm_) {
-      this->blobs_.resize(2);
+      this->blobs_.resize(2*ntiles);
     } else {
-      this->blobs_.resize(1);
+      this->blobs_.resize(1*ntiles);
     }
     // Intialize the weight
-    this->blobs_[0].reset(
-        new Blob<Dtype>(NUM_OUTPUT_, CHANNELS_ / GROUP_, KSIZE_, KSIZE_));
-    // fill the weights
-    shared_ptr<Filler<Dtype> > weight_filler(
-        GetFiller<Dtype>(this->layer_param_.weight_filler()));
-    weight_filler->Fill(this->blobs_[0].get());
-    // If necessary, intiialize and fill the bias term
-    if (biasterm_) {
-      this->blobs_[1].reset(new Blob<Dtype>(1, 1, 1, NUM_OUTPUT_));
-      shared_ptr<Filler<Dtype> > bias_filler(
-          GetFiller<Dtype>(this->layer_param_.bias_filler()));
-      bias_filler->Fill(this->blobs_[1].get());
+    for(int i = 0; i < ntiles; i++) {
+	    this->blobs_[i].reset(
+		new Blob<Dtype>(NUM_OUTPUT_, CHANNELS_ / GROUP_, KSIZE_, KSIZE_));
+	    // fill the weights
+	    shared_ptr<Filler<Dtype> > weight_filler(
+		GetFiller<Dtype>(this->layer_param_.weight_filler()));
+	    weight_filler->Fill(this->blobs_[i].get());
+	    // If necessary, intiialize and fill the bias term
+	    if (biasterm_) {
+	      this->blobs_[ntiles+i].reset(new Blob<Dtype>(1, 1, 1, NUM_OUTPUT_));
+	      shared_ptr<Filler<Dtype> > bias_filler(
+		  GetFiller<Dtype>(this->layer_param_.bias_filler()));
+	      bias_filler->Fill(this->blobs_[ntiles+i].get());
+	    }
     }
   }
   // Set up the bias filler

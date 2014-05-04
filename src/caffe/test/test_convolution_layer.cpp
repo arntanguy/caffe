@@ -103,6 +103,53 @@ TYPED_TEST(ConvolutionLayerTest, TestSimpleConvolution) {
   }
 }
 
+TYPED_TEST(ConvolutionLayerTest, TestSimpleTiledConvolution) {
+  // We will simply see if the convolution layer carries out averaging well.
+  FillerParameter filler_param;
+  filler_param.set_value(1.);
+  ConstantFiller<TypeParam> filler(filler_param);
+  filler.Fill(this->blob_bottom_);
+  LayerParameter layer_param;
+  layer_param.set_kernelsize(3);
+  layer_param.set_stride(1);
+  layer_param.set_num_output(4);
+  layer_param.set_ntile_width(1);
+  layer_param.set_ntile_height(2);
+
+  layer_param.mutable_weight_filler()->set_type("constant");
+  layer_param.mutable_weight_filler()->set_value(1);
+  layer_param.mutable_bias_filler()->set_type("constant");
+  layer_param.mutable_bias_filler()->set_value(0.1);
+  shared_ptr<Layer<TypeParam> > layer(
+      new ConvolutionLayer<TypeParam>(layer_param));
+  layer->SetUp(this->blob_bottom_vec_, &(this->blob_top_vec_));
+  vector<shared_ptr<Blob<TypeParam> > >& layer_blobs = layer->blobs();
+  EXPECT_EQ(layer_blobs.size(), 4);
+  TypeParam *ptr = layer_blobs[3]->mutable_cpu_data();
+  for(int i=0;i<layer_blobs[3]->count();i++)
+	  ptr[i] = 0.2;
+
+  // Test GPU
+  Caffe::set_mode(Caffe::GPU);
+  layer->Forward(this->blob_bottom_vec_, &(this->blob_top_vec_));
+  // After the convolution, the output should all have output values 27.1
+  for(int n = 0; n < this->blob_top_->num(); ++n){
+	  for(int c = 0; c < this->blob_top_->channels(); ++c){
+		  int i = 0;
+		  int s = this->blob_top_->width() * this->blob_top_->height();
+		  const TypeParam *p = this->blob_top_->cpu_data() + this->blob_top_->offset(n, c, 0, 0);
+		  for(;i < s / 2; i++){
+			  EXPECT_GE(p[i], 27.1 - 1e-4);
+			  EXPECT_LE(p[i], 27.1 + 1e-4);
+		  }
+		  for(;i < s; i++){
+			  EXPECT_GE(p[i], 27.2 - 1e-4);
+			  EXPECT_LE(p[i], 27.2 + 1e-4);
+		  }
+  	}
+  }
+}
+
 TYPED_TEST(ConvolutionLayerTest, TestSimpleConvolutionGroup) {
   // We will simply see if the convolution layer carries out averaging well.
   FillerParameter filler_param;
