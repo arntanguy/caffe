@@ -150,6 +150,46 @@ TYPED_TEST(ConvolutionLayerTest, TestSimpleTiledConvolution) {
   }
 }
 
+TYPED_TEST(ConvolutionLayerTest, TestSimpleTiledConvolution1) {
+  // We will simply see if the convolution layer carries out averaging well.
+  FillerParameter filler_param;
+  filler_param.set_value(1.);
+  ConstantFiller<TypeParam> filler(filler_param);
+  filler.Fill(this->blob_bottom_);
+  LayerParameter layer_param;
+  layer_param.set_kernelsize(3);
+  layer_param.set_stride(1);
+  layer_param.set_num_output(4);
+  layer_param.set_ntile_height(2);
+  layer_param.set_ntile_width(3);
+
+  layer_param.mutable_weight_filler()->set_type("constant");
+  layer_param.mutable_weight_filler()->set_value(1);
+  layer_param.mutable_bias_filler()->set_type("constant");
+  layer_param.mutable_bias_filler()->set_value(0.1);
+  shared_ptr<Layer<TypeParam> > layer(
+      new ConvolutionLayer<TypeParam>(layer_param));
+  layer->SetUp(this->blob_bottom_vec_, &(this->blob_top_vec_));
+  vector<shared_ptr<Blob<TypeParam> > >& layer_blobs = layer->blobs();
+  EXPECT_EQ(layer_blobs.size(), 6*2);
+#if 0
+  TypeParam *ptr = layer_blobs[3]->mutable_cpu_data();
+  for(int i=0;i<layer_blobs[3]->count();i++)
+	  ptr[i] = 0.1;
+#endif
+
+  // Test GPU
+  Caffe::set_mode(Caffe::GPU);
+  layer->Forward(this->blob_bottom_vec_, &(this->blob_top_vec_));
+  const TypeParam* top_data = this->blob_top_->cpu_data();
+  // After the convolution, the output should all have output values 27.1
+  for(int i = 0; i < this->blob_top_->count(); ++i){
+	  EXPECT_GE(top_data[i], 27.1 - 1e-4);
+	  EXPECT_LE(top_data[i], 27.1 + 1e-4);
+  }
+}
+
+
 TYPED_TEST(ConvolutionLayerTest, TestSimpleConvolutionGroup) {
   // We will simply see if the convolution layer carries out averaging well.
   FillerParameter filler_param;
@@ -246,6 +286,23 @@ TYPED_TEST(ConvolutionLayerTest, TestGPUGradient) {
   layer_param.set_kernelsize(3);
   layer_param.set_stride(2);
   layer_param.set_num_output(2);
+  layer_param.mutable_weight_filler()->set_type("gaussian");
+  layer_param.mutable_bias_filler()->set_type("gaussian");
+  Caffe::set_mode(Caffe::GPU);
+  ConvolutionLayer<TypeParam> layer(layer_param);
+  GradientChecker<TypeParam> checker(1e-2, 1e-3);
+  checker.CheckGradientExhaustive(&layer, &(this->blob_bottom_vec_),
+      &(this->blob_top_vec_));
+}
+
+TYPED_TEST(ConvolutionLayerTest, TestGPUTiledGradient) {
+  LayerParameter layer_param;
+  layer_param.set_kernelsize(3);
+  layer_param.set_stride(1);
+  layer_param.set_num_output(2);
+  layer_param.set_ntile_width(1);
+  layer_param.set_ntile_height(2);
+
   layer_param.mutable_weight_filler()->set_type("gaussian");
   layer_param.mutable_bias_filler()->set_type("gaussian");
   Caffe::set_mode(Caffe::GPU);

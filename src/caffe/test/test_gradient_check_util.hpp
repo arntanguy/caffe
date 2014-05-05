@@ -87,7 +87,7 @@ void GradientChecker<Dtype>::CheckGradientSingle(Layer<Dtype>* layer,
   for (int blobid = 0; blobid < blobs_to_check.size(); ++blobid) {
     Blob<Dtype>* current_blob = blobs_to_check[blobid];
     // LOG(ERROR) << "Blob " << blobid << ": checking " << current_blob->count()
-    //     << " parameters.";
+     //    << " parameters.";
     // go through the values
     for (int feat_id = 0; feat_id < current_blob->count(); ++feat_id) {
       // First, obtain the original data
