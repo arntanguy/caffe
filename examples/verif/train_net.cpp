@@ -237,6 +237,8 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 
 		loss += this->net_->BackwardBetween(FEATURE_LAYER_ID, 0);
 		loss += this->shadow_net_->BackwardBetween(FEATURE_LAYER_ID, 0);
+		
+		loss *= 0.5;
 #else
     Dtype loss = this->net_->ForwardBackward(bottom_vec);
 #endif
@@ -246,19 +248,23 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		this->net_->Update();
 
 		if (this->param_.display() && this->iter_ % this->param_.display() == 0) {
+			vector<Dtype> means;
+			Dtype thr = this->loss_layer->CalcThreshold(false);
+			this->loss_layer->GetMeanDistance(means);
+			LOG(INFO) << "Distance mean: " << means[0] << ", " << means[1] << ", " << thr;
 			LOG(INFO) << "Iteration " << this->iter_ << ", loss = " << loss << ", loss_v = " << loss_v;
 		}
 		if (this->param_.test_interval() && this->iter_ % this->param_.test_interval() == 0) {
 			// We need to set phase to test before running.
-			vector<Dtype> means;
-			this->loss_layer->GetMeanDistance(means);
-			LOG(INFO) << "Distance mean: " << means[0] << ", " << means[1];
 			Caffe::set_phase(Caffe::TEST);
 			this->TestDual();
 			Caffe::set_phase(Caffe::TRAIN);
 		}
 		if (this->param_.update_dual_thr_interval() && this->iter_ % this->param_.update_dual_thr_interval() == 0) {
 			//XXX TODO
+			Dtype thr = this->loss_layer->CalcThreshold(true);
+			this->accuracy_layer->SetThreshold(thr);
+			LOG(INFO) << "new_thr: " << thr;
 			this->loss_layer->ResetDistanceStat();
 		}
 		// Check if we need to do snapshot

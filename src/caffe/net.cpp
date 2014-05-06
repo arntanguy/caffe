@@ -134,7 +134,7 @@ void Net<Dtype>::Init(const NetParameter& in_param) {
     int blobs_lr_size = layers_[i]->layer_param().blobs_lr_size();
     CHECK(blobs_lr_size == layers_[i]->blobs().size() || blobs_lr_size == 0)
         << "Incorrect blobs lr size: should be either 0 or the same as "
-           "the number of the layer's parameter blobs.";
+           "the number of the layer's parameter blobs, " << blobs_lr_size << "vs. " << layers_[i]->blobs().size();
     if (blobs_lr_size) {
       // Check if this layer needs backward operation itself
       for (int j = 0; j < blobs_lr_size; ++j) {

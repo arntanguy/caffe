@@ -1,11 +1,12 @@
-name: "Sunyi-test"
+name: "Sunyi-feat"
 layers {
   layer {
-    name: "sunyi001"
+    name: "verif_dual_feat"
     type: "data"
     source: "c_001.db"
-    batchsize: 128
+    batchsize: 64
     scale: 1.0
+    bias: 0.0
   }
   top: "data"
   top: "label"
@@ -23,6 +24,8 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 2.
   }
   bottom: "data"
   top: "conv1"
@@ -59,6 +62,8 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 2.
   }
   bottom: "pool1"
   top: "conv2"
@@ -86,9 +91,7 @@ layers {
   layer {
     name: "conv3"
     type: "conv"
-    num_output: 60
-    ntile_height: 3
-    ntile_width: 2
+    num_output: 80
     kernelsize: 3
     stride: 1
     weight_filler {
@@ -97,6 +100,8 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 2.
   }
   bottom: "pool2"
   top: "conv3"
@@ -121,20 +126,10 @@ layers {
   top: "pool3"
 }
 layers {
-	layer{
-		name: "flat1"
-		type: "flatten"
-	}
-	bottom: "pool3"
-	top: "flat1"
-}
-layers {
   layer {
     name: "conv4"
     type: "conv"
-    num_output: 80
-    ntile_height: 2
-    ntile_width: 1
+    num_output: 120
     kernelsize: 2
     stride: 1
     weight_filler {
@@ -143,6 +138,8 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 2.
   }
   bottom: "pool3"
   top: "conv4"
@@ -156,24 +153,6 @@ layers {
   top: "conv4"
 }
 layers {
-	layer{
-		name: "flat2"
-		type: "flatten"
-	}
-	bottom: "conv4"
-	top: "flat2"
-}
-layers {
-	layer{
-		name: "concat1"
-		type: "concat"
-		concat_dim: 1
-	}
-	bottom: "flat1"
-	bottom: "flat2"
-	top: "concat1"
-}
-layers {
   layer {
     name: "ip1"
     type: "innerproduct"
@@ -185,7 +164,7 @@ layers {
       type: "constant"
     }
   }
-  bottom: "concat1"
+  bottom: "conv4"
   top: "ip1"
 }
 layers {
@@ -200,7 +179,7 @@ layers {
   layer {
     name: "ip2"
     type: "innerproduct"
-    num_output: 8700
+    num_output: 8192
     weight_filler {
       type: "xavier"
     }

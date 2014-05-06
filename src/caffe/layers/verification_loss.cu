@@ -53,34 +53,30 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
 	int l2 = static_cast<int>(label_2[i]);
 	int offset = i*feat_len;
 	Dtype norm2 = 0;
+	caffe_gpu_dot(feat_len, bottom_diff1+offset,
+		bottom_diff1+offset, &norm2);
+	distance_.push_back(sqrt(norm2));
+	same_.push_back((l1 == l2) ? 1: 0);
 	if(l1 == l2){
 		/* nothing */
-		caffe_gpu_dot(feat_len, bottom_diff1+offset,
-				bottom_diff1+offset, &norm2);
 		//LOG(INFO) << i << " " << norm2;
 		//LOG(INFO) << "1";
-		loss += sqrt(norm2);
-		SUM_DISTANCE_[1] += sqrt(norm2);
-		SUM_COUNT_[1] ++ ;
+		loss += 0.5 * norm2;
 	}else{
-		caffe_gpu_dot(feat_len, bottom_diff1+offset,
-				bottom_diff1+offset, &norm2);
 		//LOG(INFO) << i << " " << norm2;
 		//LOG(INFO) << "0";
-		Dtype norm = sqrt(norm2);
-		SUM_DISTANCE_[0] += norm;
-		SUM_COUNT_[0] ++ ;
-		if(norm > M_){
+		Dtype dw = sqrt(norm2);
+		if(dw > M_){
 			CUDA_CHECK(cudaMemset(bottom_diff1+offset,0,
 						sizeof(Dtype)*feat_len));
 			CUDA_CHECK(cudaMemset(bottom_diff2+offset,0,
 					sizeof(Dtype)*feat_len));
 		}else{
-			norm = (M_ - norm) / (norm+Dtype(FLT_MIN));
-			norm = std::min(norm, Dtype(100.0));
-			caffe_gpu_scal(feat_len, -norm, bottom_diff1+offset);
-			caffe_gpu_scal(feat_len, -norm, bottom_diff2+offset);
-			loss += norm*sqrt(norm2);
+			loss += 0.5 * (M_ - dw) * (M_ - dw);
+
+			Dtype t = Dtype(1.0) - M_ / dw;
+			caffe_gpu_scal(feat_len, t, bottom_diff1+offset);
+			caffe_gpu_scal(feat_len, t, bottom_diff2+offset);
 		}
 	}
 	die |= (norm2 > 1e6);	
@@ -91,24 +87,29 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
   sprintf(buf, "dump_%d.bin", dumpi);
   dumpi+=1;
   FILE *f = fopen(buf, "wb");
-  fwrite((*bottom)[0]->cpu_data(), (*bottom)[0]->count(),
+#if 1
+  fwrite(diffy1_.cpu_data(), diffy1_.count(),
 		  sizeof(Dtype), f  );
-  fwrite((*bottom)[2]->cpu_data(), (*bottom)[2]->count(),
+  fwrite(diffy2_.cpu_data(), diffy2_.count(),
 		  sizeof(Dtype), f  );
+#else
+  fwrite((*bottom)[0]->cpu_diff(), (*bottom)[0]->count(),
+		  sizeof(Dtype), f  );
+  fwrite((*bottom)[2]->cpu_diff(), (*bottom)[0]->count(),
+		  sizeof(Dtype), f  );
+#endif
   fclose(f);
   LOG(INFO) << "DUMP " << dumpi;
-  if(die)
-  	LOG(FATAL) << "die " << dumpi;
 #endif
 
   int num = (*bottom)[0]->num();
   //Add gradien to original
   Dtype* _bottom_diff1 = (*bottom)[0]->mutable_gpu_diff();
   Dtype* _bottom_diff2 = (*bottom)[2]->mutable_gpu_diff();
-  caffe_gpu_axpby(count, LAMDA_ / num, bottom_diff1, Dtype(0.), _bottom_diff1);
-  caffe_gpu_axpby(count, LAMDA_ / num, bottom_diff2, Dtype(0.), _bottom_diff2);
+  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff1, _bottom_diff1);
+  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff2, _bottom_diff2);
 
-  return Dtype(LAMDA_ / num * loss); 
+  return Dtype(loss / num); 
 }
 
 INSTANTIATE_CLASS(VerificationLossLayer);

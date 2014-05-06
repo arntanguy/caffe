@@ -90,7 +90,9 @@ layers {
   layer {
     name: "conv3"
     type: "conv"
-    num_output: 80
+    num_output: 60
+    ntile_height: 3
+    ntile_width: 2
     kernelsize: 3
     stride: 1
     weight_filler {
@@ -100,6 +102,16 @@ layers {
       type: "constant"
     }
     blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 2.
+    blobs_lr: 2.
+    blobs_lr: 2.
+    blobs_lr: 2.
+    blobs_lr: 2.
     blobs_lr: 2.
   }
   bottom: "pool2"
@@ -136,7 +148,9 @@ layers {
   layer {
     name: "conv4"
     type: "conv"
-    num_output: 120
+    num_output: 80
+    ntile_height: 2
+    ntile_width: 1
     kernelsize: 2
     stride: 1
     weight_filler {
@@ -146,6 +160,8 @@ layers {
       type: "constant"
     }
     blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 2.
     blobs_lr: 2.
   }
   bottom: "pool3"

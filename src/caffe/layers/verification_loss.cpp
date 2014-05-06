@@ -13,6 +13,75 @@ using std::max;
 namespace caffe {
 
 template <typename Dtype>
+Dtype VerificationLossLayer<Dtype>::CalcThreshold(bool update) {
+	int i, j, is, id, is_ = 0, id_ = 0;
+	Dtype th, th_c, s, d, f;
+	int n = same_.size();
+	CHECK_EQ(n, distance_.size());
+	if(!n)
+		return M_;
+	for(i = 0; i < n; i++)
+	{
+		if(same_[i])
+		{
+			is_++;
+		}
+		else
+		{
+			id_++;
+		}
+	}
+
+	Dtype stat[3];
+	stat[0] = 1.0;
+	stat[1] = 0.5;
+	stat[2] = 0.5;
+	th = -1.0;
+
+	for(i = 0; i < 400; i++)
+	{
+		th_c = i * 0.1;
+		is = 0;
+		id = 0;
+		for(j = 0; j < n; j++)
+		{
+			if(same_[j])
+			{
+				if(distance_[j] > th_c)
+				{
+					is++;
+				}
+			}
+			else
+			{
+				if(distance_[j] <= th_c)
+				{
+					id++;
+				}
+			}
+		}
+		s = (Dtype)is / (2 * is_);
+		d = (Dtype)id / (2 * id_);
+		f = s + d;
+		if(f < stat[0])
+		{
+			stat[0] = f;
+			stat[1] = s;
+			stat[2] = d;
+			th = th_c;
+		}
+	}
+	LOG(INFO) << "margin: " << th << " ("
+		<< stat[0] << ", " << stat[1]
+		<< ", " << stat[2] << ")";
+
+	if(update)
+		SetThreshold(th);
+	return th;
+
+}
+
+template <typename Dtype>
 void VerificationLossLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
   CHECK_EQ(bottom.size(), 4) << "VerificationLoss Layer takes four blobs as input.";

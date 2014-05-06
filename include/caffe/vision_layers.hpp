@@ -651,15 +651,23 @@ class VerificationLossLayer : public Layer<Dtype> {
 
   void GetMeanDistance(vector<Dtype> &dists){ 
 	  dists.clear();
+	  Dtype avg[2];
+	  int cnt[2];
+	  CHECK_EQ(distance_.size(), same_.size());
+	  for(size_t i=0;i<distance_.size();i++){
+		  int s = same_[i];
+		  avg[s] += distance_[i];
+		  cnt[s] ++;
+	  }
+
 	  for(int i=0;i<2;i++)
-	 	 dists.push_back(SUM_DISTANCE_[i] / std::max(SUM_COUNT_[i], 1));
+	 	 dists.push_back(avg[i] / std::max(cnt[i], 1));
   }
   void ResetDistanceStat(){
-	  for(int i=0;i<2;i++){
-		  SUM_DISTANCE_[i] = 0.;
-		  SUM_COUNT_[i] = 0.;
-	  }
+	  distance_.clear();
+	  same_.clear();
   }
+  Dtype CalcThreshold(bool update);
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
@@ -676,8 +684,8 @@ class VerificationLossLayer : public Layer<Dtype> {
   Dtype M_;
   Dtype LAMDA_;
 
-  Dtype SUM_DISTANCE_[2];
-  int SUM_COUNT_[2];
+  std::vector<Dtype> distance_;
+  std::vector<int>   same_;
 };
 
 

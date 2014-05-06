@@ -1,11 +1,14 @@
-name: "Sunyi-test"
+name: NET_NAME
 layers {
   layer {
-    name: "sunyi001"
-    type: "data"
-    source: "c_001.db"
-    batchsize: 128
+    name: "verif_dual_001"
+    type: "shuffle_data"
+    source: DB_NAME
+    batchsize: 64
+    data_count: DATA_COUNT
     scale: 1.0
+    bias: 0.0
+    source_list: TRAIN_LIST
   }
   top: "data"
   top: "label"
@@ -23,6 +26,8 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 2.
   }
   bottom: "data"
   top: "conv1"
@@ -59,6 +64,8 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 2.
   }
   bottom: "pool1"
   top: "conv2"
@@ -86,7 +93,7 @@ layers {
   layer {
     name: "conv3"
     type: "conv"
-    num_output: 60
+    num_output: 80
     ntile_height: 3
     ntile_width: 2
     kernelsize: 3
@@ -97,6 +104,19 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 2.
+    blobs_lr: 2.
+    blobs_lr: 2.
+    blobs_lr: 2.
+    blobs_lr: 2.
+    blobs_lr: 2.
+
   }
   bottom: "pool2"
   top: "conv3"
@@ -132,10 +152,10 @@ layers {
   layer {
     name: "conv4"
     type: "conv"
-    num_output: 80
+    num_output: 120
+    kernelsize: 2
     ntile_height: 2
     ntile_width: 1
-    kernelsize: 2
     stride: 1
     weight_filler {
       type: "xavier"
@@ -143,6 +163,10 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 1.
+    blobs_lr: 2.
+    blobs_lr: 2.
   }
   bottom: "pool3"
   top: "conv4"
@@ -184,6 +208,8 @@ layers {
     bias_filler {
       type: "constant"
     }
+    blobs_lr: 1.
+    blobs_lr: 2.
   }
   bottom: "concat1"
   top: "ip1"
@@ -196,43 +222,4 @@ layers {
   bottom: "ip1"
   top: "ip1"
 }
-layers {
-  layer {
-    name: "ip2"
-    type: "innerproduct"
-    num_output: 8700
-    weight_filler {
-      type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-    }
-  }
-  bottom: "ip1"
-  top: "ip2"
-}
-layers {
-  layer {
-    name: "prob"
-    type: "softmax"
-  }
-  bottom: "ip2"
-  top: "prob"
-}
-layers {
-  layer {
-    name: "accuracy"
-    type: "accuracy"
-  }
-  bottom: "prob"
-  bottom: "label"
-  top: "accuracy"
-}
-#layers {
-#  layer {
-#    name: "loss"
-#    type: "softmax_loss"
-#  }
-#  bottom: "ip2"
-#  bottom: "label"
-#}
+

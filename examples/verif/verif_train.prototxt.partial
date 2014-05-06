@@ -1,0 +1,31 @@
+#define NET_NAME "Sunyi-train"
+#define DB_NAME "c_001.db"
+#define DATA_COUNT 325540
+#define TRAIN_LIST "trainimagelist_.txt"
+
+#include "verif_net.template"
+layers {
+  layer {
+    name: "ip2"
+    type: "innerproduct"
+    num_output: 8192
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    blobs_lr: 1.
+    blobs_lr: 2.
+  }
+  bottom: "ip1"
+  top: "ip2"
+}
+layers {
+  layer {
+    name: "loss"
+    type: "softmax_loss"
+  }
+  bottom: "ip2"
+  bottom: "label"
+}
