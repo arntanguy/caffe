@@ -21,7 +21,8 @@
 using namespace caffe;  // NOLINT(build/namespaces)
 using namespace std;
 
-#define THR 16
+#define GET_LAYER(var, net, id, type) type<Dtype> *var = dynamic_cast<type<Dtype> *>(net->mutable_layers()[id].get())
+#define GET_CONST_LAYER(var, net, id, type) const type<Dtype> *var = dynamic_cast<const type<Dtype> *>(net->layers()[id].get())
 
 template <typename Dtype>
 class VeriSGDSolver : public Solver<Dtype> {
@@ -38,21 +39,16 @@ class VeriSGDSolver : public Solver<Dtype> {
 				train_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_share_data(true);
 
 				shadow_net_.reset(new Net<Dtype>(train_net_param));
-				const ShuffleDataLayer<Dtype> *data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->net_->layers()[DATA_LAYER_IDX].get());
-				ShuffleDataLayer<Dtype> *shadow_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->shadow_net_->mutable_layers()[DATA_LAYER_IDX].get());
+
+				GET_CONST_LAYER(data_layer, this->net_, DATA_LAYER_IDX, ShuffleDataLayer);
+				GET_LAYER(shadow_data_layer, this->shadow_net_, DATA_LAYER_IDX, ShuffleDataLayer);
 
 				CHECK(data_layer != NULL);
 				shadow_data_layer->CopyDataPtrFrom(*data_layer);
 
 				shadow_data_layer->SetOutputChannel(1);
 
-				FEATURE_LAYER_ID = -1;
-				for(int i=0;i<this->net_->layers().size();i++){
-					if(this->net_->layer_names()[i] == "relu5"){
-						FEATURE_LAYER_ID = i;
-						break;
-					}
-				}
+				FEATURE_LAYER_ID = FindLayer("relu5");
 				CHECK_GE(FEATURE_LAYER_ID, 0);
 				LOG(INFO) << "feature layer id " << FEATURE_LAYER_ID;
 
@@ -90,8 +86,9 @@ class VeriSGDSolver : public Solver<Dtype> {
 				LOG(INFO) << "TEST_INPUT " << test_net_param.layers(DATA_LAYER_IDX).layer().source();
 				shadow_test_net_.reset(new Net<Dtype>(test_net_param));
 
-				const ShuffleDataLayer<Dtype> *test_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->test_net_->layers()[DATA_LAYER_IDX].get());
-				ShuffleDataLayer<Dtype> *shadow_test_data_layer = dynamic_cast<ShuffleDataLayer<Dtype> *>(this->shadow_test_net_->mutable_layers()[DATA_LAYER_IDX].get());
+				GET_CONST_LAYER(test_data_layer, this->test_net_, DATA_LAYER_IDX, ShuffleDataLayer);
+				GET_LAYER(shadow_test_data_layer, this->shadow_test_net_, DATA_LAYER_IDX, ShuffleDataLayer);
+
 				CHECK(test_data_layer != NULL);
 				shadow_test_data_layer->CopyDataPtrFrom(*test_data_layer);
 				shadow_test_data_layer->SetOutputChannel(1);
@@ -113,6 +110,26 @@ class VeriSGDSolver : public Solver<Dtype> {
 				accuracy_layer->SetUp(accuracy_bottom, &accuracy_top);
 				LOG(INFO) << "BUILD ACC DONE";
 
+				//Setup dropout
+				DROPOUT_TOP_ID = FindLayer("dropout_group_2");	
+				DROPOUT_BOTTOM_ID = -1;
+				if(DROPOUT_TOP_ID >= 0){
+					LOG(INFO) << "Setup dropout layers";
+					GET_LAYER(drop2, this->net_, DROPOUT_TOP_ID, DropoutGroupLayer);
+					GET_LAYER(drop2_shadow, this->shadow_net_, DROPOUT_TOP_ID, DropoutGroupLayer);
+					CHECK(drop2 != NULL);
+					CHECK(drop2_shadow != NULL);
+
+					drop2_shadow->ShareMask(drop2);
+
+					DROPOUT_BOTTOM_ID = FindLayer("dropout_group_1");	
+					CHECK(DROPOUT_BOTTOM_ID >= 0);
+					GET_LAYER(drop1, this->net_, DROPOUT_BOTTOM_ID, DropoutGroupLayer);
+					GET_LAYER(drop1_shadow, this->shadow_net_, DROPOUT_BOTTOM_ID, DropoutGroupLayer);
+					CHECK(drop1 != NULL);
+					CHECK(drop1_shadow != NULL);
+					drop1_shadow->ShareMask(drop1);
+				}
 			}
 
 		/* overload, hide Solve in base class */
@@ -126,6 +143,18 @@ class VeriSGDSolver : public Solver<Dtype> {
 		virtual void RestoreSolverState(const SolverState& state);
 
 		void SyncNet();
+
+		int FindLayer(const std::string &name){
+			int id = -1;
+			for(int i=0;i<this->net_->layers().size();i++){
+				if(this->net_->layer_names()[i] == name){
+					id = i;
+					break;
+				}
+			}
+			return id;
+		}
+
 		// history maintains the historical momentum data.
 		vector<shared_ptr<Blob<Dtype> > > history_;
 
@@ -138,6 +167,8 @@ class VeriSGDSolver : public Solver<Dtype> {
 		int FEATURE_LAYER_ID;
 		int DATA_LAYER_IDX;
 		int TOP_LAYER_ID;
+		int DROPOUT_TOP_ID;
+		int DROPOUT_BOTTOM_ID;
 		vector<Blob<Dtype>*> loss_bottom;
 		vector<Blob<Dtype>*> loss_top;
 
@@ -216,14 +247,25 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 			loss_bottom[0]->cpu_diff());
 			*/
 
+	GET_LAYER(dropout_layer2, this->net_, std::max(DROPOUT_TOP_ID,0), DropoutGroupLayer); 
+	GET_LAYER(dropout_layer1, this->net_, std::max(DROPOUT_BOTTOM_ID,0), DropoutGroupLayer); 
+	bool update_dropout = dropout_layer1 != NULL;
+	
 	// For a network that is trained by the solver, no bottom or top vecs
 	// should be given, and we will just provide dummy vecs.
 	vector<Blob<Dtype>*> bottom_vec;
 	while (this->iter_++ < this->param_.max_iter()) {
 		//Dtype loss = this->net_->ForwardBackward(bottom_vec);
+
 #if 1
 		Dtype loss = 0., loss_v = 0.;
 		SyncNet();
+
+		if(update_dropout){
+			dropout_layer2->UpdateMask();
+			dropout_layer1->UpscaleMaskFrom(dropout_layer2);
+		}
+
 		this->net_->Forward(bottom_vec);
 		shadow_net_->Forward(bottom_vec);
 
@@ -233,7 +275,8 @@ void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
 		loss += this->net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		loss += this->shadow_net_->BackwardBetween(TOP_LAYER_ID, FEATURE_LAYER_ID+1);
 		//gradient add to bottom layer
-		loss_v += loss_layer->Backward(loss_top, true, &loss_bottom);
+		bool prob_vloss = this->iter_ > this->param_.pretrain_iterations();
+		loss_v += loss_layer->Backward(loss_top, prob_vloss, &loss_bottom);
 
 		loss += this->net_->BackwardBetween(FEATURE_LAYER_ID, 0);
 		loss += this->shadow_net_->BackwardBetween(FEATURE_LAYER_ID, 0);
@@ -409,6 +452,7 @@ void VeriSGDSolver<Dtype>::SnapshotSolverState(SolverState* state) {
 		BlobProto* history_blob = state->add_history();
 		history_[i]->ToProto(history_blob);
 	}
+	state->set_dual_thr(loss_layer->GetThreshold());
 }
 
 template <typename Dtype>
@@ -419,6 +463,8 @@ void VeriSGDSolver<Dtype>::RestoreSolverState(const SolverState& state) {
 	for (int i = 0; i < history_.size(); ++i) {
 		history_[i]->FromProto(state.history(i));
 	}
+	LOG(INFO) << "Restore dual_thr " << state.dual_thr();
+	loss_layer->SetThreshold(state.dual_thr());
 }
 
 static void sighandler(int signum)

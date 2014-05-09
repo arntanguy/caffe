@@ -23,6 +23,7 @@ inline void SyncedMemory::to_cpu() {
   switch (head_) {
   case UNINITIALIZED:
     CaffeMallocHost(&cpu_ptr_, size_);
+    CHECK(cpu_ptr_ != 0) << "size " << size_;
     memset(cpu_ptr_, 0, size_);
     head_ = HEAD_AT_CPU;
     break;

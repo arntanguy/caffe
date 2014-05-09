@@ -128,6 +128,41 @@ class DropoutLayer : public NeuronLayer<Dtype> {
   unsigned int uint_thres_;
 };
 
+template <typename Dtype>
+class DropoutGroupLayer : public NeuronLayer<Dtype> {
+ public:
+  explicit DropoutGroupLayer(const LayerParameter& param)
+      : NeuronLayer<Dtype>(param) {}
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  void UpdateMask();
+  void ShareMask(DropoutGroupLayer *dropout) {
+	  CHECK_EQ(dropout->rand_vec_->size(), rand_vec_->size());
+	  rand_vec_ = dropout->rand_vec_;
+  }
+  void UpscaleMaskFrom(DropoutGroupLayer *dropout);
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  virtual Dtype Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const bool propagate_down, vector<Blob<Dtype>*>* bottom);
+  virtual Dtype Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const bool propagate_down, vector<Blob<Dtype>*>* bottom);
+  shared_ptr<SyncedMemory> rand_vec_;
+  float threshold_;
+  shared_ptr<SyncedMemory> scale_;
+  unsigned int uint_thres_;
+
+  int NUM_;
+  int HEIGHT_;
+  int WIDTH_;
+};
+
+
 
 template <typename Dtype>
 class SplitLayer : public Layer<Dtype> {
@@ -457,11 +492,13 @@ class ShuffleDataLayer : public Layer<Dtype> {
   int datum_channels_;
   int datum_height_;
   int datum_width_;
-  int datum_size_;
+  size_t datum_size_;
 
-  int DATA_COUNT_;
+  size_t DATA_COUNT_;
   int OUTPUT_CHANNEL_;
-  shared_ptr<Blob<Dtype> > prefetch_data_;
+  //Blob fail to handle large data
+  //shared_ptr<Blob<Dtype> > prefetch_data_;
+  shared_ptr<vector<Dtype> > prefetch_data_;
   shared_ptr<Blob<Dtype> > prefetch_label_;
   int current_[2];
   shared_ptr<vector<int> > idx_[2];
@@ -647,7 +684,7 @@ class VerificationLossLayer : public Layer<Dtype> {
       vector<Blob<Dtype>*>* top);
 
   void SetThreshold(Dtype t) { M_ = t; }
-  Dtype GetThreshold(Dtype t) { return M_ ; }
+  Dtype GetThreshold() { return M_ ; }
 
   void GetMeanDistance(vector<Dtype> &dists){ 
 	  dists.clear();

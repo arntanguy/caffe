@@ -188,6 +188,7 @@ message SolverParameter {
   optional int32 device_id = 18 [default = 0];
 
   optional int32 update_dual_thr_interval = 19 [default = 10000];
+  optional int32 pretrain_iterations = 20 [default = 20000];
 }
 
 // A message that stores the solver snapshots
@@ -195,4 +196,6 @@ message SolverState {
   optional int32 iter = 1; // The current iteration
   optional string learned_net = 2; // The file that stores the learned net.
   repeated BlobProto history = 3; // The history for sgd solvers
+
+  optional float dual_thr = 4;
 }

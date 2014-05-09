@@ -2,13 +2,11 @@ OBJS:=verif_train.prototxt verif_test.prototxt
 
 all: $(OBJS)
 
-%.prototxt: %.prototxt.partial
+%.prototxt: %.prototxt.partial verif_net.template
 	cpp $< > $@
 
-verif_test.prototxt: verif_test.prototxt.partial
+verif_test.prototxt: verif_test.prototxt.partial verif_net.template
 	cpp $< |grep -v blobs_lr > $@
-
-%.prototxt: verif_net.template
 
 clean:
 	rm -f $(OBJS)

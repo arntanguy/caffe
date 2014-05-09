@@ -62,19 +62,21 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 
   int n = 0;
   iter_->SeekToFirst();
-  int nd = this->layer_param_.data_count();
+  size_t nd = this->layer_param_.data_count();
   CHECK(nd != 0);
   DATA_COUNT_ = nd;
 
   LOG(INFO) << "data count " << nd;
   LOG(INFO) << "Starting reading all";
-  prefetch_data_.reset(new Blob<Dtype>(nd, datum_channels_, datum_height_, datum_width_));
+  //prefetch_data_.reset(new Blob<Dtype>(nd, datum_channels_, datum_height_, datum_width_));
+  prefetch_data_.reset(new vector<Dtype>((size_t)nd * datum_channels_ * datum_height_ * datum_width_));
   prefetch_label_.reset(new Blob<Dtype>(nd, 1, 1, 1));
   if(!this->layer_param_.share_data()){
-	  int i = 0;
+	  size_t i = 0;
+	  Dtype *pd_hdr = &((*prefetch_data_)[0]);
 	  while(i < nd && iter_->Valid()){
 		datum.ParseFromString(iter_->value().ToString());
-		Dtype *data_ptr = prefetch_data_->mutable_cpu_data() + datum_size_*i;
+		Dtype *data_ptr = pd_hdr + datum_size_ * i;
 		prefetch_label_->mutable_cpu_data()[i] = datum.label();
         	for (int j = 0; j < datum_size_; ++j) {
 			data_ptr[j] = (datum.float_data(j) + bias ) * scale;
@@ -117,9 +119,10 @@ void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 	CHECK(prefetch_data_.get() != NULL);
 	CHECK(prefetch_label_.get() != NULL);
 	CHECK(idx_[0].get() != NULL);
-	const Dtype *ptr = prefetch_data_->cpu_data();
-	for(int i=0;i<(*top)[0]->num();i++){
-		int idx = (*idx_[OUTPUT_CHANNEL_])[current_[OUTPUT_CHANNEL_]];
+	const Dtype *ptr = &((*prefetch_data_)[0]);
+	//const Dtype *ptr = prefetch_data_->cpu_data();
+	for(size_t i=0;i<(*top)[0]->num();i++){
+		size_t idx = (*idx_[OUTPUT_CHANNEL_])[current_[OUTPUT_CHANNEL_]];
 		memcpy((*top)[0]->mutable_cpu_data() + i * datum_size_, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
 		(*top)[1]->mutable_cpu_data()[i] = prefetch_label_->cpu_data()[idx];
 		current_[OUTPUT_CHANNEL_]++;

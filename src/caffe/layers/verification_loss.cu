@@ -104,10 +104,12 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
 
   int num = (*bottom)[0]->num();
   //Add gradien to original
-  Dtype* _bottom_diff1 = (*bottom)[0]->mutable_gpu_diff();
-  Dtype* _bottom_diff2 = (*bottom)[2]->mutable_gpu_diff();
-  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff1, _bottom_diff1);
-  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff2, _bottom_diff2);
+  if(propagate_down) {
+	  Dtype* _bottom_diff1 = (*bottom)[0]->mutable_gpu_diff();
+	  Dtype* _bottom_diff2 = (*bottom)[2]->mutable_gpu_diff();
+	  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff1, _bottom_diff1);
+	  caffe_gpu_axpy(count, LAMDA_ / num, bottom_diff2, _bottom_diff2);
+  }
 
   return Dtype(loss / num); 
 }

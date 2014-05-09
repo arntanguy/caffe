@@ -1,5 +1,5 @@
 #define NET_NAME "Sunyi-train"
-#define DB_NAME "c_001.db"
+#define DB_NAME "train_55_47_c_001.db"
 #define DATA_COUNT 325540
 #define TRAIN_LIST "trainimagelist_.txt"
 
