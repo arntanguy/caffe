@@ -1,0 +1,44 @@
+
+
+ \subsection*{layout\+: default }
+
+\section*{Welcome to Caffe}
+
+Caffe is a framework for convolutional neural network algorithms, developed with speed in mind. It was created by \href{http://daggerfs.com}{\tt Yangqing Jia}, and is in active development by the \href{http://bvlc.eecs.berkeley.edu}{\tt Berkeley Vision and Learning Center}.
+
+Caffe is released under \href{https://github.com/BVLC/caffe/blob/master/LICENSE}{\tt the B\+S\+D 2-\/\+Clause license}.
+
+\subsection*{Why Caffe?}
+
+Caffe aims to provide computer vision scientists and practitioners with a {\bfseries clean and modifiable implementation} of state-\/of-\/the-\/art deep learning algorithms. For example, network structure is easily specified in separate config files, with no mess of hard-\/coded parameters in the code.
+
+At the same time, Caffe fits industry needs, with blazing fast C++/\+C\+U\+D\+A code for G\+P\+U computation. Caffe is currently the fastest G\+P\+U C\+N\+N implementation publicly available, and is able to process more than {\bfseries 40 million images per day} with a single N\+V\+I\+D\+I\+A K40 or Titan G\+P\+U (or 20 million images per day on a K20 G\+P\+U)$\ast$. That's 192 images per second during training and 500 images per second during test.
+
+Caffe also provides {\bfseries seamless switching between C\+P\+U and G\+P\+U}, which allows one to train models with fast G\+P\+Us and then deploy them on non-\/\+G\+P\+U clusters with one line of code\+: {\ttfamily Caffe\+::set\+\_\+mode(\+Caffe\+::\+C\+P\+U)}. Even in C\+P\+U mode, computing predictions on an image takes only 20 ms when images are processed in batch mode. While in G\+P\+U mode, computing predictions on an image takes only 2 ms when images are processed in batch mode.
+
+\subsection*{Documentation}
+
+
+\begin{DoxyItemize}
+\item \href{https://www.dropbox.com/s/10fx16yp5etb8dv/caffe-presentation.pdf}{\tt Introductory slides}\+: slides about the Caffe architecture, {\itshape updated 03/14}.
+\item \href{/installation.html}{\tt Installation}\+: Instructions on installing Caffe (works on Ubuntu, Red Hat, O\+S X).
+\item \href{/getting_pretrained_models.html}{\tt Pre-\/trained models}\+: B\+V\+L\+C provides some pre-\/trained models for academic / non-\/commercial use.
+\item \href{/development.html}{\tt Development}\+: Guidelines for development and contributing to Caffe.
+\end{DoxyItemize}
+
+\subsubsection*{Examples}
+
+
+\begin{DoxyItemize}
+\item \href{/mnist.html}{\tt Le\+Net / M\+N\+I\+S\+T Demo}\+: end-\/to-\/end training and testing of Le\+Net on M\+N\+I\+S\+T.
+\item \href{/cifar10.html}{\tt C\+I\+F\+A\+R-\/10 Demo}\+: training and testing on the C\+I\+F\+A\+R-\/10 data.
+\item \href{/imagenet_training.html}{\tt Training Image\+Net}\+: end-\/to-\/end training of an Image\+Net classifier.
+\item \href{/feature_extraction.html}{\tt Feature extraction with C++}\+: feature extraction using pre-\/trained model
+\item \href{http://nbviewer.ipython.org/github/BVLC/caffe/blob/master/examples/imagenet_pretrained.ipynb}{\tt Running Pretrained Image\+Net \textbackslash{}\mbox{[}notebook\textbackslash{}\mbox{]}}\+: run classification with the pretrained Image\+Net model using the Python interface.
+\item \href{http://nbviewer.ipython.org/github/BVLC/caffe/blob/master/examples/selective_search_demo.ipynb}{\tt Running Detection \textbackslash{}\mbox{[}notebook\textbackslash{}\mbox{]}}\+: run a pretrained model as a detector.
+\item \href{http://nbviewer.ipython.org/github/BVLC/caffe/blob/master/examples/filter_visualization.ipynb}{\tt Visualizing Features and Filters \textbackslash{}\mbox{[}notebook\textbackslash{}\mbox{]}}\+: trained filters and an example image, viewed layer-\/by-\/layer.
+\end{DoxyItemize}
+
+\subsection*{Citing Caffe}
+
+Please kindly cite Caffe in your publications if it helps your research\+: 

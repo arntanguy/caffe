@@ -1,0 +1,161 @@
+\hypertarget{classcaffe_1_1_timer}{\section{caffe\+:\+:Timer Class Reference}
+\label{classcaffe_1_1_timer}\index{caffe\+::\+Timer@{caffe\+::\+Timer}}
+}
+
+
+{\ttfamily \#include $<$benchmark.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_timer_a986a71e971114c61d2e73eea02968fcf}{Timer} ()
+\item 
+virtual \hyperlink{classcaffe_1_1_timer_a683ffcb27a78eae1a3dbae88f0cd1cc9}{$\sim$\+Timer} ()
+\item 
+void \hyperlink{classcaffe_1_1_timer_ae387bcee3008150e8d9a8b95a5ca279c}{Start} ()
+\item 
+void \hyperlink{classcaffe_1_1_timer_ae99595b83e6ef8f1cfa4a933c359011b}{Stop} ()
+\item 
+float \hyperlink{classcaffe_1_1_timer_a236a04bd3da087fbd0d028977cce7a15}{Milli\+Seconds} ()
+\item 
+float \hyperlink{classcaffe_1_1_timer_a5a5c499062bb98600cc061575c58510a}{Seconds} ()
+\item 
+bool \hyperlink{classcaffe_1_1_timer_a8f44fdd43378c9ef58471c6aae17c814}{initted} ()
+\item 
+bool \hyperlink{classcaffe_1_1_timer_ae1a416ef3dfd11aefc73da5760bc98d7}{running} ()
+\item 
+bool \hyperlink{classcaffe_1_1_timer_ae06252439c4e1731a4c36b5a9810787c}{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcaffe_1_1_timer_a9e5e1052cb6ea672940a300dc630c6c9}{Init} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classcaffe_1_1_timer_a2b39366d547f7a5638f53df589624def}{initted\+\_\+}
+\item 
+bool \hyperlink{classcaffe_1_1_timer_a44483462010588661ce927c3b3ef6c3d}{running\+\_\+}
+\item 
+bool \hyperlink{classcaffe_1_1_timer_a5a8439af494a4874ce47b6334bdb7da6}{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once\+\_\+}
+\item 
+cuda\+Event\+\_\+t \hyperlink{classcaffe_1_1_timer_aaeef1178d30cea3cebf7a4a0eac02e6f}{start\+\_\+gpu\+\_\+}
+\item 
+cuda\+Event\+\_\+t \hyperlink{classcaffe_1_1_timer_a7802204485bd7825f8bd7fad90bbdfd7}{stop\+\_\+gpu\+\_\+}
+\item 
+boost\+::posix\+\_\+time\+::ptime \hyperlink{classcaffe_1_1_timer_a3cbebb809a42eda35357bdc7363b9afc}{start\+\_\+cpu\+\_\+}
+\item 
+boost\+::posix\+\_\+time\+::ptime \hyperlink{classcaffe_1_1_timer_acca9361263d52a7e28d291933220e2f5}{stop\+\_\+cpu\+\_\+}
+\item 
+float \hyperlink{classcaffe_1_1_timer_a7aa3bf3a38cde89a068e48fee8b1c623}{elapsed\+\_\+milliseconds\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_timer_a986a71e971114c61d2e73eea02968fcf}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!Timer@{Timer}}
+\index{Timer@{Timer}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{Timer}]{\setlength{\rightskip}{0pt plus 5cm}caffe\+::\+Timer\+::\+Timer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_timer_a986a71e971114c61d2e73eea02968fcf}
+\hypertarget{classcaffe_1_1_timer_a683ffcb27a78eae1a3dbae88f0cd1cc9}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!````~Timer@{$\sim$\+Timer}}
+\index{````~Timer@{$\sim$\+Timer}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{$\sim$\+Timer}]{\setlength{\rightskip}{0pt plus 5cm}caffe\+::\+Timer\+::$\sim$\+Timer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_timer_a683ffcb27a78eae1a3dbae88f0cd1cc9}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_timer_ae06252439c4e1731a4c36b5a9810787c}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!has\+\_\+run\+\_\+at\+\_\+least\+\_\+once@{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once}}
+\index{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once@{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once}]{\setlength{\rightskip}{0pt plus 5cm}bool caffe\+::\+Timer\+::has\+\_\+run\+\_\+at\+\_\+least\+\_\+once (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_timer_ae06252439c4e1731a4c36b5a9810787c}
+\hypertarget{classcaffe_1_1_timer_a9e5e1052cb6ea672940a300dc630c6c9}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!Init@{Init}}
+\index{Init@{Init}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{Init}]{\setlength{\rightskip}{0pt plus 5cm}void caffe\+::\+Timer\+::\+Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_a9e5e1052cb6ea672940a300dc630c6c9}
+\hypertarget{classcaffe_1_1_timer_a8f44fdd43378c9ef58471c6aae17c814}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!initted@{initted}}
+\index{initted@{initted}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{initted}]{\setlength{\rightskip}{0pt plus 5cm}bool caffe\+::\+Timer\+::initted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_timer_a8f44fdd43378c9ef58471c6aae17c814}
+\hypertarget{classcaffe_1_1_timer_a236a04bd3da087fbd0d028977cce7a15}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!Milli\+Seconds@{Milli\+Seconds}}
+\index{Milli\+Seconds@{Milli\+Seconds}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{Milli\+Seconds}]{\setlength{\rightskip}{0pt plus 5cm}float caffe\+::\+Timer\+::\+Milli\+Seconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_timer_a236a04bd3da087fbd0d028977cce7a15}
+\hypertarget{classcaffe_1_1_timer_ae1a416ef3dfd11aefc73da5760bc98d7}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!running@{running}}
+\index{running@{running}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{running}]{\setlength{\rightskip}{0pt plus 5cm}bool caffe\+::\+Timer\+::running (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_timer_ae1a416ef3dfd11aefc73da5760bc98d7}
+\hypertarget{classcaffe_1_1_timer_a5a5c499062bb98600cc061575c58510a}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!Seconds@{Seconds}}
+\index{Seconds@{Seconds}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{Seconds}]{\setlength{\rightskip}{0pt plus 5cm}float caffe\+::\+Timer\+::\+Seconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_timer_a5a5c499062bb98600cc061575c58510a}
+\hypertarget{classcaffe_1_1_timer_ae387bcee3008150e8d9a8b95a5ca279c}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!Start@{Start}}
+\index{Start@{Start}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{Start}]{\setlength{\rightskip}{0pt plus 5cm}void caffe\+::\+Timer\+::\+Start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_timer_ae387bcee3008150e8d9a8b95a5ca279c}
+\hypertarget{classcaffe_1_1_timer_ae99595b83e6ef8f1cfa4a933c359011b}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!Stop@{Stop}}
+\index{Stop@{Stop}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{Stop}]{\setlength{\rightskip}{0pt plus 5cm}void caffe\+::\+Timer\+::\+Stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_timer_ae99595b83e6ef8f1cfa4a933c359011b}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_timer_a7aa3bf3a38cde89a068e48fee8b1c623}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!elapsed\+\_\+milliseconds\+\_\+@{elapsed\+\_\+milliseconds\+\_\+}}
+\index{elapsed\+\_\+milliseconds\+\_\+@{elapsed\+\_\+milliseconds\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{elapsed\+\_\+milliseconds\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}float caffe\+::\+Timer\+::elapsed\+\_\+milliseconds\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_a7aa3bf3a38cde89a068e48fee8b1c623}
+\hypertarget{classcaffe_1_1_timer_a5a8439af494a4874ce47b6334bdb7da6}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!has\+\_\+run\+\_\+at\+\_\+least\+\_\+once\+\_\+@{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once\+\_\+}}
+\index{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once\+\_\+@{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{has\+\_\+run\+\_\+at\+\_\+least\+\_\+once\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}bool caffe\+::\+Timer\+::has\+\_\+run\+\_\+at\+\_\+least\+\_\+once\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_a5a8439af494a4874ce47b6334bdb7da6}
+\hypertarget{classcaffe_1_1_timer_a2b39366d547f7a5638f53df589624def}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!initted\+\_\+@{initted\+\_\+}}
+\index{initted\+\_\+@{initted\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{initted\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}bool caffe\+::\+Timer\+::initted\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_a2b39366d547f7a5638f53df589624def}
+\hypertarget{classcaffe_1_1_timer_a44483462010588661ce927c3b3ef6c3d}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!running\+\_\+@{running\+\_\+}}
+\index{running\+\_\+@{running\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{running\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}bool caffe\+::\+Timer\+::running\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_a44483462010588661ce927c3b3ef6c3d}
+\hypertarget{classcaffe_1_1_timer_a3cbebb809a42eda35357bdc7363b9afc}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!start\+\_\+cpu\+\_\+@{start\+\_\+cpu\+\_\+}}
+\index{start\+\_\+cpu\+\_\+@{start\+\_\+cpu\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{start\+\_\+cpu\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}boost\+::posix\+\_\+time\+::ptime caffe\+::\+Timer\+::start\+\_\+cpu\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_a3cbebb809a42eda35357bdc7363b9afc}
+\hypertarget{classcaffe_1_1_timer_aaeef1178d30cea3cebf7a4a0eac02e6f}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!start\+\_\+gpu\+\_\+@{start\+\_\+gpu\+\_\+}}
+\index{start\+\_\+gpu\+\_\+@{start\+\_\+gpu\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{start\+\_\+gpu\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}cuda\+Event\+\_\+t caffe\+::\+Timer\+::start\+\_\+gpu\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_aaeef1178d30cea3cebf7a4a0eac02e6f}
+\hypertarget{classcaffe_1_1_timer_acca9361263d52a7e28d291933220e2f5}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!stop\+\_\+cpu\+\_\+@{stop\+\_\+cpu\+\_\+}}
+\index{stop\+\_\+cpu\+\_\+@{stop\+\_\+cpu\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{stop\+\_\+cpu\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}boost\+::posix\+\_\+time\+::ptime caffe\+::\+Timer\+::stop\+\_\+cpu\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_acca9361263d52a7e28d291933220e2f5}
+\hypertarget{classcaffe_1_1_timer_a7802204485bd7825f8bd7fad90bbdfd7}{\index{caffe\+::\+Timer@{caffe\+::\+Timer}!stop\+\_\+gpu\+\_\+@{stop\+\_\+gpu\+\_\+}}
+\index{stop\+\_\+gpu\+\_\+@{stop\+\_\+gpu\+\_\+}!caffe\+::\+Timer@{caffe\+::\+Timer}}
+\subsubsection[{stop\+\_\+gpu\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}cuda\+Event\+\_\+t caffe\+::\+Timer\+::stop\+\_\+gpu\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_timer_a7802204485bd7825f8bd7fad90bbdfd7}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/util/\hyperlink{benchmark_8hpp}{benchmark.\+hpp}\item 
+src/caffe/util/\hyperlink{benchmark_8cpp}{benchmark.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,67 @@
+\hypertarget{test__split__layer_8cpp}{\section{src/caffe/test/test\+\_\+split\+\_\+layer.cpp File Reference}
+\label{test__split__layer_8cpp}\index{src/caffe/test/test\+\_\+split\+\_\+layer.\+cpp@{src/caffe/test/test\+\_\+split\+\_\+layer.\+cpp}}
+}
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}cuda\+\_\+runtime.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}google/protobuf/text\+\_\+format.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}gtest/gtest.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/blob.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/filler.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/vision\+\_\+layers.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/test/test\+\_\+gradient\+\_\+check\+\_\+util.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/insert\+\_\+splits.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/test/test\+\_\+caffe\+\_\+main.\+hpp\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcaffe_1_1_split_layer_test}{caffe\+::\+Split\+Layer\+Test$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_split_layer_insertion_test}{caffe\+::\+Split\+Layer\+Insertion\+Test}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacecaffe_a6c39e478577aad54a91f57372cae171d}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T\+\_\+\+C\+A\+S\+E} (Split\+Layer\+Test, Dtypes)
+\item 
+\hyperlink{namespacecaffe_a68257f79783eb5355a4509c37884613a}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+Setup)
+\item 
+\hyperlink{namespacecaffe_ace451257b69f244496de1f28bb25563e}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_ae28e7a2cadc1c218d437abf801340172}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a9c63f07f10cb50a3fd0cb9d8df74c28e}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+C\+P\+U\+In\+Place)
+\item 
+\hyperlink{namespacecaffe_a24afd896a66f72d2192ec9f5453a5b62}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+G\+P\+U\+In\+Place)
+\item 
+\hyperlink{namespacecaffe_ab32356b369c0417857ffbff900b33961}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+C\+P\+U\+Gradient)
+\item 
+\hyperlink{namespacecaffe_a51589763e472cc8a5cf6b2202b9cf111}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+G\+P\+U\+Gradient)
+\item 
+\hyperlink{namespacecaffe_a2fbf424b93d7d2b2a0201a3ac0e6832a}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+C\+P\+U\+Gradient\+In\+Place)
+\item 
+\hyperlink{namespacecaffe_a665efcc86179b1cafbc80f0f3d3ce02d}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Split\+Layer\+Test, Test\+G\+P\+U\+Gradient\+In\+Place)
+\item 
+\hyperlink{namespacecaffe_a3797a5352903a56a627d536c2f100f0b}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+No\+Insertion1)
+\item 
+\hyperlink{namespacecaffe_ad42939317f596c88a3812f4add2006bb}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+No\+Insertion2)
+\item 
+\hyperlink{namespacecaffe_a2be95891eab7aa572a1f194fe49ec87c}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+No\+Insertion\+Image\+Net)
+\item 
+\hyperlink{namespacecaffe_a814e51fee4f23c7b6a2582f786444272}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+No\+Insertion\+With\+In\+Place)
+\item 
+\hyperlink{namespacecaffe_a089ae543e18802449cf2622e2f518a00}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+Insertion)
+\item 
+\hyperlink{namespacecaffe_aebdf7779d31baa8f925fe3f8998ad73c}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+Insertion\+Two\+Top)
+\item 
+\hyperlink{namespacecaffe_adcfa63a43a43ba9fd550337a8f3ab439}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+Input\+Insertion)
+\item 
+\hyperlink{namespacecaffe_a871ea8f68a97aca1111c186180edff62}{caffe\+::\+T\+E\+S\+T\+\_\+\+F} (Split\+Layer\+Insertion\+Test, Test\+With\+In\+Place)
+\end{DoxyCompactItemize}

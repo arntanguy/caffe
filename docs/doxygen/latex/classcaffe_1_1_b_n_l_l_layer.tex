@@ -1,0 +1,100 @@
+\hypertarget{classcaffe_1_1_b_n_l_l_layer}{\section{caffe\+:\+:B\+N\+L\+L\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_b_n_l_l_layer}\index{caffe\+::\+B\+N\+L\+L\+Layer$<$ Dtype $>$@{caffe\+::\+B\+N\+L\+L\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:B\+N\+L\+L\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcaffe_1_1_b_n_l_l_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_b_n_l_l_layer_ab30d4b1d22f7489597449e09d74cf4b9}{B\+N\+L\+L\+Layer} (const Layer\+Parameter \&param)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_b_n_l_l_layer_a1a0cb5dd56ad7d93f0d70e93f00263b9}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_b_n_l_l_layer_a880ed4501379ea518a66bc7126b974bc}{Forward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_b_n_l_l_layer_acf58b70a8e5fafc303844a822dcf0e3b}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+virtual void \hyperlink{classcaffe_1_1_b_n_l_l_layer_a9732b6f05aac77d59e9a906a300b7bfe}{Backward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_b_n_l_l_layer_ab30d4b1d22f7489597449e09d74cf4b9}{\index{caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}!B\+N\+L\+L\+Layer@{B\+N\+L\+L\+Layer}}
+\index{B\+N\+L\+L\+Layer@{B\+N\+L\+L\+Layer}!caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}}
+\subsubsection[{B\+N\+L\+L\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+B\+N\+L\+L\+Layer}$<$ Dtype $>$\+::{\bf B\+N\+L\+L\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_b_n_l_l_layer_ab30d4b1d22f7489597449e09d74cf4b9}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_b_n_l_l_layer_acf58b70a8e5fafc303844a822dcf0e3b}{\index{caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+B\+N\+L\+L\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_b_n_l_l_layer_acf58b70a8e5fafc303844a822dcf0e3b}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_b_n_l_l_layer_a9732b6f05aac77d59e9a906a300b7bfe}{\index{caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}!Backward\+\_\+gpu@{Backward\+\_\+gpu}}
+\index{Backward\+\_\+gpu@{Backward\+\_\+gpu}!caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}}
+\subsubsection[{Backward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+B\+N\+L\+L\+Layer}$<$ Dtype $>$\+::Backward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_b_n_l_l_layer_a9732b6f05aac77d59e9a906a300b7bfe}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_b_n_l_l_layer_a1a0cb5dd56ad7d93f0d70e93f00263b9}{\index{caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+B\+N\+L\+L\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_b_n_l_l_layer_a1a0cb5dd56ad7d93f0d70e93f00263b9}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_b_n_l_l_layer_a880ed4501379ea518a66bc7126b974bc}{\index{caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}!Forward\+\_\+gpu@{Forward\+\_\+gpu}}
+\index{Forward\+\_\+gpu@{Forward\+\_\+gpu}!caffe\+::\+B\+N\+L\+L\+Layer@{caffe\+::\+B\+N\+L\+L\+Layer}}
+\subsubsection[{Forward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+B\+N\+L\+L\+Layer}$<$ Dtype $>$\+::Forward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_b_n_l_l_layer_a880ed4501379ea518a66bc7126b974bc}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{bnll__layer_8cpp}{bnll\+\_\+layer.\+cpp}\item 
+src/caffe/layers/\hyperlink{bnll__layer_8cu}{bnll\+\_\+layer.\+cu}\end{DoxyCompactItemize}

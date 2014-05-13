@@ -1,0 +1,33 @@
+\hypertarget{pooling__layer_8cu}{\section{src/caffe/layers/pooling\+\_\+layer.cu File Reference}
+\label{pooling__layer_8cu}\index{src/caffe/layers/pooling\+\_\+layer.\+cu@{src/caffe/layers/pooling\+\_\+layer.\+cu}}
+}
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$cfloat$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}caffe/layer.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/vision\+\_\+layers.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/math\+\_\+functions.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a9b99970c8e86778efc90dd9e9aaf2b7e}{caffe\+::\+Max\+Pool\+Forward} (const int nthreads, const Dtype $\ast$bottom\+\_\+data, const int num, const int channels, const int height, const int width, const int pooled\+\_\+height, const int pooled\+\_\+width, const int kernel\+\_\+size, const int stride, Dtype $\ast$top\+\_\+data)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_ae5570ee550fedfed62ebdc91ee33f23b}{caffe\+::\+Ave\+Pool\+Forward} (const int nthreads, const Dtype $\ast$bottom\+\_\+data, const int num, const int channels, const int height, const int width, const int pooled\+\_\+height, const int pooled\+\_\+width, const int kernel\+\_\+size, const int stride, const int pad, Dtype $\ast$top\+\_\+data)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_aecd2fb4a16d7a1864dc9774cf8035264}{caffe\+::\+Sto\+Pool\+Forward\+Train} (const int nthreads, const Dtype $\ast$bottom\+\_\+data, const int num, const int channels, const int height, const int width, const int pooled\+\_\+height, const int pooled\+\_\+width, const int kernel\+\_\+size, const int stride, Dtype $\ast$rand\+\_\+idx, Dtype $\ast$top\+\_\+data)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_ad9cf8043e680796318b7bad79c2bc481}{caffe\+::\+Sto\+Pool\+Forward\+Test} (const int nthreads, const Dtype $\ast$bottom\+\_\+data, const int num, const int channels, const int height, const int width, const int pooled\+\_\+height, const int pooled\+\_\+width, const int kernel\+\_\+size, const int stride, Dtype $\ast$top\+\_\+data)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a22c07bd08af73d0383ddb0b74ae72534}{caffe\+::\+Max\+Pool\+Backward} (const int nthreads, const Dtype $\ast$bottom\+\_\+data, const Dtype $\ast$top\+\_\+data, const Dtype $\ast$top\+\_\+diff, const int num, const int channels, const int height, const int width, const int pooled\+\_\+height, const int pooled\+\_\+width, const int kernel\+\_\+size, const int stride, Dtype $\ast$bottom\+\_\+diff)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a646a1381b87e6f26e1535cfe0c11283d}{caffe\+::\+Ave\+Pool\+Backward} (const int nthreads, const Dtype $\ast$top\+\_\+diff, const int num, const int channels, const int height, const int width, const int pooled\+\_\+height, const int pooled\+\_\+width, const int kernel\+\_\+size, const int stride, const int pad, Dtype $\ast$bottom\+\_\+diff)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a28ecc3c20dad2a7c95e8432f30ba30ae}{caffe\+::\+Sto\+Pool\+Backward} (const int nthreads, const Dtype $\ast$rand\+\_\+idx, const Dtype $\ast$top\+\_\+diff, const int num, const int channels, const int height, const int width, const int pooled\+\_\+height, const int pooled\+\_\+width, const int kernel\+\_\+size, const int stride, Dtype $\ast$bottom\+\_\+diff)
+\item 
+\hyperlink{namespacecaffe_af43ea480985566d99aa40bf8d862830a}{caffe\+::\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S} (Pooling\+Layer)
+\end{DoxyCompactItemize}

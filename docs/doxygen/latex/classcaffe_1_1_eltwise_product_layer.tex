@@ -1,0 +1,114 @@
+\hypertarget{classcaffe_1_1_eltwise_product_layer}{\section{caffe\+:\+:Eltwise\+Product\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_eltwise_product_layer}\index{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$@{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Eltwise\+Product\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_eltwise_product_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_eltwise_product_layer_ae8ba2b765a0b666927448e5746733044}{Eltwise\+Product\+Layer} (const Layer\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_eltwise_product_layer_ab24fdd7f4a2b47c95fbe80ed1cd5ee08}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_eltwise_product_layer_a0c3daabf8f8075f4e94879218941a348}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_eltwise_product_layer_a53cf4aaa04a908dc7ed5ceee48f6054d}{Forward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_eltwise_product_layer_a5d03ef5628726c95e71d425137e60d5e}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+virtual void \hyperlink{classcaffe_1_1_eltwise_product_layer_a9d5b22fd37b476dd5cab2499c9a69a87}{Backward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_eltwise_product_layer_ae8ba2b765a0b666927448e5746733044}{\index{caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}!Eltwise\+Product\+Layer@{Eltwise\+Product\+Layer}}
+\index{Eltwise\+Product\+Layer@{Eltwise\+Product\+Layer}!caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}}
+\subsubsection[{Eltwise\+Product\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Eltwise\+Product\+Layer}$<$ Dtype $>$\+::{\bf Eltwise\+Product\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_eltwise_product_layer_ae8ba2b765a0b666927448e5746733044}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_eltwise_product_layer_a5d03ef5628726c95e71d425137e60d5e}{\index{caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Eltwise\+Product\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_eltwise_product_layer_a5d03ef5628726c95e71d425137e60d5e}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_eltwise_product_layer_a9d5b22fd37b476dd5cab2499c9a69a87}{\index{caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}!Backward\+\_\+gpu@{Backward\+\_\+gpu}}
+\index{Backward\+\_\+gpu@{Backward\+\_\+gpu}!caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}}
+\subsubsection[{Backward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Eltwise\+Product\+Layer}$<$ Dtype $>$\+::Backward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_eltwise_product_layer_a9d5b22fd37b476dd5cab2499c9a69a87}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_eltwise_product_layer_a0c3daabf8f8075f4e94879218941a348}{\index{caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Eltwise\+Product\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_eltwise_product_layer_a0c3daabf8f8075f4e94879218941a348}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_eltwise_product_layer_a53cf4aaa04a908dc7ed5ceee48f6054d}{\index{caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}!Forward\+\_\+gpu@{Forward\+\_\+gpu}}
+\index{Forward\+\_\+gpu@{Forward\+\_\+gpu}!caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}}
+\subsubsection[{Forward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Eltwise\+Product\+Layer}$<$ Dtype $>$\+::Forward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_eltwise_product_layer_a53cf4aaa04a908dc7ed5ceee48f6054d}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_eltwise_product_layer_ab24fdd7f4a2b47c95fbe80ed1cd5ee08}{\index{caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Eltwise\+Product\+Layer@{caffe\+::\+Eltwise\+Product\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Eltwise\+Product\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_eltwise_product_layer_ab24fdd7f4a2b47c95fbe80ed1cd5ee08}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{eltwise__product__layer_8cpp}{eltwise\+\_\+product\+\_\+layer.\+cpp}\item 
+src/caffe/layers/\hyperlink{eltwise__product__layer_8cu}{eltwise\+\_\+product\+\_\+layer.\+cu}\end{DoxyCompactItemize}

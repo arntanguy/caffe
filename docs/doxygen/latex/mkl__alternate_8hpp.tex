@@ -1,0 +1,195 @@
+\hypertarget{mkl__alternate_8hpp}{\section{include/caffe/util/mkl\+\_\+alternate.hpp File Reference}
+\label{mkl__alternate_8hpp}\index{include/caffe/util/mkl\+\_\+alternate.\+hpp@{include/caffe/util/mkl\+\_\+alternate.\+hpp}}
+}
+{\ttfamily \#include $<$cblas.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{mkl__alternate_8hpp_a5dd08a40a3bb920320d7d38e938a458c}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}(name, operation)
+\item 
+\#define \hyperlink{mkl__alternate_8hpp_a689bff9212f0ceffd9c424757a4bebb7}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M}(name, operation)
+\item 
+\#define \hyperlink{mkl__alternate_8hpp_a24ebc9592dcc0da72a756a90e80f091b}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}(name, operation)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{mkl__alternate_8hpp_aa23b9a58a89a217d05f6497233b4146d}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C} (Sqr, y\mbox{[}i\mbox{]}=a\mbox{[}i\mbox{]}$\ast$a\mbox{[}i\mbox{]})
+\item 
+\hyperlink{mkl__alternate_8hpp_aa3a3b658733ddfeb91215f3a099b716d}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C} (Exp, y\mbox{[}i\mbox{]}=exp(a\mbox{[}i\mbox{]}))
+\item 
+\hyperlink{mkl__alternate_8hpp_a7e63cf3adfb117df2e42c06f813de71a}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M} (Powx, y\mbox{[}i\mbox{]}=pow(a\mbox{[}i\mbox{]}, b))
+\item 
+\hyperlink{mkl__alternate_8hpp_a97be214b6af420754a606374f27fac2f}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C} (Add, y\mbox{[}i\mbox{]}=a\mbox{[}i\mbox{]}+b\mbox{[}i\mbox{]})
+\item 
+\hyperlink{mkl__alternate_8hpp_ab890323455cc28be85025ab7d4a79349}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C} (Sub, y\mbox{[}i\mbox{]}=a\mbox{[}i\mbox{]}-\/b\mbox{[}i\mbox{]})
+\item 
+\hyperlink{mkl__alternate_8hpp_a82e03b4351cab9c130a55cf1b4b0c247}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C} (Mul, y\mbox{[}i\mbox{]}=a\mbox{[}i\mbox{]}$\ast$b\mbox{[}i\mbox{]})
+\item 
+\hyperlink{mkl__alternate_8hpp_a28fe368bd6b3929cb2f3dbb89b2b5a51}{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C} (Div, y\mbox{[}i\mbox{]}=a\mbox{[}i\mbox{]}/b\mbox{[}i\mbox{]})
+\item 
+void \hyperlink{mkl__alternate_8hpp_a6ce5c406f89584e0757c08d2c28f8fbf}{cblas\+\_\+saxpby} (const int N, const float alpha, const float $\ast$X, const int inc\+X, const float beta, float $\ast$Y, const int inc\+Y)
+\item 
+void \hyperlink{mkl__alternate_8hpp_a5cf15168260b51907706268daebf2bce}{cblas\+\_\+daxpby} (const int N, const double alpha, const double $\ast$X, const int inc\+X, const double beta, double $\ast$Y, const int inc\+Y)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{mkl__alternate_8hpp_a24ebc9592dcc0da72a756a90e80f091b}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C(
+\begin{DoxyParamCaption}
+\item[{}]{name, }
+\item[{}]{operation}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_a24ebc9592dcc0da72a756a90e80f091b}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{template}<\textcolor{keyword}{typename} Dtype> \(\backslash\)
+  void v##name(\textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} Dtype* a, \textcolor{keyword}{const} Dtype* b, Dtype* y) \{ \(\backslash\)
+    CHECK\_GT(n, 0); CHECK(a); CHECK(b); CHECK(y); \(\backslash\)
+    for (\textcolor{keywordtype}{int} i = 0; i < n; ++i) \{ operation; \} \(\backslash\)
+  \} \(\backslash\)
+  inline \textcolor{keywordtype}{void} vs##name( \(\backslash\)
+    \textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} \textcolor{keywordtype}{float}* a, \textcolor{keyword}{const} \textcolor{keywordtype}{float}* b, \textcolor{keywordtype}{float}* y) \{ \(\backslash\)
+    v##name<float>(n, a, b, y); \(\backslash\)
+  \} \(\backslash\)
+  inline \textcolor{keywordtype}{void} vd##name( \(\backslash\)
+      \textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} \textcolor{keywordtype}{double}* a, \textcolor{keyword}{const} \textcolor{keywordtype}{double}* b, \textcolor{keywordtype}{double}* y) \{ \(\backslash\)
+    v##name<double>(n, a, b, y); \(\backslash\)
+  \}
+\end{DoxyCode}
+\hypertarget{mkl__alternate_8hpp_a5dd08a40a3bb920320d7d38e938a458c}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C(
+\begin{DoxyParamCaption}
+\item[{}]{name, }
+\item[{}]{operation}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_a5dd08a40a3bb920320d7d38e938a458c}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{template}<\textcolor{keyword}{typename} Dtype> \(\backslash\)
+  void v##name(\textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} Dtype* a, Dtype* y) \{ \(\backslash\)
+    CHECK\_GT(n, 0); CHECK(a); CHECK(y); \(\backslash\)
+    for (\textcolor{keywordtype}{int} i = 0; i < n; ++i) \{ operation; \} \(\backslash\)
+  \} \(\backslash\)
+  inline \textcolor{keywordtype}{void} vs##name( \(\backslash\)
+    \textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} \textcolor{keywordtype}{float}* a, \textcolor{keywordtype}{float}* y) \{ \(\backslash\)
+    v##name<float>(n, a, y); \(\backslash\)
+  \} \(\backslash\)
+  inline \textcolor{keywordtype}{void} vd##name( \(\backslash\)
+      \textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} \textcolor{keywordtype}{double}* a, \textcolor{keywordtype}{double}* y) \{ \(\backslash\)
+    v##name<double>(n, a, y); \(\backslash\)
+  \}
+\end{DoxyCode}
+\hypertarget{mkl__alternate_8hpp_a689bff9212f0ceffd9c424757a4bebb7}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M(
+\begin{DoxyParamCaption}
+\item[{}]{name, }
+\item[{}]{operation}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_a689bff9212f0ceffd9c424757a4bebb7}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{template}<\textcolor{keyword}{typename} Dtype> \(\backslash\)
+  void v##name(\textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} Dtype* a, \textcolor{keyword}{const} Dtype b, Dtype* y) \{ \(\backslash\)
+    CHECK\_GT(n, 0); CHECK(a); CHECK(y); \(\backslash\)
+    for (\textcolor{keywordtype}{int} i = 0; i < n; ++i) \{ operation; \} \(\backslash\)
+  \} \(\backslash\)
+  inline \textcolor{keywordtype}{void} vs##name( \(\backslash\)
+    \textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} \textcolor{keywordtype}{float}* a, \textcolor{keyword}{const} \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{float}* y) \{ \(\backslash\)
+    v##name<float>(n, a, b, y); \(\backslash\)
+  \} \(\backslash\)
+  inline \textcolor{keywordtype}{void} vd##name( \(\backslash\)
+      \textcolor{keyword}{const} \textcolor{keywordtype}{int} n, \textcolor{keyword}{const} \textcolor{keywordtype}{double}* a, \textcolor{keyword}{const} \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{double}* y) \{ \(\backslash\)
+    v##name<double>(n, a, b, y); \(\backslash\)
+  \}
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\hypertarget{mkl__alternate_8hpp_a5cf15168260b51907706268daebf2bce}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!cblas\+\_\+daxpby@{cblas\+\_\+daxpby}}
+\index{cblas\+\_\+daxpby@{cblas\+\_\+daxpby}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{cblas\+\_\+daxpby}]{\setlength{\rightskip}{0pt plus 5cm}void cblas\+\_\+daxpby (
+\begin{DoxyParamCaption}
+\item[{const int}]{N, }
+\item[{const double}]{alpha, }
+\item[{const double $\ast$}]{X, }
+\item[{const int}]{inc\+X, }
+\item[{const double}]{beta, }
+\item[{double $\ast$}]{Y, }
+\item[{const int}]{inc\+Y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{mkl__alternate_8hpp_a5cf15168260b51907706268daebf2bce}
+\hypertarget{mkl__alternate_8hpp_a6ce5c406f89584e0757c08d2c28f8fbf}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!cblas\+\_\+saxpby@{cblas\+\_\+saxpby}}
+\index{cblas\+\_\+saxpby@{cblas\+\_\+saxpby}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{cblas\+\_\+saxpby}]{\setlength{\rightskip}{0pt plus 5cm}void cblas\+\_\+saxpby (
+\begin{DoxyParamCaption}
+\item[{const int}]{N, }
+\item[{const float}]{alpha, }
+\item[{const float $\ast$}]{X, }
+\item[{const int}]{inc\+X, }
+\item[{const float}]{beta, }
+\item[{float $\ast$}]{Y, }
+\item[{const int}]{inc\+Y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{mkl__alternate_8hpp_a6ce5c406f89584e0757c08d2c28f8fbf}
+\hypertarget{mkl__alternate_8hpp_a97be214b6af420754a606374f27fac2f}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C (
+\begin{DoxyParamCaption}
+\item[{Add}]{, }
+\item[{y}]{\mbox{[}i\mbox{]} = {\ttfamily a\mbox{[}i\mbox{]}+b\mbox{[}i\mbox{]}}}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_a97be214b6af420754a606374f27fac2f}
+\hypertarget{mkl__alternate_8hpp_ab890323455cc28be85025ab7d4a79349}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C (
+\begin{DoxyParamCaption}
+\item[{Sub}]{, }
+\item[{y}]{\mbox{[}i\mbox{]} = {\ttfamily a\mbox{[}i\mbox{]}-\/b\mbox{[}i\mbox{]}}}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_ab890323455cc28be85025ab7d4a79349}
+\hypertarget{mkl__alternate_8hpp_a82e03b4351cab9c130a55cf1b4b0c247}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C (
+\begin{DoxyParamCaption}
+\item[{Mul}]{, }
+\item[{y}]{\mbox{[}i\mbox{]} = {\ttfamily a\mbox{[}i\mbox{]}$\ast$b\mbox{[}i\mbox{]}}}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_a82e03b4351cab9c130a55cf1b4b0c247}
+\hypertarget{mkl__alternate_8hpp_a28fe368bd6b3929cb2f3dbb89b2b5a51}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+B\+I\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C (
+\begin{DoxyParamCaption}
+\item[{Div}]{, }
+\item[{y}]{\mbox{[}i\mbox{]} = {\ttfamily a\mbox{[}i\mbox{]}/b\mbox{[}i\mbox{]}}}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_a28fe368bd6b3929cb2f3dbb89b2b5a51}
+\hypertarget{mkl__alternate_8hpp_aa23b9a58a89a217d05f6497233b4146d}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C (
+\begin{DoxyParamCaption}
+\item[{Sqr}]{, }
+\item[{y}]{\mbox{[}i\mbox{]} = {\ttfamily a\mbox{[}i\mbox{]}$\ast$a\mbox{[}i\mbox{]}}}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_aa23b9a58a89a217d05f6497233b4146d}
+\hypertarget{mkl__alternate_8hpp_aa3a3b658733ddfeb91215f3a099b716d}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}]{\setlength{\rightskip}{0pt plus 5cm}D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C (
+\begin{DoxyParamCaption}
+\item[{Exp}]{, }
+\item[{y}]{\mbox{[}i\mbox{]} = {\ttfamily exp(a\mbox{[}i\mbox{]})}}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_aa3a3b658733ddfeb91215f3a099b716d}
+\hypertarget{mkl__alternate_8hpp_a7e63cf3adfb117df2e42c06f813de71a}{\index{mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}!D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M}}
+\index{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M@{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M}!mkl\+\_\+alternate.\+hpp@{mkl\+\_\+alternate.\+hpp}}
+\subsubsection[{D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M}]{\setlength{\rightskip}{0pt plus 5cm}D\+E\+F\+I\+N\+E\+\_\+\+V\+S\+L\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C\+\_\+\+W\+I\+T\+H\+\_\+\+P\+A\+R\+A\+M (
+\begin{DoxyParamCaption}
+\item[{Powx}]{, }
+\item[{y}]{\mbox{[}i\mbox{]} = {\ttfamily pow(a\mbox{[}i\mbox{]},~b)}}
+\end{DoxyParamCaption}
+)}}\label{mkl__alternate_8hpp_a7e63cf3adfb117df2e42c06f813de71a}

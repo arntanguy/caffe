@@ -1,0 +1,139 @@
+\hypertarget{classcaffe_1_1_dropout_layer}{\section{caffe\+:\+:Dropout\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_dropout_layer}\index{caffe\+::\+Dropout\+Layer$<$ Dtype $>$@{caffe\+::\+Dropout\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Dropout\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcaffe_1_1_dropout_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_dropout_layer_a24cbddd4699b102a9555d3b8013c16d0}{Dropout\+Layer} (const Layer\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_dropout_layer_a1314d858640aa6ef2453c7cb6209be4e}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_dropout_layer_a031995973fec83788c03723d9855ec3f}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_dropout_layer_a7f568b33a08534687ee840a89e004a35}{Forward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_dropout_layer_aca25a2d883356b1aa5a8c0fe852dc8a1}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+virtual void \hyperlink{classcaffe_1_1_dropout_layer_aad9d0019a2760866e47f8dc61b2ff3d9}{Backward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_dropout_layer_a3707987fa20305fc798cb5f32a30f669}{rand\+\_\+vec\+\_\+}
+\item 
+Dtype \hyperlink{classcaffe_1_1_dropout_layer_a8e9d88e6128a97101c27ce8a11158ca6}{threshold\+\_\+}
+\item 
+Dtype \hyperlink{classcaffe_1_1_dropout_layer_ac8702c053de0fea389f5a0ded8cdc544}{scale\+\_\+}
+\item 
+unsigned int \hyperlink{classcaffe_1_1_dropout_layer_ae8ba2b98a7bc12643eec8ad72a66be21}{uint\+\_\+thres\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_dropout_layer_a24cbddd4699b102a9555d3b8013c16d0}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!Dropout\+Layer@{Dropout\+Layer}}
+\index{Dropout\+Layer@{Dropout\+Layer}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{Dropout\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::{\bf Dropout\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_dropout_layer_a24cbddd4699b102a9555d3b8013c16d0}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_dropout_layer_aca25a2d883356b1aa5a8c0fe852dc8a1}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_dropout_layer_aca25a2d883356b1aa5a8c0fe852dc8a1}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_dropout_layer_aad9d0019a2760866e47f8dc61b2ff3d9}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!Backward\+\_\+gpu@{Backward\+\_\+gpu}}
+\index{Backward\+\_\+gpu@{Backward\+\_\+gpu}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{Backward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::Backward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_dropout_layer_aad9d0019a2760866e47f8dc61b2ff3d9}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_dropout_layer_a031995973fec83788c03723d9855ec3f}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_dropout_layer_a031995973fec83788c03723d9855ec3f}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_dropout_layer_a7f568b33a08534687ee840a89e004a35}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!Forward\+\_\+gpu@{Forward\+\_\+gpu}}
+\index{Forward\+\_\+gpu@{Forward\+\_\+gpu}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{Forward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::Forward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_dropout_layer_a7f568b33a08534687ee840a89e004a35}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_dropout_layer_a1314d858640aa6ef2453c7cb6209be4e}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_dropout_layer_a1314d858640aa6ef2453c7cb6209be4e}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_neuron_layer_a8441089c3e6f2434a2683de22698352a}{caffe\+::\+Neuron\+Layer$<$ Dtype $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_dropout_layer_a3707987fa20305fc798cb5f32a30f669}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!rand\+\_\+vec\+\_\+@{rand\+\_\+vec\+\_\+}}
+\index{rand\+\_\+vec\+\_\+@{rand\+\_\+vec\+\_\+}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{rand\+\_\+vec\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::rand\+\_\+vec\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_dropout_layer_a3707987fa20305fc798cb5f32a30f669}
+\hypertarget{classcaffe_1_1_dropout_layer_ac8702c053de0fea389f5a0ded8cdc544}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!scale\+\_\+@{scale\+\_\+}}
+\index{scale\+\_\+@{scale\+\_\+}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{scale\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::scale\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_dropout_layer_ac8702c053de0fea389f5a0ded8cdc544}
+\hypertarget{classcaffe_1_1_dropout_layer_a8e9d88e6128a97101c27ce8a11158ca6}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!threshold\+\_\+@{threshold\+\_\+}}
+\index{threshold\+\_\+@{threshold\+\_\+}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{threshold\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::threshold\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_dropout_layer_a8e9d88e6128a97101c27ce8a11158ca6}
+\hypertarget{classcaffe_1_1_dropout_layer_ae8ba2b98a7bc12643eec8ad72a66be21}{\index{caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}!uint\+\_\+thres\+\_\+@{uint\+\_\+thres\+\_\+}}
+\index{uint\+\_\+thres\+\_\+@{uint\+\_\+thres\+\_\+}!caffe\+::\+Dropout\+Layer@{caffe\+::\+Dropout\+Layer}}
+\subsubsection[{uint\+\_\+thres\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ unsigned int {\bf caffe\+::\+Dropout\+Layer}$<$ Dtype $>$\+::uint\+\_\+thres\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_dropout_layer_ae8ba2b98a7bc12643eec8ad72a66be21}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{dropout__layer_8cpp}{dropout\+\_\+layer.\+cpp}\item 
+src/caffe/layers/\hyperlink{dropout__layer_8cu}{dropout\+\_\+layer.\+cu}\end{DoxyCompactItemize}

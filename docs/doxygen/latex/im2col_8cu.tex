@@ -1,0 +1,33 @@
+\hypertarget{im2col_8cu}{\section{src/caffe/util/im2col.cu File Reference}
+\label{im2col_8cu}\index{src/caffe/util/im2col.\+cu@{src/caffe/util/im2col.\+cu}}
+}
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/im2col.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a11ed6a7eca37a3810d9dd173cfc1c871}{caffe\+::im2col\+\_\+gpu\+\_\+kernel} (const int n, const Dtype $\ast$data\+\_\+im, const int height, const int width, const int ksize, const int pad, const int stride, const int height\+\_\+col, const int width\+\_\+col, Dtype $\ast$data\+\_\+col)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void \hyperlink{namespacecaffe_ac27906020365bbdd789307ab27064d28}{caffe\+::im2col\+\_\+gpu} (const Dtype $\ast$data\+\_\+im, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, Dtype $\ast$data\+\_\+col)
+\item 
+template void \hyperlink{namespacecaffe_a500c953ed9e8940174c8a59b7165b824}{caffe\+::im2col\+\_\+gpu$<$ float $>$} (const float $\ast$data\+\_\+im, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, float $\ast$data\+\_\+col)
+\item 
+template void \hyperlink{namespacecaffe_aa0f4b89a20fbbfe2f055ea8737b054b4}{caffe\+::im2col\+\_\+gpu$<$ double $>$} (const double $\ast$data\+\_\+im, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, double $\ast$data\+\_\+col)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a3a26760e107a595c92a0523f7c02928a}{caffe\+::col2im\+\_\+gpu\+\_\+kernel} (const int n, const Dtype $\ast$data\+\_\+col, const int height, const int width, const int channels, const int ksize, const int pad, const int stride, const int height\+\_\+col, const int width\+\_\+col, Dtype $\ast$data\+\_\+im)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void \hyperlink{namespacecaffe_a4604c45fdbee27b1591a047541218308}{caffe\+::col2im\+\_\+gpu} (const Dtype $\ast$data\+\_\+col, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, Dtype $\ast$data\+\_\+im)
+\item 
+template void \hyperlink{namespacecaffe_a864bc0e9898dad8473cf1b592c8c1991}{caffe\+::col2im\+\_\+gpu$<$ float $>$} (const float $\ast$data\+\_\+col, const int channels, const int height, const int width, const int psize, const int pad, const int stride, float $\ast$data\+\_\+im)
+\item 
+template void \hyperlink{namespacecaffe_a9cb148184e75df535d299185583db7dc}{caffe\+::col2im\+\_\+gpu$<$ double $>$} (const double $\ast$data\+\_\+col, const int channels, const int height, const int width, const int psize, const int pad, const int stride, double $\ast$data\+\_\+im)
+\end{DoxyCompactItemize}

@@ -1,0 +1,354 @@
+\hypertarget{classcaffe_1_1_blob}{\section{caffe\+:\+:Blob$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_blob}\index{caffe\+::\+Blob$<$ Dtype $>$@{caffe\+::\+Blob$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$blob.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_blob_a5ec3bf9e25255c6071db8cfd1dc7f4e9}{Blob} ()
+\item 
+\hyperlink{classcaffe_1_1_blob_a379df830aad9b3cae253e1ddb0863844}{Blob} (const int \hyperlink{classcaffe_1_1_blob_a56c2b25db397d9e82bbd7c43597ae427}{num}, const int \hyperlink{classcaffe_1_1_blob_a744a987091c4496a2236898ee39558ec}{channels}, const int \hyperlink{classcaffe_1_1_blob_a422a10a605c30ac02a5377e7cf4c8c6c}{height}, const int \hyperlink{classcaffe_1_1_blob_a781b5410b7894455a85cd283cf8ee02a}{width})
+\item 
+void \hyperlink{classcaffe_1_1_blob_ad0e0a9a4f49478e89161c6afe4e341a0}{Reshape} (const int \hyperlink{classcaffe_1_1_blob_a56c2b25db397d9e82bbd7c43597ae427}{num}, const int \hyperlink{classcaffe_1_1_blob_a744a987091c4496a2236898ee39558ec}{channels}, const int \hyperlink{classcaffe_1_1_blob_a422a10a605c30ac02a5377e7cf4c8c6c}{height}, const int \hyperlink{classcaffe_1_1_blob_a781b5410b7894455a85cd283cf8ee02a}{width})
+\item 
+void \hyperlink{classcaffe_1_1_blob_aa8dee739aaa4253f73c44904784ce417}{Reshape\+Like} (const \hyperlink{classcaffe_1_1_blob}{Blob} \&other)
+\item 
+int \hyperlink{classcaffe_1_1_blob_a56c2b25db397d9e82bbd7c43597ae427}{num} () const 
+\item 
+int \hyperlink{classcaffe_1_1_blob_a744a987091c4496a2236898ee39558ec}{channels} () const 
+\item 
+int \hyperlink{classcaffe_1_1_blob_a422a10a605c30ac02a5377e7cf4c8c6c}{height} () const 
+\item 
+int \hyperlink{classcaffe_1_1_blob_a781b5410b7894455a85cd283cf8ee02a}{width} () const 
+\item 
+int \hyperlink{classcaffe_1_1_blob_abf97753a599dd546c16d55ba926d4e81}{count} () const 
+\item 
+int \hyperlink{classcaffe_1_1_blob_a87022dfa6cc45b3a2727ccce9ccf4b2c}{offset} (const int n, const int c=0, const int h=0, const int w=0) const 
+\item 
+void \hyperlink{classcaffe_1_1_blob_a64ad51f99e88233f43a21a85ebe10284}{Copy\+From} (const \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ \&source, bool copy\+\_\+diff=false, bool reshape=false)
+\item 
+Dtype \hyperlink{classcaffe_1_1_blob_a3f12332d9d8a0a5adc12c8c75bbbd335}{data\+\_\+at} (const int n, const int c, const int h, const int w) const 
+\item 
+Dtype \hyperlink{classcaffe_1_1_blob_a349ee9442e5ba9736b6ccf12359e776e}{diff\+\_\+at} (const int n, const int c, const int h, const int w) const 
+\item 
+const shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \& \hyperlink{classcaffe_1_1_blob_a09d1435056f21ba9df52cee4d6371087}{data} () const 
+\item 
+const shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \& \hyperlink{classcaffe_1_1_blob_ab7a8c2034a34695fe5f777ff3271e80d}{diff} () const 
+\item 
+const Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_a490e0b609d0d62dbfc317cbe76aa8fa2}{cpu\+\_\+data} () const 
+\item 
+void \hyperlink{classcaffe_1_1_blob_a5d7d38b157e43ff6a8b8bf94b6815daf}{set\+\_\+cpu\+\_\+data} (Dtype $\ast$\hyperlink{classcaffe_1_1_blob_a09d1435056f21ba9df52cee4d6371087}{data})
+\item 
+const Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_afd60f6fa2044997149075817991bfc19}{gpu\+\_\+data} () const 
+\item 
+const Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_a59dc87d97e8a0db8302b142eacb64e10}{cpu\+\_\+diff} () const 
+\item 
+const Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_aafcc1d137ff67dea2d65824ce67bb21d}{gpu\+\_\+diff} () const 
+\item 
+Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_ac170c040c34e2e78e7fc0d2ee12cf0ef}{mutable\+\_\+cpu\+\_\+data} ()
+\item 
+Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_abac6bde0521e019df173213af6808e3b}{mutable\+\_\+gpu\+\_\+data} ()
+\item 
+Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_a4eb870499aa659a5eee7af622cd92eca}{mutable\+\_\+cpu\+\_\+diff} ()
+\item 
+Dtype $\ast$ \hyperlink{classcaffe_1_1_blob_a8d230bed098a5ee31559df0b8e2db252}{mutable\+\_\+gpu\+\_\+diff} ()
+\item 
+void \hyperlink{classcaffe_1_1_blob_afe035d7b60c56e4aed2a18296e8ffdc5}{Update} ()
+\item 
+void \hyperlink{classcaffe_1_1_blob_aa8b8ccc2dc4c68f07b2257d69cb4bc90}{From\+Proto} (const Blob\+Proto \&proto)
+\item 
+void \hyperlink{classcaffe_1_1_blob_ad297f6b6cad67200c3b5201034653271}{To\+Proto} (Blob\+Proto $\ast$proto, bool write\+\_\+diff=false) const 
+\item 
+void \hyperlink{classcaffe_1_1_blob_a8fce5a816a2b9629686db69108610d93}{Share\+Data} (const \hyperlink{classcaffe_1_1_blob}{Blob} \&other)
+\item 
+void \hyperlink{classcaffe_1_1_blob_a004781965b09f94c409cec9a6fc7c35c}{Share\+Diff} (const \hyperlink{classcaffe_1_1_blob}{Blob} \&other)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_blob_a603f1a5472e5fae9ca8fec62f6d5c581}{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N} (\hyperlink{classcaffe_1_1_blob}{Blob})
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_blob_a5240277a3cea1bc530deca40ca0d0e16}{data\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_blob_a9310f9007aa45e529cb6d69d32dbb80c}{diff\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_blob_a1af8433c8c66ae8f2732aa4d102b6c29}{num\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_blob_a7618f913659955dcee178c00a842065c}{channels\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_blob_ada72205fe499a098a6d17b4b1cd34a82}{height\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_blob_a5ea591a12504b44d94e3715d88fb37a9}{width\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_blob_acf06ea13a3a14f77c178a525c35a3ea0}{count\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_blob_a5ec3bf9e25255c6071db8cfd1dc7f4e9}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Blob@{Blob}}
+\index{Blob@{Blob}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Blob}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::{\bf Blob} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a5ec3bf9e25255c6071db8cfd1dc7f4e9}
+\hypertarget{classcaffe_1_1_blob_a379df830aad9b3cae253e1ddb0863844}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Blob@{Blob}}
+\index{Blob@{Blob}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Blob}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::{\bf Blob} (
+\begin{DoxyParamCaption}
+\item[{const int}]{num, }
+\item[{const int}]{channels, }
+\item[{const int}]{height, }
+\item[{const int}]{width}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}}\label{classcaffe_1_1_blob_a379df830aad9b3cae253e1ddb0863844}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_blob_a744a987091c4496a2236898ee39558ec}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!channels@{channels}}
+\index{channels@{channels}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{channels}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::channels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a744a987091c4496a2236898ee39558ec}
+\hypertarget{classcaffe_1_1_blob_a64ad51f99e88233f43a21a85ebe10284}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Copy\+From@{Copy\+From}}
+\index{Copy\+From@{Copy\+From}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Copy\+From}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::Copy\+From (
+\begin{DoxyParamCaption}
+\item[{const {\bf Blob}$<$ Dtype $>$ \&}]{source, }
+\item[{bool}]{copy\+\_\+diff = {\ttfamily false}, }
+\item[{bool}]{reshape = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_a64ad51f99e88233f43a21a85ebe10284}
+\hypertarget{classcaffe_1_1_blob_abf97753a599dd546c16d55ba926d4e81}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!count@{count}}
+\index{count@{count}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{count}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_abf97753a599dd546c16d55ba926d4e81}
+\hypertarget{classcaffe_1_1_blob_a490e0b609d0d62dbfc317cbe76aa8fa2}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!cpu\+\_\+data@{cpu\+\_\+data}}
+\index{cpu\+\_\+data@{cpu\+\_\+data}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{cpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ const Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::cpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classcaffe_1_1_blob_a490e0b609d0d62dbfc317cbe76aa8fa2}
+\hypertarget{classcaffe_1_1_blob_a59dc87d97e8a0db8302b142eacb64e10}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!cpu\+\_\+diff@{cpu\+\_\+diff}}
+\index{cpu\+\_\+diff@{cpu\+\_\+diff}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{cpu\+\_\+diff}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ const Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::cpu\+\_\+diff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classcaffe_1_1_blob_a59dc87d97e8a0db8302b142eacb64e10}
+\hypertarget{classcaffe_1_1_blob_a09d1435056f21ba9df52cee4d6371087}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!data@{data}}
+\index{data@{data}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ const shared\+\_\+ptr$<${\bf Synced\+Memory}$>$\& {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a09d1435056f21ba9df52cee4d6371087}
+\hypertarget{classcaffe_1_1_blob_a3f12332d9d8a0a5adc12c8c75bbbd335}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!data\+\_\+at@{data\+\_\+at}}
+\index{data\+\_\+at@{data\+\_\+at}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{data\+\_\+at}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ Dtype {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::data\+\_\+at (
+\begin{DoxyParamCaption}
+\item[{const int}]{n, }
+\item[{const int}]{c, }
+\item[{const int}]{h, }
+\item[{const int}]{w}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a3f12332d9d8a0a5adc12c8c75bbbd335}
+\hypertarget{classcaffe_1_1_blob_ab7a8c2034a34695fe5f777ff3271e80d}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!diff@{diff}}
+\index{diff@{diff}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{diff}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ const shared\+\_\+ptr$<${\bf Synced\+Memory}$>$\& {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::diff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_ab7a8c2034a34695fe5f777ff3271e80d}
+\hypertarget{classcaffe_1_1_blob_a349ee9442e5ba9736b6ccf12359e776e}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!diff\+\_\+at@{diff\+\_\+at}}
+\index{diff\+\_\+at@{diff\+\_\+at}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{diff\+\_\+at}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ Dtype {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::diff\+\_\+at (
+\begin{DoxyParamCaption}
+\item[{const int}]{n, }
+\item[{const int}]{c, }
+\item[{const int}]{h, }
+\item[{const int}]{w}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a349ee9442e5ba9736b6ccf12359e776e}
+\hypertarget{classcaffe_1_1_blob_a603f1a5472e5fae9ca8fec62f6d5c581}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}}
+\index{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N (
+\begin{DoxyParamCaption}
+\item[{{\bf Blob}$<$ Dtype $>$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_a603f1a5472e5fae9ca8fec62f6d5c581}
+\hypertarget{classcaffe_1_1_blob_aa8b8ccc2dc4c68f07b2257d69cb4bc90}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!From\+Proto@{From\+Proto}}
+\index{From\+Proto@{From\+Proto}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{From\+Proto}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::From\+Proto (
+\begin{DoxyParamCaption}
+\item[{const Blob\+Proto \&}]{proto}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_aa8b8ccc2dc4c68f07b2257d69cb4bc90}
+\hypertarget{classcaffe_1_1_blob_afd60f6fa2044997149075817991bfc19}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!gpu\+\_\+data@{gpu\+\_\+data}}
+\index{gpu\+\_\+data@{gpu\+\_\+data}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{gpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ const Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::gpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classcaffe_1_1_blob_afd60f6fa2044997149075817991bfc19}
+\hypertarget{classcaffe_1_1_blob_aafcc1d137ff67dea2d65824ce67bb21d}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!gpu\+\_\+diff@{gpu\+\_\+diff}}
+\index{gpu\+\_\+diff@{gpu\+\_\+diff}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{gpu\+\_\+diff}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ const Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::gpu\+\_\+diff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classcaffe_1_1_blob_aafcc1d137ff67dea2d65824ce67bb21d}
+\hypertarget{classcaffe_1_1_blob_a422a10a605c30ac02a5377e7cf4c8c6c}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!height@{height}}
+\index{height@{height}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{height}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a422a10a605c30ac02a5377e7cf4c8c6c}
+\hypertarget{classcaffe_1_1_blob_ac170c040c34e2e78e7fc0d2ee12cf0ef}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!mutable\+\_\+cpu\+\_\+data@{mutable\+\_\+cpu\+\_\+data}}
+\index{mutable\+\_\+cpu\+\_\+data@{mutable\+\_\+cpu\+\_\+data}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{mutable\+\_\+cpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::mutable\+\_\+cpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_ac170c040c34e2e78e7fc0d2ee12cf0ef}
+\hypertarget{classcaffe_1_1_blob_a4eb870499aa659a5eee7af622cd92eca}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!mutable\+\_\+cpu\+\_\+diff@{mutable\+\_\+cpu\+\_\+diff}}
+\index{mutable\+\_\+cpu\+\_\+diff@{mutable\+\_\+cpu\+\_\+diff}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{mutable\+\_\+cpu\+\_\+diff}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::mutable\+\_\+cpu\+\_\+diff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_a4eb870499aa659a5eee7af622cd92eca}
+\hypertarget{classcaffe_1_1_blob_abac6bde0521e019df173213af6808e3b}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!mutable\+\_\+gpu\+\_\+data@{mutable\+\_\+gpu\+\_\+data}}
+\index{mutable\+\_\+gpu\+\_\+data@{mutable\+\_\+gpu\+\_\+data}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{mutable\+\_\+gpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::mutable\+\_\+gpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_abac6bde0521e019df173213af6808e3b}
+\hypertarget{classcaffe_1_1_blob_a8d230bed098a5ee31559df0b8e2db252}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!mutable\+\_\+gpu\+\_\+diff@{mutable\+\_\+gpu\+\_\+diff}}
+\index{mutable\+\_\+gpu\+\_\+diff@{mutable\+\_\+gpu\+\_\+diff}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{mutable\+\_\+gpu\+\_\+diff}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype $\ast$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::mutable\+\_\+gpu\+\_\+diff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_a8d230bed098a5ee31559df0b8e2db252}
+\hypertarget{classcaffe_1_1_blob_a56c2b25db397d9e82bbd7c43597ae427}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!num@{num}}
+\index{num@{num}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::num (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a56c2b25db397d9e82bbd7c43597ae427}
+\hypertarget{classcaffe_1_1_blob_a87022dfa6cc45b3a2727ccce9ccf4b2c}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!offset@{offset}}
+\index{offset@{offset}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{offset}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::offset (
+\begin{DoxyParamCaption}
+\item[{const int}]{n, }
+\item[{const int}]{c = {\ttfamily 0}, }
+\item[{const int}]{h = {\ttfamily 0}, }
+\item[{const int}]{w = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a87022dfa6cc45b3a2727ccce9ccf4b2c}
+\hypertarget{classcaffe_1_1_blob_ad0e0a9a4f49478e89161c6afe4e341a0}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Reshape@{Reshape}}
+\index{Reshape@{Reshape}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Reshape}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::Reshape (
+\begin{DoxyParamCaption}
+\item[{const int}]{num, }
+\item[{const int}]{channels, }
+\item[{const int}]{height, }
+\item[{const int}]{width}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_ad0e0a9a4f49478e89161c6afe4e341a0}
+\hypertarget{classcaffe_1_1_blob_aa8dee739aaa4253f73c44904784ce417}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Reshape\+Like@{Reshape\+Like}}
+\index{Reshape\+Like@{Reshape\+Like}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Reshape\+Like}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::Reshape\+Like (
+\begin{DoxyParamCaption}
+\item[{const {\bf Blob}$<$ Dtype $>$ \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_aa8dee739aaa4253f73c44904784ce417}
+\hypertarget{classcaffe_1_1_blob_a5d7d38b157e43ff6a8b8bf94b6815daf}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!set\+\_\+cpu\+\_\+data@{set\+\_\+cpu\+\_\+data}}
+\index{set\+\_\+cpu\+\_\+data@{set\+\_\+cpu\+\_\+data}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{set\+\_\+cpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::set\+\_\+cpu\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{Dtype $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_a5d7d38b157e43ff6a8b8bf94b6815daf}
+\hypertarget{classcaffe_1_1_blob_a8fce5a816a2b9629686db69108610d93}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Share\+Data@{Share\+Data}}
+\index{Share\+Data@{Share\+Data}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Share\+Data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::Share\+Data (
+\begin{DoxyParamCaption}
+\item[{const {\bf Blob}$<$ Dtype $>$ \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_a8fce5a816a2b9629686db69108610d93}
+\hypertarget{classcaffe_1_1_blob_a004781965b09f94c409cec9a6fc7c35c}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Share\+Diff@{Share\+Diff}}
+\index{Share\+Diff@{Share\+Diff}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Share\+Diff}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::Share\+Diff (
+\begin{DoxyParamCaption}
+\item[{const {\bf Blob}$<$ Dtype $>$ \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_a004781965b09f94c409cec9a6fc7c35c}
+\hypertarget{classcaffe_1_1_blob_ad297f6b6cad67200c3b5201034653271}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!To\+Proto@{To\+Proto}}
+\index{To\+Proto@{To\+Proto}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{To\+Proto}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::To\+Proto (
+\begin{DoxyParamCaption}
+\item[{Blob\+Proto $\ast$}]{proto, }
+\item[{bool}]{write\+\_\+diff = {\ttfamily false}}
+\end{DoxyParamCaption}
+) const}}\label{classcaffe_1_1_blob_ad297f6b6cad67200c3b5201034653271}
+\hypertarget{classcaffe_1_1_blob_afe035d7b60c56e4aed2a18296e8ffdc5}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!Update@{Update}}
+\index{Update@{Update}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{Update}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::Update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_blob_afe035d7b60c56e4aed2a18296e8ffdc5}
+\hypertarget{classcaffe_1_1_blob_a781b5410b7894455a85cd283cf8ee02a}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!width@{width}}
+\index{width@{width}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{width}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_blob_a781b5410b7894455a85cd283cf8ee02a}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_blob_a7618f913659955dcee178c00a842065c}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!channels\+\_\+@{channels\+\_\+}}
+\index{channels\+\_\+@{channels\+\_\+}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{channels\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::channels\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_a7618f913659955dcee178c00a842065c}
+\hypertarget{classcaffe_1_1_blob_acf06ea13a3a14f77c178a525c35a3ea0}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!count\+\_\+@{count\+\_\+}}
+\index{count\+\_\+@{count\+\_\+}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{count\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::count\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_acf06ea13a3a14f77c178a525c35a3ea0}
+\hypertarget{classcaffe_1_1_blob_a5240277a3cea1bc530deca40ca0d0e16}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!data\+\_\+@{data\+\_\+}}
+\index{data\+\_\+@{data\+\_\+}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{data\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::data\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_a5240277a3cea1bc530deca40ca0d0e16}
+\hypertarget{classcaffe_1_1_blob_a9310f9007aa45e529cb6d69d32dbb80c}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!diff\+\_\+@{diff\+\_\+}}
+\index{diff\+\_\+@{diff\+\_\+}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{diff\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::diff\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_a9310f9007aa45e529cb6d69d32dbb80c}
+\hypertarget{classcaffe_1_1_blob_ada72205fe499a098a6d17b4b1cd34a82}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!height\+\_\+@{height\+\_\+}}
+\index{height\+\_\+@{height\+\_\+}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{height\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::height\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_ada72205fe499a098a6d17b4b1cd34a82}
+\hypertarget{classcaffe_1_1_blob_a1af8433c8c66ae8f2732aa4d102b6c29}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!num\+\_\+@{num\+\_\+}}
+\index{num\+\_\+@{num\+\_\+}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{num\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::num\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_a1af8433c8c66ae8f2732aa4d102b6c29}
+\hypertarget{classcaffe_1_1_blob_a5ea591a12504b44d94e3715d88fb37a9}{\index{caffe\+::\+Blob@{caffe\+::\+Blob}!width\+\_\+@{width\+\_\+}}
+\index{width\+\_\+@{width\+\_\+}!caffe\+::\+Blob@{caffe\+::\+Blob}}
+\subsubsection[{width\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ int {\bf caffe\+::\+Blob}$<$ Dtype $>$\+::width\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_blob_a5ea591a12504b44d94e3715d88fb37a9}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{blob_8hpp}{blob.\+hpp}\item 
+src/caffe/\hyperlink{blob_8cpp}{blob.\+cpp}\end{DoxyCompactItemize}

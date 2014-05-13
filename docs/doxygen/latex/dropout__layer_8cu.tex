@@ -1,0 +1,25 @@
+\hypertarget{dropout__layer_8cu}{\section{src/caffe/layers/dropout\+\_\+layer.cu File Reference}
+\label{dropout__layer_8cu}\index{src/caffe/layers/dropout\+\_\+layer.\+cu@{src/caffe/layers/dropout\+\_\+layer.\+cu}}
+}
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$limits$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/layer.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/syncedmem.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/vision\+\_\+layers.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/math\+\_\+functions.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_acbb974c590152030733b853fdee8a384}{caffe\+::\+Dropout\+Forward} (const int n, const Dtype $\ast$in, const unsigned int $\ast$mask, const unsigned int threshold, const float scale, Dtype $\ast$out)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_ad5a0ade82e9862148c3e957d66b19ec4}{caffe\+::\+Dropout\+Backward} (const int n, const Dtype $\ast$in\+\_\+diff, const unsigned int $\ast$mask, const unsigned int threshold, const float scale, Dtype $\ast$out\+\_\+diff)
+\item 
+\hyperlink{namespacecaffe_a3ddfb0dd062592a2e7b625246518184c}{caffe\+::\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S} (Dropout\+Layer)
+\end{DoxyCompactItemize}

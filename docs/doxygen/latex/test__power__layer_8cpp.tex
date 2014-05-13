@@ -1,0 +1,68 @@
+\hypertarget{test__power__layer_8cpp}{\section{src/caffe/test/test\+\_\+power\+\_\+layer.cpp File Reference}
+\label{test__power__layer_8cpp}\index{src/caffe/test/test\+\_\+power\+\_\+layer.\+cpp@{src/caffe/test/test\+\_\+power\+\_\+layer.\+cpp}}
+}
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}cuda\+\_\+runtime.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}gtest/gtest.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/blob.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/filler.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/vision\+\_\+layers.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/test/test\+\_\+gradient\+\_\+check\+\_\+util.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/test/test\+\_\+caffe\+\_\+main.\+hpp\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcaffe_1_1_power_layer_test}{caffe\+::\+Power\+Layer\+Test$<$ Dtype $>$}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacecaffe_a4e5ccd73b60cec3460e2af8cf5a1b1a3}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T\+\_\+\+C\+A\+S\+E} (Power\+Layer\+Test, Dtypes)
+\item 
+\hyperlink{namespacecaffe_adb455cd2518bbfae538e41b9b0349170}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a520202ff2b6b033e21d3fcf1008d124f}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_af90f66c87fc90d734bb4fe230bcdc8a2}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Gradient\+Shift\+Zero\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a6cb8586959b3cb6a931160f5f028728c}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Zero\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a0776849ebf9c4f259fc70b903eee923e}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Zero\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_aca280232dc92505faf70d9bd320afd37}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+One\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_abf9a8c71d8419ca1bbc9c74727ec3c31}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+One\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a75a1a697ed09f1e8a266cbbc1cf533ed}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Two\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a7e87032e6915da8583a7f1eac496b6d0}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Two\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a4579025745e0446cf692bf62fba98cde}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Two\+Scale\+Half\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a74406e46487a7664dad2823c6ef30cc2}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a549108923280b8786b05ed8e5d08daf7}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Gradient\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a55b210d76fe6c95ac9cb2032ea1167ce}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Gradient\+Shift\+Zero\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a5eea49c2f8f10be2bdff28efd86fa965}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Zero\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a55eb1e52bff207d6db03c87351d850ff}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Zero\+Gradient\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a6f65f93ea66104aefccfc77cab8313e5}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+One\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_ae58b17bf9d1f0786093f9d6f4f626f00}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+One\+Gradient\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_af3b2f7643bd0eca86f4539a89d61fba2}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Two\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_afad1acac0dd1070cceca1ff618b15a3c}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Two\+Gradient\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a7dd6856b44944588a098e4aaed16abbd}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Power\+Layer\+Test, Test\+Power\+Two\+Scale\+Half\+Gradient\+G\+P\+U)
+\end{DoxyCompactItemize}

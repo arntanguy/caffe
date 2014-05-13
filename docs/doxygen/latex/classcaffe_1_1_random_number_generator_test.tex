@@ -1,0 +1,246 @@
+\hypertarget{classcaffe_1_1_random_number_generator_test}{\section{caffe\+:\+:Random\+Number\+Generator\+Test$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_random_number_generator_test}\index{caffe\+::\+Random\+Number\+Generator\+Test$<$ Dtype $>$@{caffe\+::\+Random\+Number\+Generator\+Test$<$ Dtype $>$}}
+}
+Inheritance diagram for caffe\+:\+:Random\+Number\+Generator\+Test$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_random_number_generator_test}
+\end{center}
+\end{figure}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_random_number_generator_test_a143706c1ffd4d623c2449f726efb26aa}{Random\+Number\+Generator\+Test} ()
+\item 
+virtual void \hyperlink{classcaffe_1_1_random_number_generator_test_a0f16d083efcd9e6d096e0f533c3dbb42}{Set\+Up} ()
+\item 
+Dtype \hyperlink{classcaffe_1_1_random_number_generator_test_a8e47e8eb974abd9f96c6e1421b91001b}{sample\+\_\+mean} (const Dtype $\ast$const seqs, const int sample\+\_\+size)
+\item 
+Dtype \hyperlink{classcaffe_1_1_random_number_generator_test_a1a5c0259b52a872366cff6e6158c38df}{sample\+\_\+mean} (const Dtype $\ast$const seqs)
+\item 
+Dtype \hyperlink{classcaffe_1_1_random_number_generator_test_adba69089a2fe1e1f27533ee2a4ffa73f}{sample\+\_\+mean} (const int $\ast$const seqs, const int sample\+\_\+size)
+\item 
+Dtype \hyperlink{classcaffe_1_1_random_number_generator_test_a43d7d4b986410448721bfa79a73f62b8}{sample\+\_\+mean} (const int $\ast$const seqs)
+\item 
+Dtype \hyperlink{classcaffe_1_1_random_number_generator_test_a4f23f81c31dc80dca93311ecc4ca8799}{mean\+\_\+bound} (const Dtype std, const int sample\+\_\+size)
+\item 
+Dtype \hyperlink{classcaffe_1_1_random_number_generator_test_a32a1604e0358efaf9fdfa08ecc102cc0}{mean\+\_\+bound} (const Dtype std)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_a33e80e026c65bfa736e5fadd042cad7b}{Rng\+Gaussian\+Fill} (const Dtype mu, const Dtype sigma, void $\ast$cpu\+\_\+data)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_ac85fa67278accad52bc31d89d220bec9}{Rng\+Gaussian\+Fill\+G\+P\+U} (const Dtype mu, const Dtype sigma, void $\ast$gpu\+\_\+data)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_a1710186e01feea820951e6b31d7ed8d5}{Rng\+Gaussian\+Checks} (const Dtype mu, const Dtype sigma, const void $\ast$cpu\+\_\+data, const Dtype sparse\+\_\+p=0)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_ae645743499118e0d5a4f09df5f617547}{Rng\+Uniform\+Fill} (const Dtype lower, const Dtype upper, void $\ast$cpu\+\_\+data)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_a56f2663c29c44445369573d484a6d1ca}{Rng\+Uniform\+Fill\+G\+P\+U} (const Dtype lower, const Dtype upper, void $\ast$gpu\+\_\+data)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_ae731201dd6d8c588306e044787a64954}{Rng\+Uniform\+Int\+Fill\+G\+P\+U} (void $\ast$gpu\+\_\+data)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_adda371a2186747f91efa3bdd400c95f1}{Rng\+Uniform\+Checks} (const Dtype lower, const Dtype upper, const void $\ast$cpu\+\_\+data, const Dtype sparse\+\_\+p=0)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_af2759f33fedb94c8cf324a61081fe61e}{Rng\+Bernoulli\+Fill} (const Dtype p, void $\ast$cpu\+\_\+data)
+\item 
+void \hyperlink{classcaffe_1_1_random_number_generator_test_ac44cfd5c9c9a09961e1385e95dc91e22}{Rng\+Bernoulli\+Checks} (const Dtype p, const void $\ast$cpu\+\_\+data)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcaffe_1_1_random_number_generator_test_a039d6584b589e0f3e87d215c7a230fce}{num\+\_\+above\+\_\+mean}
+\item 
+int \hyperlink{classcaffe_1_1_random_number_generator_test_ab2744cd1e3f41449e2b4b2ea9087f458}{num\+\_\+below\+\_\+mean}
+\item 
+Dtype \hyperlink{classcaffe_1_1_random_number_generator_test_a7af6670320b4dd8b29edd00fcd33c899}{mean\+\_\+bound\+\_\+multiplier\+\_\+}
+\item 
+size\+\_\+t \hyperlink{classcaffe_1_1_random_number_generator_test_a1e16c55d83c076ffe898f1db6f7cfc1d}{sample\+\_\+size\+\_\+}
+\item 
+uint32\+\_\+t \hyperlink{classcaffe_1_1_random_number_generator_test_a8975ddeeefd466b91f1b39db1e526436}{seed\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_random_number_generator_test_a0d9fe79538e2af9fdd25f93a4fe3efe8}{data\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_random_number_generator_test_aa5d1f3c85e7b05ddae63a96ef858f208}{data\+\_\+2\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_random_number_generator_test_a1db28be8828105cc9c187fc6717eef0a}{int\+\_\+data\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_random_number_generator_test_a766746e10a61c6853731eac979c42c55}{int\+\_\+data\+\_\+2\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a143706c1ffd4d623c2449f726efb26aa}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Random\+Number\+Generator\+Test@{Random\+Number\+Generator\+Test}}
+\index{Random\+Number\+Generator\+Test@{Random\+Number\+Generator\+Test}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Random\+Number\+Generator\+Test}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::{\bf Random\+Number\+Generator\+Test} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a143706c1ffd4d623c2449f726efb26aa}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a4f23f81c31dc80dca93311ecc4ca8799}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!mean\+\_\+bound@{mean\+\_\+bound}}
+\index{mean\+\_\+bound@{mean\+\_\+bound}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{mean\+\_\+bound}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::mean\+\_\+bound (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{std, }
+\item[{const int}]{sample\+\_\+size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a4f23f81c31dc80dca93311ecc4ca8799}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a32a1604e0358efaf9fdfa08ecc102cc0}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!mean\+\_\+bound@{mean\+\_\+bound}}
+\index{mean\+\_\+bound@{mean\+\_\+bound}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{mean\+\_\+bound}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::mean\+\_\+bound (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{std}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a32a1604e0358efaf9fdfa08ecc102cc0}
+\hypertarget{classcaffe_1_1_random_number_generator_test_ac44cfd5c9c9a09961e1385e95dc91e22}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Bernoulli\+Checks@{Rng\+Bernoulli\+Checks}}
+\index{Rng\+Bernoulli\+Checks@{Rng\+Bernoulli\+Checks}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Bernoulli\+Checks}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Bernoulli\+Checks (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{p, }
+\item[{const void $\ast$}]{cpu\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_ac44cfd5c9c9a09961e1385e95dc91e22}
+\hypertarget{classcaffe_1_1_random_number_generator_test_af2759f33fedb94c8cf324a61081fe61e}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Bernoulli\+Fill@{Rng\+Bernoulli\+Fill}}
+\index{Rng\+Bernoulli\+Fill@{Rng\+Bernoulli\+Fill}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Bernoulli\+Fill}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Bernoulli\+Fill (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{p, }
+\item[{void $\ast$}]{cpu\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_af2759f33fedb94c8cf324a61081fe61e}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a1710186e01feea820951e6b31d7ed8d5}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Gaussian\+Checks@{Rng\+Gaussian\+Checks}}
+\index{Rng\+Gaussian\+Checks@{Rng\+Gaussian\+Checks}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Gaussian\+Checks}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Gaussian\+Checks (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{mu, }
+\item[{const Dtype}]{sigma, }
+\item[{const void $\ast$}]{cpu\+\_\+data, }
+\item[{const Dtype}]{sparse\+\_\+p = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a1710186e01feea820951e6b31d7ed8d5}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a33e80e026c65bfa736e5fadd042cad7b}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Gaussian\+Fill@{Rng\+Gaussian\+Fill}}
+\index{Rng\+Gaussian\+Fill@{Rng\+Gaussian\+Fill}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Gaussian\+Fill}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Gaussian\+Fill (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{mu, }
+\item[{const Dtype}]{sigma, }
+\item[{void $\ast$}]{cpu\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a33e80e026c65bfa736e5fadd042cad7b}
+\hypertarget{classcaffe_1_1_random_number_generator_test_ac85fa67278accad52bc31d89d220bec9}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Gaussian\+Fill\+G\+P\+U@{Rng\+Gaussian\+Fill\+G\+P\+U}}
+\index{Rng\+Gaussian\+Fill\+G\+P\+U@{Rng\+Gaussian\+Fill\+G\+P\+U}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Gaussian\+Fill\+G\+P\+U}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Gaussian\+Fill\+G\+P\+U (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{mu, }
+\item[{const Dtype}]{sigma, }
+\item[{void $\ast$}]{gpu\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_ac85fa67278accad52bc31d89d220bec9}
+\hypertarget{classcaffe_1_1_random_number_generator_test_adda371a2186747f91efa3bdd400c95f1}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Uniform\+Checks@{Rng\+Uniform\+Checks}}
+\index{Rng\+Uniform\+Checks@{Rng\+Uniform\+Checks}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Uniform\+Checks}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Uniform\+Checks (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{lower, }
+\item[{const Dtype}]{upper, }
+\item[{const void $\ast$}]{cpu\+\_\+data, }
+\item[{const Dtype}]{sparse\+\_\+p = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_adda371a2186747f91efa3bdd400c95f1}
+\hypertarget{classcaffe_1_1_random_number_generator_test_ae645743499118e0d5a4f09df5f617547}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Uniform\+Fill@{Rng\+Uniform\+Fill}}
+\index{Rng\+Uniform\+Fill@{Rng\+Uniform\+Fill}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Uniform\+Fill}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Uniform\+Fill (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{lower, }
+\item[{const Dtype}]{upper, }
+\item[{void $\ast$}]{cpu\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_ae645743499118e0d5a4f09df5f617547}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a56f2663c29c44445369573d484a6d1ca}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Uniform\+Fill\+G\+P\+U@{Rng\+Uniform\+Fill\+G\+P\+U}}
+\index{Rng\+Uniform\+Fill\+G\+P\+U@{Rng\+Uniform\+Fill\+G\+P\+U}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Uniform\+Fill\+G\+P\+U}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Uniform\+Fill\+G\+P\+U (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{lower, }
+\item[{const Dtype}]{upper, }
+\item[{void $\ast$}]{gpu\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a56f2663c29c44445369573d484a6d1ca}
+\hypertarget{classcaffe_1_1_random_number_generator_test_ae731201dd6d8c588306e044787a64954}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Rng\+Uniform\+Int\+Fill\+G\+P\+U@{Rng\+Uniform\+Int\+Fill\+G\+P\+U}}
+\index{Rng\+Uniform\+Int\+Fill\+G\+P\+U@{Rng\+Uniform\+Int\+Fill\+G\+P\+U}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Rng\+Uniform\+Int\+Fill\+G\+P\+U}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Rng\+Uniform\+Int\+Fill\+G\+P\+U (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{gpu\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_ae731201dd6d8c588306e044787a64954}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a8e47e8eb974abd9f96c6e1421b91001b}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!sample\+\_\+mean@{sample\+\_\+mean}}
+\index{sample\+\_\+mean@{sample\+\_\+mean}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{sample\+\_\+mean}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::sample\+\_\+mean (
+\begin{DoxyParamCaption}
+\item[{const Dtype $\ast$const}]{seqs, }
+\item[{const int}]{sample\+\_\+size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a8e47e8eb974abd9f96c6e1421b91001b}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a1a5c0259b52a872366cff6e6158c38df}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!sample\+\_\+mean@{sample\+\_\+mean}}
+\index{sample\+\_\+mean@{sample\+\_\+mean}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{sample\+\_\+mean}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::sample\+\_\+mean (
+\begin{DoxyParamCaption}
+\item[{const Dtype $\ast$const}]{seqs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a1a5c0259b52a872366cff6e6158c38df}
+\hypertarget{classcaffe_1_1_random_number_generator_test_adba69089a2fe1e1f27533ee2a4ffa73f}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!sample\+\_\+mean@{sample\+\_\+mean}}
+\index{sample\+\_\+mean@{sample\+\_\+mean}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{sample\+\_\+mean}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::sample\+\_\+mean (
+\begin{DoxyParamCaption}
+\item[{const int $\ast$const}]{seqs, }
+\item[{const int}]{sample\+\_\+size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_adba69089a2fe1e1f27533ee2a4ffa73f}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a43d7d4b986410448721bfa79a73f62b8}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!sample\+\_\+mean@{sample\+\_\+mean}}
+\index{sample\+\_\+mean@{sample\+\_\+mean}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{sample\+\_\+mean}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::sample\+\_\+mean (
+\begin{DoxyParamCaption}
+\item[{const int $\ast$const}]{seqs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a43d7d4b986410448721bfa79a73f62b8}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a0f16d083efcd9e6d096e0f533c3dbb42}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ virtual void {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_random_number_generator_test_a0f16d083efcd9e6d096e0f533c3dbb42}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a0d9fe79538e2af9fdd25f93a4fe3efe8}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!data\+\_\+@{data\+\_\+}}
+\index{data\+\_\+@{data\+\_\+}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{data\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::data\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a0d9fe79538e2af9fdd25f93a4fe3efe8}
+\hypertarget{classcaffe_1_1_random_number_generator_test_aa5d1f3c85e7b05ddae63a96ef858f208}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!data\+\_\+2\+\_\+@{data\+\_\+2\+\_\+}}
+\index{data\+\_\+2\+\_\+@{data\+\_\+2\+\_\+}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{data\+\_\+2\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::data\+\_\+2\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_aa5d1f3c85e7b05ddae63a96ef858f208}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a1db28be8828105cc9c187fc6717eef0a}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!int\+\_\+data\+\_\+@{int\+\_\+data\+\_\+}}
+\index{int\+\_\+data\+\_\+@{int\+\_\+data\+\_\+}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{int\+\_\+data\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::int\+\_\+data\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a1db28be8828105cc9c187fc6717eef0a}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a766746e10a61c6853731eac979c42c55}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!int\+\_\+data\+\_\+2\+\_\+@{int\+\_\+data\+\_\+2\+\_\+}}
+\index{int\+\_\+data\+\_\+2\+\_\+@{int\+\_\+data\+\_\+2\+\_\+}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{int\+\_\+data\+\_\+2\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::int\+\_\+data\+\_\+2\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a766746e10a61c6853731eac979c42c55}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a7af6670320b4dd8b29edd00fcd33c899}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!mean\+\_\+bound\+\_\+multiplier\+\_\+@{mean\+\_\+bound\+\_\+multiplier\+\_\+}}
+\index{mean\+\_\+bound\+\_\+multiplier\+\_\+@{mean\+\_\+bound\+\_\+multiplier\+\_\+}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{mean\+\_\+bound\+\_\+multiplier\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::mean\+\_\+bound\+\_\+multiplier\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a7af6670320b4dd8b29edd00fcd33c899}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a039d6584b589e0f3e87d215c7a230fce}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!num\+\_\+above\+\_\+mean@{num\+\_\+above\+\_\+mean}}
+\index{num\+\_\+above\+\_\+mean@{num\+\_\+above\+\_\+mean}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{num\+\_\+above\+\_\+mean}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::num\+\_\+above\+\_\+mean\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a039d6584b589e0f3e87d215c7a230fce}
+\hypertarget{classcaffe_1_1_random_number_generator_test_ab2744cd1e3f41449e2b4b2ea9087f458}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!num\+\_\+below\+\_\+mean@{num\+\_\+below\+\_\+mean}}
+\index{num\+\_\+below\+\_\+mean@{num\+\_\+below\+\_\+mean}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{num\+\_\+below\+\_\+mean}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::num\+\_\+below\+\_\+mean\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_ab2744cd1e3f41449e2b4b2ea9087f458}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a1e16c55d83c076ffe898f1db6f7cfc1d}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!sample\+\_\+size\+\_\+@{sample\+\_\+size\+\_\+}}
+\index{sample\+\_\+size\+\_\+@{sample\+\_\+size\+\_\+}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{sample\+\_\+size\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ size\+\_\+t {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::sample\+\_\+size\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a1e16c55d83c076ffe898f1db6f7cfc1d}
+\hypertarget{classcaffe_1_1_random_number_generator_test_a8975ddeeefd466b91f1b39db1e526436}{\index{caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}!seed\+\_\+@{seed\+\_\+}}
+\index{seed\+\_\+@{seed\+\_\+}!caffe\+::\+Random\+Number\+Generator\+Test@{caffe\+::\+Random\+Number\+Generator\+Test}}
+\subsubsection[{seed\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ uint32\+\_\+t {\bf caffe\+::\+Random\+Number\+Generator\+Test}$<$ Dtype $>$\+::seed\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_random_number_generator_test_a8975ddeeefd466b91f1b39db1e526436}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/caffe/test/\hyperlink{test__random__number__generator_8cpp}{test\+\_\+random\+\_\+number\+\_\+generator.\+cpp}\end{DoxyCompactItemize}

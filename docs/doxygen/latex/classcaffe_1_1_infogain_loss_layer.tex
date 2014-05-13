@@ -1,0 +1,94 @@
+\hypertarget{classcaffe_1_1_infogain_loss_layer}{\section{caffe\+:\+:Infogain\+Loss\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_infogain_loss_layer}\index{caffe\+::\+Infogain\+Loss\+Layer$<$ Dtype $>$@{caffe\+::\+Infogain\+Loss\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Infogain\+Loss\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_infogain_loss_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_infogain_loss_layer_ac2269ba8dc7d18fa8fab90ea9f295784}{Infogain\+Loss\+Layer} (const Layer\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_infogain_loss_layer_a22a1826f68b20911bcd2941e2284fd9e}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_infogain_loss_layer_ab5a8e36c29baa36e34b81a06d04043b6}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_infogain_loss_layer_a3fea9231eb9c3f1cd2f3989c54e475a8}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ \hyperlink{classcaffe_1_1_infogain_loss_layer_a2d9ffe8c64b096042cc75fced30dcaca}{infogain\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_infogain_loss_layer_ac2269ba8dc7d18fa8fab90ea9f295784}{\index{caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}!Infogain\+Loss\+Layer@{Infogain\+Loss\+Layer}}
+\index{Infogain\+Loss\+Layer@{Infogain\+Loss\+Layer}!caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}}
+\subsubsection[{Infogain\+Loss\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Infogain\+Loss\+Layer}$<$ Dtype $>$\+::{\bf Infogain\+Loss\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_infogain_loss_layer_ac2269ba8dc7d18fa8fab90ea9f295784}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_infogain_loss_layer_a3fea9231eb9c3f1cd2f3989c54e475a8}{\index{caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Infogain\+Loss\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_infogain_loss_layer_a3fea9231eb9c3f1cd2f3989c54e475a8}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_infogain_loss_layer_ab5a8e36c29baa36e34b81a06d04043b6}{\index{caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Infogain\+Loss\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_infogain_loss_layer_ab5a8e36c29baa36e34b81a06d04043b6}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_infogain_loss_layer_a22a1826f68b20911bcd2941e2284fd9e}{\index{caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Infogain\+Loss\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_infogain_loss_layer_a22a1826f68b20911bcd2941e2284fd9e}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_infogain_loss_layer_a2d9ffe8c64b096042cc75fced30dcaca}{\index{caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}!infogain\+\_\+@{infogain\+\_\+}}
+\index{infogain\+\_\+@{infogain\+\_\+}!caffe\+::\+Infogain\+Loss\+Layer@{caffe\+::\+Infogain\+Loss\+Layer}}
+\subsubsection[{infogain\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf Blob}$<$Dtype$>$ {\bf caffe\+::\+Infogain\+Loss\+Layer}$<$ Dtype $>$\+::infogain\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_infogain_loss_layer_a2d9ffe8c64b096042cc75fced30dcaca}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{loss__layer_8cpp}{loss\+\_\+layer.\+cpp}\end{DoxyCompactItemize}

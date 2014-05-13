@@ -1,0 +1,129 @@
+\hypertarget{classcaffe_1_1_softmax_layer}{\section{caffe\+:\+:Softmax\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_softmax_layer}\index{caffe\+::\+Softmax\+Layer$<$ Dtype $>$@{caffe\+::\+Softmax\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Softmax\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_softmax_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_softmax_layer_a6a3b60c74c2c48e8d5f65595ec1b4268}{Softmax\+Layer} (const Layer\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_softmax_layer_ac6d690c48e66fa79f42938349e99a2e2}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_softmax_layer_a11afab015d5240699e45c44b5c4b64ff}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_softmax_layer_a37ede6eb847d766731b833e2f8923219}{Forward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_softmax_layer_a2f318816073f4585d6b84168fd2ce418}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+virtual void \hyperlink{classcaffe_1_1_softmax_layer_a46febb93e499d1fccd68f406a3dd4bcb}{Backward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ \hyperlink{classcaffe_1_1_softmax_layer_a3bfc4000b464ab32c73060a2d5c4e426}{sum\+\_\+multiplier\+\_\+}
+\item 
+\hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ \hyperlink{classcaffe_1_1_softmax_layer_a22a5348d7a31c512ac9d5dcfc066d4b1}{scale\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_softmax_layer_a6a3b60c74c2c48e8d5f65595ec1b4268}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!Softmax\+Layer@{Softmax\+Layer}}
+\index{Softmax\+Layer@{Softmax\+Layer}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{Softmax\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::{\bf Softmax\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_softmax_layer_a6a3b60c74c2c48e8d5f65595ec1b4268}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_softmax_layer_a2f318816073f4585d6b84168fd2ce418}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_softmax_layer_a2f318816073f4585d6b84168fd2ce418}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_softmax_layer_a46febb93e499d1fccd68f406a3dd4bcb}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!Backward\+\_\+gpu@{Backward\+\_\+gpu}}
+\index{Backward\+\_\+gpu@{Backward\+\_\+gpu}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{Backward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::Backward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_softmax_layer_a46febb93e499d1fccd68f406a3dd4bcb}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_softmax_layer_a11afab015d5240699e45c44b5c4b64ff}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_softmax_layer_a11afab015d5240699e45c44b5c4b64ff}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_softmax_layer_a37ede6eb847d766731b833e2f8923219}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!Forward\+\_\+gpu@{Forward\+\_\+gpu}}
+\index{Forward\+\_\+gpu@{Forward\+\_\+gpu}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{Forward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::Forward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_softmax_layer_a37ede6eb847d766731b833e2f8923219}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_softmax_layer_ac6d690c48e66fa79f42938349e99a2e2}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_softmax_layer_ac6d690c48e66fa79f42938349e99a2e2}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_softmax_layer_a22a5348d7a31c512ac9d5dcfc066d4b1}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!scale\+\_\+@{scale\+\_\+}}
+\index{scale\+\_\+@{scale\+\_\+}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{scale\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf Blob}$<$Dtype$>$ {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::scale\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_softmax_layer_a22a5348d7a31c512ac9d5dcfc066d4b1}
+\hypertarget{classcaffe_1_1_softmax_layer_a3bfc4000b464ab32c73060a2d5c4e426}{\index{caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}!sum\+\_\+multiplier\+\_\+@{sum\+\_\+multiplier\+\_\+}}
+\index{sum\+\_\+multiplier\+\_\+@{sum\+\_\+multiplier\+\_\+}!caffe\+::\+Softmax\+Layer@{caffe\+::\+Softmax\+Layer}}
+\subsubsection[{sum\+\_\+multiplier\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf Blob}$<$Dtype$>$ {\bf caffe\+::\+Softmax\+Layer}$<$ Dtype $>$\+::sum\+\_\+multiplier\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_softmax_layer_a3bfc4000b464ab32c73060a2d5c4e426}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{softmax__layer_8cpp}{softmax\+\_\+layer.\+cpp}\item 
+src/caffe/layers/\hyperlink{softmax__layer_8cu}{softmax\+\_\+layer.\+cu}\end{DoxyCompactItemize}

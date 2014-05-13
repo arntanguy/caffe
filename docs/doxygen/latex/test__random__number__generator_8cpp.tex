@@ -1,0 +1,62 @@
+\hypertarget{test__random__number__generator_8cpp}{\section{src/caffe/test/test\+\_\+random\+\_\+number\+\_\+generator.cpp File Reference}
+\label{test__random__number__generator_8cpp}\index{src/caffe/test/test\+\_\+random\+\_\+number\+\_\+generator.\+cpp@{src/caffe/test/test\+\_\+random\+\_\+number\+\_\+generator.\+cpp}}
+}
+{\ttfamily \#include $<$cuda\+\_\+runtime.\+h$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include \char`\"{}gtest/gtest.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/syncedmem.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/math\+\_\+functions.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/test/test\+\_\+caffe\+\_\+main.\+hpp\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcaffe_1_1_random_number_generator_test}{caffe\+::\+Random\+Number\+Generator\+Test$<$ Dtype $>$}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacecaffe_a337efb6ddeb6d3bd5e213b611a438194}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T\+\_\+\+C\+A\+S\+E} (Random\+Number\+Generator\+Test, Dtypes)
+\item 
+\hyperlink{namespacecaffe_a7582b16a07d2d730d02b06e49d1ff9af}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Gaussian)
+\item 
+\hyperlink{namespacecaffe_abd7fca68a0a0cdb31958b99041800780}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Gaussian2)
+\item 
+\hyperlink{namespacecaffe_aae0f55793eeea20a85eabcb3920a0231}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform)
+\item 
+\hyperlink{namespacecaffe_a775aa1f3a6240a60d51d269f0e639acf}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform2)
+\item 
+\hyperlink{namespacecaffe_a9b14f98af65e2b1598ccb0b6a234e17b}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Bernoulli)
+\item 
+\hyperlink{namespacecaffe_a05591495ffdafc5579f8861530d2736c}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Bernoulli2)
+\item 
+\hyperlink{namespacecaffe_a4e1e79387cc1a8e137d5b705cebf798f}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Gaussian\+Times\+Gaussian)
+\item 
+\hyperlink{namespacecaffe_aa30ff03a25431ac45216cfddc9ac96b6}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform\+Times\+Uniform)
+\item 
+\hyperlink{namespacecaffe_a68984fa7d28ecc1f0e4351145f71718f}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Gaussian\+Times\+Bernoulli)
+\item 
+\hyperlink{namespacecaffe_a000e358a08b2d2439ed8ce703d774116}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform\+Times\+Bernoulli)
+\item 
+\hyperlink{namespacecaffe_a21d86d58edb92bd3ff4f26425ec88f8c}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Bernoulli\+Times\+Bernoulli)
+\item 
+\hyperlink{namespacecaffe_a02bc709f94e8d01e51dc13682e192f8a}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Gaussian\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a9f6f159cf788fba69529ef1fcd435c66}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Gaussian2\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a2220590a22a84d2565d28f56d54b4b84}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a8e3d3ed214f3feb876c187fffe3490a1}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform2\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_abacbd04f25d2b779004ab46aade1df5b}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform\+Int\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a16863d237a8ace81d249bf1554e1c586}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Gaussian\+Times\+Gaussian\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a59dc3ed12ecc3b1967f4da4714073710}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Random\+Number\+Generator\+Test, Test\+Rng\+Uniform\+Times\+Uniform\+G\+P\+U)
+\end{DoxyCompactItemize}

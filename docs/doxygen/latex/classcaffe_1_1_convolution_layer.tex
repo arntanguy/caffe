@@ -1,0 +1,194 @@
+\hypertarget{classcaffe_1_1_convolution_layer}{\section{caffe\+:\+:Convolution\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_convolution_layer}\index{caffe\+::\+Convolution\+Layer$<$ Dtype $>$@{caffe\+::\+Convolution\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Convolution\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_convolution_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_convolution_layer_ad27360afd7729001b9e4f1d8c8401866}{Convolution\+Layer} (const Layer\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_convolution_layer_ad3eebbeb87db98a784aea2ddd8e8199d}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_convolution_layer_a53eb4114d914f019bc873818d4f8e53b}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_convolution_layer_a1feac725539612918553e6b7bf299b4b}{Forward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_convolution_layer_a977898d74cd37fa2557f74322d419575}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+virtual void \hyperlink{classcaffe_1_1_convolution_layer_a451a90070f9600b3bc33e0a9f9356ab2}{Backward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_aa1ca915eb8f781f4b168aaf21f39894b}{kernel\+\_\+size\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_a3ba44963cfa4f1bbcdf141d0199bc493}{stride\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_a6976c8be8d083e9ebe44756b5bc6479b}{num\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_ad70d4cbdcb75695b05b13bc479445aec}{channels\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_aba61b8e2065eda304e35fa3fa753eb80}{pad\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_a647a6b1172a630ac5f8b8eee9ef4e7b2}{height\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_a8286a1369f876ad29cea7f3dcca4a3a7}{width\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_af58ade65cda5954b9467f82df8999b89}{num\+\_\+output\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_a0a6f9c53ba515998258a98d523ff72b0}{group\+\_\+}
+\item 
+\hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ \hyperlink{classcaffe_1_1_convolution_layer_a26feaeca8bbd36a64e782ab2e12b46d2}{col\+\_\+buffer\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_synced_memory}{Synced\+Memory} $>$ \hyperlink{classcaffe_1_1_convolution_layer_a587cf49430daaacbd570e6a97c4364d2}{bias\+\_\+multiplier\+\_\+}
+\item 
+bool \hyperlink{classcaffe_1_1_convolution_layer_a0e8fbac1d24ba656fa6593191b21b32b}{bias\+\_\+term\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_a6a5386d7cc7b6b53653cdc9d17925116}{M\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_a917cf494c7845d3be0234dad754d4f49}{K\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_convolution_layer_ad10263fbb69959ac83dee14deadc5f61}{N\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_convolution_layer_ad27360afd7729001b9e4f1d8c8401866}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!Convolution\+Layer@{Convolution\+Layer}}
+\index{Convolution\+Layer@{Convolution\+Layer}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{Convolution\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::{\bf Convolution\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_convolution_layer_ad27360afd7729001b9e4f1d8c8401866}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_convolution_layer_a977898d74cd37fa2557f74322d419575}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_convolution_layer_a977898d74cd37fa2557f74322d419575}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_convolution_layer_a451a90070f9600b3bc33e0a9f9356ab2}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!Backward\+\_\+gpu@{Backward\+\_\+gpu}}
+\index{Backward\+\_\+gpu@{Backward\+\_\+gpu}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{Backward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::Backward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_convolution_layer_a451a90070f9600b3bc33e0a9f9356ab2}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_convolution_layer_a53eb4114d914f019bc873818d4f8e53b}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_convolution_layer_a53eb4114d914f019bc873818d4f8e53b}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_convolution_layer_a1feac725539612918553e6b7bf299b4b}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!Forward\+\_\+gpu@{Forward\+\_\+gpu}}
+\index{Forward\+\_\+gpu@{Forward\+\_\+gpu}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{Forward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::Forward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_convolution_layer_a1feac725539612918553e6b7bf299b4b}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_convolution_layer_ad3eebbeb87db98a784aea2ddd8e8199d}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_convolution_layer_ad3eebbeb87db98a784aea2ddd8e8199d}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_convolution_layer_a587cf49430daaacbd570e6a97c4364d2}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!bias\+\_\+multiplier\+\_\+@{bias\+\_\+multiplier\+\_\+}}
+\index{bias\+\_\+multiplier\+\_\+@{bias\+\_\+multiplier\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{bias\+\_\+multiplier\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Synced\+Memory}$>$ {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::bias\+\_\+multiplier\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a587cf49430daaacbd570e6a97c4364d2}
+\hypertarget{classcaffe_1_1_convolution_layer_a0e8fbac1d24ba656fa6593191b21b32b}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!bias\+\_\+term\+\_\+@{bias\+\_\+term\+\_\+}}
+\index{bias\+\_\+term\+\_\+@{bias\+\_\+term\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{bias\+\_\+term\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ bool {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::bias\+\_\+term\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a0e8fbac1d24ba656fa6593191b21b32b}
+\hypertarget{classcaffe_1_1_convolution_layer_ad70d4cbdcb75695b05b13bc479445aec}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!channels\+\_\+@{channels\+\_\+}}
+\index{channels\+\_\+@{channels\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{channels\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::channels\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_ad70d4cbdcb75695b05b13bc479445aec}
+\hypertarget{classcaffe_1_1_convolution_layer_a26feaeca8bbd36a64e782ab2e12b46d2}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!col\+\_\+buffer\+\_\+@{col\+\_\+buffer\+\_\+}}
+\index{col\+\_\+buffer\+\_\+@{col\+\_\+buffer\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{col\+\_\+buffer\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf Blob}$<$Dtype$>$ {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::col\+\_\+buffer\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a26feaeca8bbd36a64e782ab2e12b46d2}
+\hypertarget{classcaffe_1_1_convolution_layer_a0a6f9c53ba515998258a98d523ff72b0}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!group\+\_\+@{group\+\_\+}}
+\index{group\+\_\+@{group\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{group\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::group\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a0a6f9c53ba515998258a98d523ff72b0}
+\hypertarget{classcaffe_1_1_convolution_layer_a647a6b1172a630ac5f8b8eee9ef4e7b2}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!height\+\_\+@{height\+\_\+}}
+\index{height\+\_\+@{height\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{height\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::height\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a647a6b1172a630ac5f8b8eee9ef4e7b2}
+\hypertarget{classcaffe_1_1_convolution_layer_a917cf494c7845d3be0234dad754d4f49}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!K\+\_\+@{K\+\_\+}}
+\index{K\+\_\+@{K\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{K\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::K\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a917cf494c7845d3be0234dad754d4f49}
+\hypertarget{classcaffe_1_1_convolution_layer_aa1ca915eb8f781f4b168aaf21f39894b}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!kernel\+\_\+size\+\_\+@{kernel\+\_\+size\+\_\+}}
+\index{kernel\+\_\+size\+\_\+@{kernel\+\_\+size\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{kernel\+\_\+size\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::kernel\+\_\+size\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_aa1ca915eb8f781f4b168aaf21f39894b}
+\hypertarget{classcaffe_1_1_convolution_layer_a6a5386d7cc7b6b53653cdc9d17925116}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!M\+\_\+@{M\+\_\+}}
+\index{M\+\_\+@{M\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{M\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::M\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a6a5386d7cc7b6b53653cdc9d17925116}
+\hypertarget{classcaffe_1_1_convolution_layer_ad10263fbb69959ac83dee14deadc5f61}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!N\+\_\+@{N\+\_\+}}
+\index{N\+\_\+@{N\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{N\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::N\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_ad10263fbb69959ac83dee14deadc5f61}
+\hypertarget{classcaffe_1_1_convolution_layer_a6976c8be8d083e9ebe44756b5bc6479b}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!num\+\_\+@{num\+\_\+}}
+\index{num\+\_\+@{num\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{num\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::num\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a6976c8be8d083e9ebe44756b5bc6479b}
+\hypertarget{classcaffe_1_1_convolution_layer_af58ade65cda5954b9467f82df8999b89}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!num\+\_\+output\+\_\+@{num\+\_\+output\+\_\+}}
+\index{num\+\_\+output\+\_\+@{num\+\_\+output\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{num\+\_\+output\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::num\+\_\+output\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_af58ade65cda5954b9467f82df8999b89}
+\hypertarget{classcaffe_1_1_convolution_layer_aba61b8e2065eda304e35fa3fa753eb80}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!pad\+\_\+@{pad\+\_\+}}
+\index{pad\+\_\+@{pad\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{pad\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::pad\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_aba61b8e2065eda304e35fa3fa753eb80}
+\hypertarget{classcaffe_1_1_convolution_layer_a3ba44963cfa4f1bbcdf141d0199bc493}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!stride\+\_\+@{stride\+\_\+}}
+\index{stride\+\_\+@{stride\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{stride\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::stride\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a3ba44963cfa4f1bbcdf141d0199bc493}
+\hypertarget{classcaffe_1_1_convolution_layer_a8286a1369f876ad29cea7f3dcca4a3a7}{\index{caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}!width\+\_\+@{width\+\_\+}}
+\index{width\+\_\+@{width\+\_\+}!caffe\+::\+Convolution\+Layer@{caffe\+::\+Convolution\+Layer}}
+\subsubsection[{width\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Convolution\+Layer}$<$ Dtype $>$\+::width\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_convolution_layer_a8286a1369f876ad29cea7f3dcca4a3a7}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{conv__layer_8cpp}{conv\+\_\+layer.\+cpp}\item 
+src/caffe/layers/\hyperlink{conv__layer_8cu}{conv\+\_\+layer.\+cu}\end{DoxyCompactItemize}

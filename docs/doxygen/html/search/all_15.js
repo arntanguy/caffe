@@ -1,0 +1,15 @@
+var searchData=
+[
+  ['width',['width',['../classcaffe_1_1_blob.html#a781b5410b7894455a85cd283cf8ee02a',1,'caffe::Blob::width()'],['../namespacegenerate__sample__data.html#a2264268ecd1bdb7d0617a9c36ed42939',1,'generate_sample_data.width()']]],
+  ['width_5f',['width_',['../classcaffe_1_1_h_d_f5_output_layer_test.html#a867e7d0a5fc961566ed6be297f292401',1,'caffe::HDF5OutputLayerTest::width_()'],['../classcaffe_1_1_memory_data_layer_test.html#a3488d10fa611d4deadbf238c288e1572',1,'caffe::MemoryDataLayerTest::width_()'],['../classcaffe_1_1_blob.html#a5ea591a12504b44d94e3715d88fb37a9',1,'caffe::Blob::width_()'],['../classcaffe_1_1_concat_layer.html#aae82aa5826cdd79a27c35da49728be4c',1,'caffe::ConcatLayer::width_()'],['../classcaffe_1_1_convolution_layer.html#a8286a1369f876ad29cea7f3dcca4a3a7',1,'caffe::ConvolutionLayer::width_()'],['../classcaffe_1_1_im2col_layer.html#a6d888c45c786826e1acabd97213e45a6',1,'caffe::Im2colLayer::width_()'],['../classcaffe_1_1_l_r_n_layer.html#a5b12d5c779f16e9b1caf4c3a6d581e09',1,'caffe::LRNLayer::width_()'],['../classcaffe_1_1_pooling_layer.html#a812efd53d8f67f250beeb7c79cc74cbe',1,'caffe::PoolingLayer::width_()']]],
+  ['window_5fdata_5flayer_2ecpp',['window_data_layer.cpp',['../window__data__layer_8cpp.html',1,'']]],
+  ['window_5fdata_5flayer_2ecu',['window_data_layer.cu',['../window__data__layer_8cu.html',1,'']]],
+  ['windowdatalayer',['WindowDataLayer',['../classcaffe_1_1_window_data_layer.html',1,'caffe']]],
+  ['windowdatalayer',['WindowDataLayer',['../classcaffe_1_1_window_data_layer.html#a747fce6a6cfc2bcc05f9422d8b1cba97',1,'caffe::WindowDataLayer']]],
+  ['windowdatalayerprefetch',['WindowDataLayerPrefetch',['../classcaffe_1_1_window_data_layer.html#a83105f7f96bbfc7981db9ce1d9bce98d',1,'caffe::WindowDataLayer::WindowDataLayerPrefetch()'],['../namespacecaffe.html#a3d9c1901651a78a2faebd1219bb08956',1,'caffe::WindowDataLayerPrefetch()']]],
+  ['windowfield',['WindowField',['../classcaffe_1_1_window_data_layer.html#a9ca81b56644734daf53ea5ac8ad5ef07',1,'caffe::WindowDataLayer']]],
+  ['withinchannelbackward',['WithinChannelBackward',['../classcaffe_1_1_l_r_n_layer.html#aef8f2723840441b902addf88aa309e07',1,'caffe::LRNLayer']]],
+  ['withinchannelforward',['WithinChannelForward',['../classcaffe_1_1_l_r_n_layer.html#a6f86e75a6b68f47e9e528644254057c2',1,'caffe::LRNLayer']]],
+  ['writeprototobinaryfile',['WriteProtoToBinaryFile',['../namespacecaffe.html#a6e669ab7a89a744359cbb041021b6332',1,'caffe::WriteProtoToBinaryFile(const Message &amp;proto, const char *filename)'],['../namespacecaffe.html#a982f1288dee62760b6599c0948652d6d',1,'caffe::WriteProtoToBinaryFile(const Message &amp;proto, const string &amp;filename)']]],
+  ['writeprotototextfile',['WriteProtoToTextFile',['../namespacecaffe.html#aa2f483e4300ceff4497891db10371056',1,'caffe::WriteProtoToTextFile(const Message &amp;proto, const char *filename)'],['../namespacecaffe.html#a06a4e7ad1a73458c73e45bbdd2eb207d',1,'caffe::WriteProtoToTextFile(const Message &amp;proto, const string &amp;filename)']]]
+];

@@ -1,0 +1,215 @@
+\hypertarget{classcaffe_1_1_caffe}{\section{caffe\+:\+:Caffe Class Reference}
+\label{classcaffe_1_1_caffe}\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+}
+
+
+{\ttfamily \#include $<$common.\+hpp$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcaffe_1_1_caffe_1_1_r_n_g}{R\+N\+G}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4e}{Brew} \{ \hyperlink{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4ea63f3aab774a57c836a8ec3b306caa150}{C\+P\+U}, 
+\hyperlink{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4ea1c6fc57b019c260dbb06627208cbaeb8}{G\+P\+U}
+ \}
+\item 
+enum \hyperlink{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9}{Phase} \{ \hyperlink{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9a52f1a7dbb49529ada6072caad00a0e5f}{T\+R\+A\+I\+N}, 
+\hyperlink{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9acebef56fe5fe2d711e43fe18e779e116}{T\+E\+S\+T}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_caffe_a5b6a1c6daa535212b43ee7ad23942963}{$\sim$\+Caffe} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classcaffe_1_1_caffe}{Caffe} \& \hyperlink{classcaffe_1_1_caffe_a6a0a8e4ff537a038707f50f28f6ca65d}{Get} ()
+\item 
+static \hyperlink{classcaffe_1_1_caffe_1_1_r_n_g}{R\+N\+G} \& \hyperlink{classcaffe_1_1_caffe_aff31f4285d99f4254e2af4e40678bf5e}{rng\+\_\+stream} ()
+\item 
+static cublas\+Handle\+\_\+t \hyperlink{classcaffe_1_1_caffe_afbba8bb2af70b628eca89269b81c915f}{cublas\+\_\+handle} ()
+\item 
+static curand\+Generator\+\_\+t \hyperlink{classcaffe_1_1_caffe_a659f92f48f20d95c46c6629574a26c0f}{curand\+\_\+generator} ()
+\item 
+static \hyperlink{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4e}{Brew} \hyperlink{classcaffe_1_1_caffe_aa45214769b727ecd971e0d5ed8ffe96a}{mode} ()
+\item 
+static \hyperlink{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9}{Phase} \hyperlink{classcaffe_1_1_caffe_aa2727a8d4f9290dd2a750590a9c0ad08}{phase} ()
+\item 
+static void \hyperlink{classcaffe_1_1_caffe_a025008ff5854ba15e62138c81b7a140d}{set\+\_\+mode} (\hyperlink{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4e}{Brew} \hyperlink{classcaffe_1_1_caffe_aa45214769b727ecd971e0d5ed8ffe96a}{mode})
+\item 
+static void \hyperlink{classcaffe_1_1_caffe_ad1b7dfdc899fda430750adc24aca34f8}{set\+\_\+phase} (\hyperlink{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9}{Phase} \hyperlink{classcaffe_1_1_caffe_aa2727a8d4f9290dd2a750590a9c0ad08}{phase})
+\item 
+static void \hyperlink{classcaffe_1_1_caffe_a1f6f560b0f9f73a596284908ee44ecc7}{set\+\_\+random\+\_\+seed} (const unsigned int seed)
+\item 
+static void \hyperlink{classcaffe_1_1_caffe_ac95c04832bf528acb3ae8f1ffa5b6c11}{Set\+Device} (const int device\+\_\+id)
+\item 
+static void \hyperlink{classcaffe_1_1_caffe_a4af30f25dc929f2b9c1f195e1683a411}{Device\+Query} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+cublas\+Handle\+\_\+t \hyperlink{classcaffe_1_1_caffe_a5fb5298203759722a061644b508ddaeb}{cublas\+\_\+handle\+\_\+}
+\item 
+curand\+Generator\+\_\+t \hyperlink{classcaffe_1_1_caffe_a0d920ccea7282d5d88335847c0e9ca9e}{curand\+\_\+generator\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_caffe_1_1_r_n_g}{R\+N\+G} $>$ \hyperlink{classcaffe_1_1_caffe_a0c1d6159f6add0ae470af9a09836d979}{random\+\_\+generator\+\_\+}
+\item 
+\hyperlink{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4e}{Brew} \hyperlink{classcaffe_1_1_caffe_aef998c6b69827060630e21a8ccf8884e}{mode\+\_\+}
+\item 
+\hyperlink{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9}{Phase} \hyperlink{classcaffe_1_1_caffe_ad919ccd26b71547e009bac6debfcc05a}{phase\+\_\+}
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_caffe}{Caffe} $>$ \hyperlink{classcaffe_1_1_caffe_a74e06bec4b81b15e2064a216f33467b6}{singleton\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4e}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!Brew@{Brew}}
+\index{Brew@{Brew}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{Brew}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf caffe\+::\+Caffe\+::\+Brew}}}\label{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4e}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+P\+U@{C\+P\+U}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!C\+P\+U@{C\+P\+U}}\item[{\em 
+\hypertarget{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4ea63f3aab774a57c836a8ec3b306caa150}{C\+P\+U}\label{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4ea63f3aab774a57c836a8ec3b306caa150}
+}]\index{G\+P\+U@{G\+P\+U}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!G\+P\+U@{G\+P\+U}}\item[{\em 
+\hypertarget{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4ea1c6fc57b019c260dbb06627208cbaeb8}{G\+P\+U}\label{classcaffe_1_1_caffe_af8f607248c1f212be1f6f1c988d80e4ea1c6fc57b019c260dbb06627208cbaeb8}
+}]\end{description}
+\end{Desc}
+\hypertarget{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!Phase@{Phase}}
+\index{Phase@{Phase}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{Phase}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf caffe\+::\+Caffe\+::\+Phase}}}\label{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{T\+R\+A\+I\+N@{T\+R\+A\+I\+N}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!T\+R\+A\+I\+N@{T\+R\+A\+I\+N}}\item[{\em 
+\hypertarget{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9a52f1a7dbb49529ada6072caad00a0e5f}{T\+R\+A\+I\+N}\label{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9a52f1a7dbb49529ada6072caad00a0e5f}
+}]\index{T\+E\+S\+T@{T\+E\+S\+T}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!T\+E\+S\+T@{T\+E\+S\+T}}\item[{\em 
+\hypertarget{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9acebef56fe5fe2d711e43fe18e779e116}{T\+E\+S\+T}\label{classcaffe_1_1_caffe_ad2993dccc4a615c39259ed7f0d0e24e9acebef56fe5fe2d711e43fe18e779e116}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_caffe_a5b6a1c6daa535212b43ee7ad23942963}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!````~Caffe@{$\sim$\+Caffe}}
+\index{````~Caffe@{$\sim$\+Caffe}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{$\sim$\+Caffe}]{\setlength{\rightskip}{0pt plus 5cm}caffe\+::\+Caffe\+::$\sim$\+Caffe (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_caffe_a5b6a1c6daa535212b43ee7ad23942963}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_caffe_afbba8bb2af70b628eca89269b81c915f}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!cublas\+\_\+handle@{cublas\+\_\+handle}}
+\index{cublas\+\_\+handle@{cublas\+\_\+handle}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{cublas\+\_\+handle}]{\setlength{\rightskip}{0pt plus 5cm}static cublas\+Handle\+\_\+t caffe\+::\+Caffe\+::cublas\+\_\+handle (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_afbba8bb2af70b628eca89269b81c915f}
+\hypertarget{classcaffe_1_1_caffe_a659f92f48f20d95c46c6629574a26c0f}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!curand\+\_\+generator@{curand\+\_\+generator}}
+\index{curand\+\_\+generator@{curand\+\_\+generator}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{curand\+\_\+generator}]{\setlength{\rightskip}{0pt plus 5cm}static curand\+Generator\+\_\+t caffe\+::\+Caffe\+::curand\+\_\+generator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_a659f92f48f20d95c46c6629574a26c0f}
+\hypertarget{classcaffe_1_1_caffe_a4af30f25dc929f2b9c1f195e1683a411}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!Device\+Query@{Device\+Query}}
+\index{Device\+Query@{Device\+Query}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{Device\+Query}]{\setlength{\rightskip}{0pt plus 5cm}void caffe\+::\+Caffe\+::\+Device\+Query (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classcaffe_1_1_caffe_a4af30f25dc929f2b9c1f195e1683a411}
+\hypertarget{classcaffe_1_1_caffe_a6a0a8e4ff537a038707f50f28f6ca65d}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!Get@{Get}}
+\index{Get@{Get}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{Get}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Caffe}\& caffe\+::\+Caffe\+::\+Get (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_a6a0a8e4ff537a038707f50f28f6ca65d}
+\hypertarget{classcaffe_1_1_caffe_aa45214769b727ecd971e0d5ed8ffe96a}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!mode@{mode}}
+\index{mode@{mode}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{mode}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Brew} caffe\+::\+Caffe\+::mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_aa45214769b727ecd971e0d5ed8ffe96a}
+\hypertarget{classcaffe_1_1_caffe_aa2727a8d4f9290dd2a750590a9c0ad08}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!phase@{phase}}
+\index{phase@{phase}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{phase}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Phase} caffe\+::\+Caffe\+::phase (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_aa2727a8d4f9290dd2a750590a9c0ad08}
+\hypertarget{classcaffe_1_1_caffe_aff31f4285d99f4254e2af4e40678bf5e}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!rng\+\_\+stream@{rng\+\_\+stream}}
+\index{rng\+\_\+stream@{rng\+\_\+stream}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{rng\+\_\+stream}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf R\+N\+G}\& caffe\+::\+Caffe\+::rng\+\_\+stream (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_aff31f4285d99f4254e2af4e40678bf5e}
+\hypertarget{classcaffe_1_1_caffe_a025008ff5854ba15e62138c81b7a140d}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!set\+\_\+mode@{set\+\_\+mode}}
+\index{set\+\_\+mode@{set\+\_\+mode}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{set\+\_\+mode}]{\setlength{\rightskip}{0pt plus 5cm}static void caffe\+::\+Caffe\+::set\+\_\+mode (
+\begin{DoxyParamCaption}
+\item[{{\bf Brew}}]{mode}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_a025008ff5854ba15e62138c81b7a140d}
+\hypertarget{classcaffe_1_1_caffe_ad1b7dfdc899fda430750adc24aca34f8}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!set\+\_\+phase@{set\+\_\+phase}}
+\index{set\+\_\+phase@{set\+\_\+phase}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{set\+\_\+phase}]{\setlength{\rightskip}{0pt plus 5cm}static void caffe\+::\+Caffe\+::set\+\_\+phase (
+\begin{DoxyParamCaption}
+\item[{{\bf Phase}}]{phase}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{classcaffe_1_1_caffe_ad1b7dfdc899fda430750adc24aca34f8}
+\hypertarget{classcaffe_1_1_caffe_a1f6f560b0f9f73a596284908ee44ecc7}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!set\+\_\+random\+\_\+seed@{set\+\_\+random\+\_\+seed}}
+\index{set\+\_\+random\+\_\+seed@{set\+\_\+random\+\_\+seed}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{set\+\_\+random\+\_\+seed}]{\setlength{\rightskip}{0pt plus 5cm}void caffe\+::\+Caffe\+::set\+\_\+random\+\_\+seed (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{seed}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classcaffe_1_1_caffe_a1f6f560b0f9f73a596284908ee44ecc7}
+\hypertarget{classcaffe_1_1_caffe_ac95c04832bf528acb3ae8f1ffa5b6c11}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!Set\+Device@{Set\+Device}}
+\index{Set\+Device@{Set\+Device}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{Set\+Device}]{\setlength{\rightskip}{0pt plus 5cm}void caffe\+::\+Caffe\+::\+Set\+Device (
+\begin{DoxyParamCaption}
+\item[{const int}]{device\+\_\+id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classcaffe_1_1_caffe_ac95c04832bf528acb3ae8f1ffa5b6c11}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_caffe_a5fb5298203759722a061644b508ddaeb}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!cublas\+\_\+handle\+\_\+@{cublas\+\_\+handle\+\_\+}}
+\index{cublas\+\_\+handle\+\_\+@{cublas\+\_\+handle\+\_\+}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{cublas\+\_\+handle\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}cublas\+Handle\+\_\+t caffe\+::\+Caffe\+::cublas\+\_\+handle\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_caffe_a5fb5298203759722a061644b508ddaeb}
+\hypertarget{classcaffe_1_1_caffe_a0d920ccea7282d5d88335847c0e9ca9e}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!curand\+\_\+generator\+\_\+@{curand\+\_\+generator\+\_\+}}
+\index{curand\+\_\+generator\+\_\+@{curand\+\_\+generator\+\_\+}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{curand\+\_\+generator\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}curand\+Generator\+\_\+t caffe\+::\+Caffe\+::curand\+\_\+generator\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_caffe_a0d920ccea7282d5d88335847c0e9ca9e}
+\hypertarget{classcaffe_1_1_caffe_aef998c6b69827060630e21a8ccf8884e}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!mode\+\_\+@{mode\+\_\+}}
+\index{mode\+\_\+@{mode\+\_\+}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{mode\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Brew} caffe\+::\+Caffe\+::mode\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_caffe_aef998c6b69827060630e21a8ccf8884e}
+\hypertarget{classcaffe_1_1_caffe_ad919ccd26b71547e009bac6debfcc05a}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!phase\+\_\+@{phase\+\_\+}}
+\index{phase\+\_\+@{phase\+\_\+}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{phase\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Phase} caffe\+::\+Caffe\+::phase\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_caffe_ad919ccd26b71547e009bac6debfcc05a}
+\hypertarget{classcaffe_1_1_caffe_a0c1d6159f6add0ae470af9a09836d979}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!random\+\_\+generator\+\_\+@{random\+\_\+generator\+\_\+}}
+\index{random\+\_\+generator\+\_\+@{random\+\_\+generator\+\_\+}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{random\+\_\+generator\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}shared\+\_\+ptr$<${\bf R\+N\+G}$>$ caffe\+::\+Caffe\+::random\+\_\+generator\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_caffe_a0c1d6159f6add0ae470af9a09836d979}
+\hypertarget{classcaffe_1_1_caffe_a74e06bec4b81b15e2064a216f33467b6}{\index{caffe\+::\+Caffe@{caffe\+::\+Caffe}!singleton\+\_\+@{singleton\+\_\+}}
+\index{singleton\+\_\+@{singleton\+\_\+}!caffe\+::\+Caffe@{caffe\+::\+Caffe}}
+\subsubsection[{singleton\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}shared\+\_\+ptr$<$ {\bf Caffe} $>$ caffe\+::\+Caffe\+::singleton\+\_\+\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}}\label{classcaffe_1_1_caffe_a74e06bec4b81b15e2064a216f33467b6}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{common_8hpp}{common.\+hpp}\item 
+src/caffe/\hyperlink{common_8cpp}{common.\+cpp}\end{DoxyCompactItemize}

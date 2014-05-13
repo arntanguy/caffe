@@ -1,0 +1,27 @@
+\hypertarget{im2col_8cpp}{\section{src/caffe/util/im2col.cpp File Reference}
+\label{im2col_8cpp}\index{src/caffe/util/im2col.\+cpp@{src/caffe/util/im2col.\+cpp}}
+}
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include \char`\"{}caffe/util/im2col.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void \hyperlink{namespacecaffe_a1372d353fc4674a70e209164ebf13533}{caffe\+::im2col\+\_\+cpu} (const Dtype $\ast$data\+\_\+im, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, Dtype $\ast$data\+\_\+col)
+\item 
+template void \hyperlink{namespacecaffe_a31d0b7b6d4c28cfd96a220f48d88df9f}{caffe\+::im2col\+\_\+cpu$<$ float $>$} (const float $\ast$data\+\_\+im, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, float $\ast$data\+\_\+col)
+\item 
+template void \hyperlink{namespacecaffe_abc3bc513bb22741ac98db329d899349d}{caffe\+::im2col\+\_\+cpu$<$ double $>$} (const double $\ast$data\+\_\+im, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, double $\ast$data\+\_\+col)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void \hyperlink{namespacecaffe_aeb0e6b4078faacd2bf4d11dfce427946}{caffe\+::col2im\+\_\+cpu} (const Dtype $\ast$data\+\_\+col, const int channels, const int height, const int width, const int ksize, const int pad, const int stride, Dtype $\ast$data\+\_\+im)
+\item 
+template void \hyperlink{namespacecaffe_a8942c3fb0c87fb6d951d6d37a51b63e9}{caffe\+::col2im\+\_\+cpu$<$ float $>$} (const float $\ast$data\+\_\+col, const int channels, const int height, const int width, const int psize, const int pad, const int stride, float $\ast$data\+\_\+im)
+\item 
+template void \hyperlink{namespacecaffe_a41a9fdd9b353e79de4c3a45d9aa32252}{caffe\+::col2im\+\_\+cpu$<$ double $>$} (const double $\ast$data\+\_\+col, const int channels, const int height, const int width, const int psize, const int pad, const int stride, double $\ast$data\+\_\+im)
+\end{DoxyCompactItemize}

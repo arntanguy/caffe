@@ -1,0 +1,100 @@
+\href{http://caffe.berkeleyvision.org}{\tt Caffe\+: Convolutional Architecture for Fast Feature Extraction}
+
+Created by \href{http://daggerfs.com}{\tt Yangqing Jia}, U\+C Berkeley E\+E\+C\+S department. In active development by the Berkeley Vision and Learning Center (\href{http://bvlc.eecs.berkeley.edu/}{\tt B\+V\+L\+C}).
+
+\subsection*{Introduction}
+
+Caffe aims to provide computer vision scientists with a {\bfseries clean, modifiable implementation} of state-\/of-\/the-\/art deep learning algorithms. Network structure is easily specified in separate config files, with no mess of hard-\/coded parameters in the code. Python and Matlab wrappers are provided.
+
+At the same time, Caffe fits industry needs, with blazing fast C++/\+Cuda code for G\+P\+U computation. Caffe is currently the fastest G\+P\+U C\+N\+N implementation publicly available, and is able to process more than {\bfseries 40 million images per day} on a single N\+V\+I\+D\+I\+A K40 G\+P\+U (or 20 million per day on a K20)$\ast$.
+
+Caffe also provides {\bfseries seamless switching between C\+P\+U and G\+P\+U}, which allows one to train models with fast G\+P\+Us and then deploy them on non-\/\+G\+P\+U clusters with one line of code\+: {\ttfamily Caffe\+::set\+\_\+mode(\+Caffe\+::\+C\+P\+U)}.
+
+Even in C\+P\+U mode, computing predictions on an image takes only 20 ms when images are processed in batch mode.
+
+
+\begin{DoxyItemize}
+\item \href{https://www.dropbox.com/s/10fx16yp5etb8dv/caffe-presentation.pdf}{\tt Caffe introductory presentation}
+\item \href{http://caffe.berkeleyvision.org/installation.html}{\tt Installation instructions}
+\item When measured with the \href{http://www.image-net.org/challenges/LSVRC/2012/supervision.pdf}{\tt Super\+Vision} model that won the Image\+Net Large Scale Visual Recognition Challenge 2012.
+\end{DoxyItemize}
+
+\subsection*{License}
+
+Caffe is B\+S\+D 2-\/\+Clause licensed (refer to the \href{http://caffe.berkeleyvision.org/license.html}{\tt L\+I\+C\+E\+N\+S\+E} for details).
+
+The pretrained models published by the B\+V\+L\+C, such as the \href{https://www.dropbox.com/s/n3jups0gr7uj0dv/caffe_reference_imagenet_model}{\tt Caffe reference Image\+Net model} are licensed for academic research / non-\/commercial use only. However, Caffe is a full toolkit for model training, so start brewing your own Caffe model today!
+
+\subsection*{Citing Caffe}
+
+Please kindly cite Caffe in your publications if it helps your research\+: \begin{DoxyVerb}@misc{Jia13caffe,
+  Author = {Yangqing Jia},
+  Title = { {Caffe}: An Open Source Convolutional Architecture for Fast Feature Embedding},
+  Year  = {2013},
+  Howpublished = {\url{http://caffe.berkeleyvision.org/}}
+}
+\end{DoxyVerb}
+
+
+\subsection*{Documentation}
+
+Tutorials and general documentation are written in Markdown format in the {\ttfamily docs/} folder. While the format is quite easy to read directly, you may prefer to view the whole thing as a website. To do so, simply run {\ttfamily jekyll serve -\/s docs} and view the documentation website at {\ttfamily \href{http://0.0.0.0:4000}{\tt http\+://0.\+0.\+0.\+0\+:4000}} (to get \href{http://jekyllrb.com/}{\tt jekyll}, you must have ruby and do {\ttfamily gem install jekyll}).
+
+We strive to provide provide lots of usage examples, and to document all code in docstrings. We'd appreciate your contribution to this effort!
+
+\subsection*{Development}
+
+Caffe is developed with active participation of the community by the \href{http://bvlc.eecs.berkeley.edu/}{\tt Berkeley Vision and Learning Center}. We welcome all contributions!
+
+\subsubsection*{The release cycle}
+
+
+\begin{DoxyItemize}
+\item The {\ttfamily dev} branch is for new development, including community contributions. We aim to keep it in a functional state, but large changes may occur and things may get broken every now and then. Use this if you want the \char`\"{}bleeding edge\char`\"{}.
+\item The {\ttfamily master} branch is handled by B\+V\+L\+C, which will integrate changes from {\ttfamily dev} on a roughly monthly schedule, giving it a release tag. Use this if you want more stability.
+\end{DoxyItemize}
+
+\subsubsection*{Setting priorities}
+
+
+\begin{DoxyItemize}
+\item Make Git\+Hub Issues for bugs, features you'd like to see, questions, etc.
+\item Development work is guided by \href{https://github.com/BVLC/caffe/issues?milestone=1}{\tt milestones}, which are sets of issues selected for concurrent release (integration from {\ttfamily dev} to {\ttfamily master}).
+\item Please note that since the core developers are largely researchers, we may work on a feature in isolation from the open-\/source community for some time before releasing it, so as to claim honest academic contribution. We do release it as soon as a reasonable technical report may be written about the work, and we still aim to inform the community of ongoing development through Issues.
+\end{DoxyItemize}
+
+\subsubsection*{Contibuting}
+
+
+\begin{DoxyItemize}
+\item Do new development in \href{https://www.atlassian.com/git/workflows#!workflow-feature-branch}{\tt feature branches} with descriptive names.
+\item Bring your work up-\/to-\/date by \href{http://git-scm.com/book/en/Git-Branching-Rebasing}{\tt rebasing} onto the latest {\ttfamily dev}. (Polish your changes by \href{https://help.github.com/articles/interactive-rebase}{\tt interactive rebase}, if you'd like.)
+\item \href{https://help.github.com/articles/using-pull-requests}{\tt Pull request} your contribution to B\+V\+L\+C/caffe's {\ttfamily dev} branch for discussion and review.
+\begin{DoxyItemize}
+\item P\+Rs should live fast, die young, and leave a beautiful merge. Pull request sooner than later so that discussion can guide development.
+\item Code must be accompanied by documentation and tests at all times.
+\item Only fast-\/forward merges will be accepted.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+See our \href{http://caffe.berkeleyvision.org/development.html}{\tt development guidelines} for further details–the more closely these are followed, the sooner your work will be merged.
+
+\paragraph*{\href{https://github.com/shelhamer}{\tt Shelhamer's} “life of a branch in four acts”}
+
+Make the {\ttfamily feature} branch off of the latest {\ttfamily bvlc/dev} ``` git checkout dev git pull upstream dev git checkout -\/b feature \section*{do your work, make commits}
+
+```
+
+Prepare to merge by rebasing your branch on the latest {\ttfamily bvlc/dev} ``` \section*{make sure dev is fresh}
+
+git checkout dev git pull upstream dev \section*{rebase your branch on the tip of dev}
+
+git checkout feature git rebase dev ```
+
+Push your branch to pull request it into {\ttfamily dev} ``` git push origin feature \section*{...make pull request to dev...}
+
+```
+
+Now make a pull request! You can do this from the command line ({\ttfamily git pull-\/request -\/b dev}) if you install \href{https://github.com/github/hub}{\tt hub}.
+
+The pull request of {\ttfamily feature} into {\ttfamily dev} will be a clean merge. Applause. 

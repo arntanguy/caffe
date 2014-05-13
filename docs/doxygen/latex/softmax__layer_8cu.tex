@@ -1,0 +1,26 @@
+\hypertarget{softmax__layer_8cu}{\section{src/caffe/layers/softmax\+\_\+layer.cu File Reference}
+\label{softmax__layer_8cu}\index{src/caffe/layers/softmax\+\_\+layer.\+cu@{src/caffe/layers/softmax\+\_\+layer.\+cu}}
+}
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$cfloat$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}thrust/device\+\_\+vector.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/layer.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/vision\+\_\+layers.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/math\+\_\+functions.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_ada77c3264b07ddfc2c1753c7331b8b09}{caffe\+::kernel\+\_\+get\+\_\+max} (const int num, const int dim, const Dtype $\ast$data, Dtype $\ast$out)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a11ed3b27ece2c308c54197b97026736b}{caffe\+::kernel\+\_\+softmax\+\_\+div} (const int num, const int dim, const Dtype $\ast$scale, Dtype $\ast$data)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a77d45a889e472a1bd13458be8b5f8201}{caffe\+::kernel\+\_\+exp} (const int num, const Dtype $\ast$data, Dtype $\ast$out)
+\item 
+\hyperlink{namespacecaffe_a6fa6fe4a2398b265fe5ca12997afbb38}{caffe\+::\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S} (Softmax\+Layer)
+\end{DoxyCompactItemize}

@@ -1,0 +1,140 @@
+\hypertarget{classcaffe_1_1_synced_memory}{\section{caffe\+:\+:Synced\+Memory Class Reference}
+\label{classcaffe_1_1_synced_memory}\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+}
+
+
+{\ttfamily \#include $<$syncedmem.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1}{Synced\+Head} \{ \hyperlink{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a9f1fa5001f0811db2894f95e60033fc9}{U\+N\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D}, 
+\hyperlink{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a00eb059ed546e67fa831fbab8a02ff7b}{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+C\+P\+U}, 
+\hyperlink{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a9edbdf0774bdc1d03b20457ed68a106e}{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+G\+P\+U}, 
+\hyperlink{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a5bb31ce97d6aef554f434f94c2a5d246}{S\+Y\+N\+C\+E\+D}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_synced_memory_a1554c965fa580eee8d425c9cc14ac264}{Synced\+Memory} ()
+\item 
+\hyperlink{classcaffe_1_1_synced_memory_a858ddd33252ddfd6e8bb2dc59ab7691b}{Synced\+Memory} (size\+\_\+t \hyperlink{classcaffe_1_1_synced_memory_ae181c18b137d62de33bc91501aabb841}{size})
+\item 
+\hyperlink{classcaffe_1_1_synced_memory_a0f9e02554b59ba5357ac1d0c9256560a}{$\sim$\+Synced\+Memory} ()
+\item 
+const void $\ast$ \hyperlink{classcaffe_1_1_synced_memory_a5ffa0255e243f223e1af064fb7322ae4}{cpu\+\_\+data} ()
+\item 
+void \hyperlink{classcaffe_1_1_synced_memory_a4118cdf888d8663c4f88c037ce3e3b8e}{set\+\_\+cpu\+\_\+data} (void $\ast$data)
+\item 
+const void $\ast$ \hyperlink{classcaffe_1_1_synced_memory_acf04d9fabcde73902bdad08672696933}{gpu\+\_\+data} ()
+\item 
+void $\ast$ \hyperlink{classcaffe_1_1_synced_memory_ab32cd46d7f0cf524d79e4ba7da7449dd}{mutable\+\_\+cpu\+\_\+data} ()
+\item 
+void $\ast$ \hyperlink{classcaffe_1_1_synced_memory_ab6ca4faa7233c8ac2319acb72ba0441e}{mutable\+\_\+gpu\+\_\+data} ()
+\item 
+\hyperlink{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1}{Synced\+Head} \hyperlink{classcaffe_1_1_synced_memory_abd3e8f08d0186d3460fcce1378a2dc4c}{head} ()
+\item 
+size\+\_\+t \hyperlink{classcaffe_1_1_synced_memory_ae181c18b137d62de33bc91501aabb841}{size} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!Synced\+Head@{Synced\+Head}}
+\index{Synced\+Head@{Synced\+Head}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{Synced\+Head}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf caffe\+::\+Synced\+Memory\+::\+Synced\+Head}}}\label{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{U\+N\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D@{U\+N\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!U\+N\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D@{U\+N\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D}}\item[{\em 
+\hypertarget{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a9f1fa5001f0811db2894f95e60033fc9}{U\+N\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+E\+D}\label{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a9f1fa5001f0811db2894f95e60033fc9}
+}]\index{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+C\+P\+U@{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+C\+P\+U}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+C\+P\+U@{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+C\+P\+U}}\item[{\em 
+\hypertarget{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a00eb059ed546e67fa831fbab8a02ff7b}{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+C\+P\+U}\label{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a00eb059ed546e67fa831fbab8a02ff7b}
+}]\index{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+G\+P\+U@{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+G\+P\+U}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+G\+P\+U@{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+G\+P\+U}}\item[{\em 
+\hypertarget{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a9edbdf0774bdc1d03b20457ed68a106e}{H\+E\+A\+D\+\_\+\+A\+T\+\_\+\+G\+P\+U}\label{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a9edbdf0774bdc1d03b20457ed68a106e}
+}]\index{S\+Y\+N\+C\+E\+D@{S\+Y\+N\+C\+E\+D}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!S\+Y\+N\+C\+E\+D@{S\+Y\+N\+C\+E\+D}}\item[{\em 
+\hypertarget{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a5bb31ce97d6aef554f434f94c2a5d246}{S\+Y\+N\+C\+E\+D}\label{classcaffe_1_1_synced_memory_aa9d505f04322f6e521a57b8fc51dfba1a5bb31ce97d6aef554f434f94c2a5d246}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_synced_memory_a1554c965fa580eee8d425c9cc14ac264}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!Synced\+Memory@{Synced\+Memory}}
+\index{Synced\+Memory@{Synced\+Memory}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{Synced\+Memory}]{\setlength{\rightskip}{0pt plus 5cm}caffe\+::\+Synced\+Memory\+::\+Synced\+Memory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_synced_memory_a1554c965fa580eee8d425c9cc14ac264}
+\hypertarget{classcaffe_1_1_synced_memory_a858ddd33252ddfd6e8bb2dc59ab7691b}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!Synced\+Memory@{Synced\+Memory}}
+\index{Synced\+Memory@{Synced\+Memory}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{Synced\+Memory}]{\setlength{\rightskip}{0pt plus 5cm}caffe\+::\+Synced\+Memory\+::\+Synced\+Memory (
+\begin{DoxyParamCaption}
+\item[{size\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_synced_memory_a858ddd33252ddfd6e8bb2dc59ab7691b}
+\hypertarget{classcaffe_1_1_synced_memory_a0f9e02554b59ba5357ac1d0c9256560a}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!````~Synced\+Memory@{$\sim$\+Synced\+Memory}}
+\index{````~Synced\+Memory@{$\sim$\+Synced\+Memory}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{$\sim$\+Synced\+Memory}]{\setlength{\rightskip}{0pt plus 5cm}caffe\+::\+Synced\+Memory\+::$\sim$\+Synced\+Memory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_synced_memory_a0f9e02554b59ba5357ac1d0c9256560a}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_synced_memory_a5ffa0255e243f223e1af064fb7322ae4}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!cpu\+\_\+data@{cpu\+\_\+data}}
+\index{cpu\+\_\+data@{cpu\+\_\+data}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{cpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}const void $\ast$ caffe\+::\+Synced\+Memory\+::cpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_synced_memory_a5ffa0255e243f223e1af064fb7322ae4}
+\hypertarget{classcaffe_1_1_synced_memory_acf04d9fabcde73902bdad08672696933}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!gpu\+\_\+data@{gpu\+\_\+data}}
+\index{gpu\+\_\+data@{gpu\+\_\+data}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{gpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}const void $\ast$ caffe\+::\+Synced\+Memory\+::gpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_synced_memory_acf04d9fabcde73902bdad08672696933}
+\hypertarget{classcaffe_1_1_synced_memory_abd3e8f08d0186d3460fcce1378a2dc4c}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!head@{head}}
+\index{head@{head}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{head}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Synced\+Head} caffe\+::\+Synced\+Memory\+::head (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_synced_memory_abd3e8f08d0186d3460fcce1378a2dc4c}
+\hypertarget{classcaffe_1_1_synced_memory_ab32cd46d7f0cf524d79e4ba7da7449dd}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!mutable\+\_\+cpu\+\_\+data@{mutable\+\_\+cpu\+\_\+data}}
+\index{mutable\+\_\+cpu\+\_\+data@{mutable\+\_\+cpu\+\_\+data}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{mutable\+\_\+cpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ caffe\+::\+Synced\+Memory\+::mutable\+\_\+cpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_synced_memory_ab32cd46d7f0cf524d79e4ba7da7449dd}
+\hypertarget{classcaffe_1_1_synced_memory_ab6ca4faa7233c8ac2319acb72ba0441e}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!mutable\+\_\+gpu\+\_\+data@{mutable\+\_\+gpu\+\_\+data}}
+\index{mutable\+\_\+gpu\+\_\+data@{mutable\+\_\+gpu\+\_\+data}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{mutable\+\_\+gpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ caffe\+::\+Synced\+Memory\+::mutable\+\_\+gpu\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_synced_memory_ab6ca4faa7233c8ac2319acb72ba0441e}
+\hypertarget{classcaffe_1_1_synced_memory_a4118cdf888d8663c4f88c037ce3e3b8e}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!set\+\_\+cpu\+\_\+data@{set\+\_\+cpu\+\_\+data}}
+\index{set\+\_\+cpu\+\_\+data@{set\+\_\+cpu\+\_\+data}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{set\+\_\+cpu\+\_\+data}]{\setlength{\rightskip}{0pt plus 5cm}void caffe\+::\+Synced\+Memory\+::set\+\_\+cpu\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_synced_memory_a4118cdf888d8663c4f88c037ce3e3b8e}
+\hypertarget{classcaffe_1_1_synced_memory_ae181c18b137d62de33bc91501aabb841}{\index{caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}!size@{size}}
+\index{size@{size}!caffe\+::\+Synced\+Memory@{caffe\+::\+Synced\+Memory}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t caffe\+::\+Synced\+Memory\+::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_synced_memory_ae181c18b137d62de33bc91501aabb841}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{syncedmem_8hpp}{syncedmem.\+hpp}\item 
+src/caffe/\hyperlink{syncedmem_8cpp}{syncedmem.\+cpp}\end{DoxyCompactItemize}

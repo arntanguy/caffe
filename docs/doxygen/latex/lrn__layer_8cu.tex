@@ -1,0 +1,23 @@
+\hypertarget{lrn__layer_8cu}{\section{src/caffe/layers/lrn\+\_\+layer.cu File Reference}
+\label{lrn__layer_8cu}\index{src/caffe/layers/lrn\+\_\+layer.\+cu@{src/caffe/layers/lrn\+\_\+layer.\+cu}}
+}
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}caffe/layer.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/vision\+\_\+layers.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/math\+\_\+functions.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a641351385260c312bede8b3fad607507}{caffe\+::\+L\+R\+N\+Fill\+Scale} (const int nthreads, const Dtype $\ast$in, const int num, const int channels, const int height, const int width, const int size, const Dtype alpha\+\_\+over\+\_\+size, Dtype $\ast$scale)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a3e2b25f3998a5c8761212e69b9388960}{caffe\+::\+L\+R\+N\+Compute\+Output} (const int nthreads, const Dtype $\ast$in, const Dtype $\ast$scale, const Dtype negative\+\_\+beta, Dtype $\ast$out)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_af1adaf470bdf0ce07ee640f5b7ada3aa}{caffe\+::\+L\+R\+N\+Compute\+Diff} (const int nthreads, const Dtype $\ast$bottom\+\_\+data, const Dtype $\ast$top\+\_\+data, const Dtype $\ast$scale, const Dtype $\ast$top\+\_\+diff, const int num, const int channels, const int height, const int width, const int size, const Dtype negative\+\_\+beta, const Dtype cache\+\_\+ratio, Dtype $\ast$bottom\+\_\+diff)
+\item 
+\hyperlink{namespacecaffe_a818b23abbae9ca690cd0a4bd07a8870e}{caffe\+::\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S} (L\+R\+N\+Layer)
+\end{DoxyCompactItemize}

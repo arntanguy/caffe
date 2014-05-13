@@ -1,0 +1,196 @@
+\hypertarget{classcaffe_1_1_layer}{\section{caffe\+:\+:Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_layer}\index{caffe\+::\+Layer$<$ Dtype $>$@{caffe\+::\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$layer.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{classcaffe_1_1_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_layer_a7b4e4ccea08c7b8b15acc6829d5735f6}{Layer} (const Layer\+Parameter \&param)
+\item 
+virtual \hyperlink{classcaffe_1_1_layer_aa9db88a6b9bdad8fceb1f79ea1cc2ef4}{$\sim$\+Layer} ()
+\item 
+virtual void \hyperlink{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)=0
+\item 
+Dtype \hyperlink{classcaffe_1_1_layer_a31d00947960a1334be6e45c9a43d8d58}{Forward} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+void \hyperlink{classcaffe_1_1_layer_a4bcd2013ef9822dd21d122c97a87da83}{Backward} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+vector$<$ shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_blob}{Blob}\\*
+$<$ Dtype $>$ $>$ $>$ \& \hyperlink{classcaffe_1_1_layer_aaf4524ce8641a30a8a4784aee1b2b4c8}{blobs} ()
+\item 
+const Layer\+Parameter \& \hyperlink{classcaffe_1_1_layer_a6478a1086c96f32d928bc40f336cbb81}{layer\+\_\+param} ()
+\item 
+virtual void \hyperlink{classcaffe_1_1_layer_a4a1754828dda22cc8daa2f63377f3579}{To\+Proto} (Layer\+Parameter $\ast$param, bool write\+\_\+diff=false)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)=0
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{Forward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)=0
+\item 
+virtual void \hyperlink{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{Backward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+\hyperlink{classcaffe_1_1_layer_a90730e177e4b3b3516b1b69ba2f6b06a}{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N} (\hyperlink{classcaffe_1_1_layer}{Layer})
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Layer\+Parameter \hyperlink{classcaffe_1_1_layer_a7ed12bb2df25c887e41d7ea9557fc701}{layer\+\_\+param\+\_\+}
+\item 
+vector$<$ shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_blob}{Blob}\\*
+$<$ Dtype $>$ $>$ $>$ \hyperlink{classcaffe_1_1_layer_a8073fcf2c139b47eb99ce71b346b1321}{blobs\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_layer_a7b4e4ccea08c7b8b15acc6829d5735f6}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Layer@{Layer}}
+\index{Layer@{Layer}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::{\bf Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_layer_a7b4e4ccea08c7b8b15acc6829d5735f6}
+\hypertarget{classcaffe_1_1_layer_aa9db88a6b9bdad8fceb1f79ea1cc2ef4}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!````~Layer@{$\sim$\+Layer}}
+\index{````~Layer@{$\sim$\+Layer}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{$\sim$\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ virtual {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::$\sim${\bf Layer} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_layer_aa9db88a6b9bdad8fceb1f79ea1cc2ef4}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_layer_a4bcd2013ef9822dd21d122c97a87da83}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Backward@{Backward}}
+\index{Backward@{Backward}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Backward}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::Backward (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_layer_a4bcd2013ef9822dd21d122c97a87da83}
+\hypertarget{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ virtual void {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}
+
+
+Implemented in \hyperlink{classcaffe_1_1_window_data_layer_a39778e64942e652e2f9d8b41af621251}{caffe\+::\+Window\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_split_layer_ae9ef9d789fe7225af123010400b44100}{caffe\+::\+Split\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_with_loss_layer_ae969bcf16c6d99070e18d669053f8587}{caffe\+::\+Softmax\+With\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_layer_a2f318816073f4585d6b84168fd2ce418}{caffe\+::\+Softmax\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_pooling_layer_aad07e6ab8b23155a971e2e78e87f0763}{caffe\+::\+Pooling\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_multinomial_logistic_loss_layer_a130cef8084d30fc789c401ec0310d587}{caffe\+::\+Multinomial\+Logistic\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_memory_data_layer_ac85916554558f0ca7881bd3ee608865c}{caffe\+::\+Memory\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_l_r_n_layer_a67a331a12eece60b04ff2960164b78fe}{caffe\+::\+L\+R\+N\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_inner_product_layer_ab4f9892f3be7aef5d98777bca2dd8598}{caffe\+::\+Inner\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_infogain_loss_layer_a3fea9231eb9c3f1cd2f3989c54e475a8}{caffe\+::\+Infogain\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_image_data_layer_aa94c13be8dcceb317b637c6ddf6cb0af}{caffe\+::\+Image\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_im2col_layer_ae6436f4287c23e62965f7c8216669ef2}{caffe\+::\+Im2col\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_hinge_loss_layer_a467c0d92debbaddecf6b18d4bbc31526}{caffe\+::\+Hinge\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_data_layer_a2c44e32bcde368d4afbb2b9f68f4e3f8}{caffe\+::\+H\+D\+F5\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_output_layer_a805cc611664761d199b5eb54ba20de0c}{caffe\+::\+H\+D\+F5\+Output\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_flatten_layer_a5b7439a850684ebd8901180853809a50}{caffe\+::\+Flatten\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_euclidean_loss_layer_aeca6594a25c462a4764f6c2e07224b2d}{caffe\+::\+Euclidean\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_eltwise_product_layer_a5d03ef5628726c95e71d425137e60d5e}{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_data_layer_a4b58dd246c6d1d1c3950f8c344c8b5ac}{caffe\+::\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_convolution_layer_a977898d74cd37fa2557f74322d419575}{caffe\+::\+Convolution\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_concat_layer_ad9f664216981e5f2248cdf88b49c5015}{caffe\+::\+Concat\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_accuracy_layer_a18aff36af82433e25eca1e0de3276d7f}{caffe\+::\+Accuracy\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_tan_h_layer_a26fc7022a7f0c474b160db428bbdc4a3}{caffe\+::\+Tan\+H\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_cross_entropy_loss_layer_a336c6f8453f30a598c280cc0259a5a95}{caffe\+::\+Sigmoid\+Cross\+Entropy\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_layer_a4d99e969155f06a298205c94b9701492}{caffe\+::\+Sigmoid\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_re_l_u_layer_ac00cb9a11b3a63939f3bf07f787c6357}{caffe\+::\+Re\+L\+U\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_power_layer_a44971f370af2adc06adf814d9465a371}{caffe\+::\+Power\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_dropout_layer_aca25a2d883356b1aa5a8c0fe852dc8a1}{caffe\+::\+Dropout\+Layer$<$ Dtype $>$}, and \hyperlink{classcaffe_1_1_b_n_l_l_layer_acf58b70a8e5fafc303844a822dcf0e3b}{caffe\+::\+B\+N\+L\+L\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Backward\+\_\+gpu@{Backward\+\_\+gpu}}
+\index{Backward\+\_\+gpu@{Backward\+\_\+gpu}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Backward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ virtual void {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::Backward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}
+
+
+Reimplemented in \hyperlink{classcaffe_1_1_window_data_layer_ac008d7905f98366ae679a0fd6626abdb}{caffe\+::\+Window\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_split_layer_a22b01622ac43b4a8a4dbbd893f25ae32}{caffe\+::\+Split\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_with_loss_layer_a5274ccce6a8850e7bb61ac64ade39c8a}{caffe\+::\+Softmax\+With\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_layer_a46febb93e499d1fccd68f406a3dd4bcb}{caffe\+::\+Softmax\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_pooling_layer_a90db5feba107ee64fb1c3cfacc0b2f38}{caffe\+::\+Pooling\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_memory_data_layer_ab209891a982c0962c78c36dedf2916ed}{caffe\+::\+Memory\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_l_r_n_layer_a37759b344e93a5d7f61caed89c1c8993}{caffe\+::\+L\+R\+N\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_inner_product_layer_a67252d33aaf6efb6ef5ce2e450cc4ca8}{caffe\+::\+Inner\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_image_data_layer_af467793e1c2184cd5016186c54167a20}{caffe\+::\+Image\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_im2col_layer_abe4feb385c1226f2d69ec47142ce0b06}{caffe\+::\+Im2col\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_data_layer_ac2528e6eea1bbcd1d6e3b0e35a7595b8}{caffe\+::\+H\+D\+F5\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_output_layer_a2018b7ab2f08f004bf967b177e1bb724}{caffe\+::\+H\+D\+F5\+Output\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_flatten_layer_ae5f1044beb9b5c4d60ff8fd5487ad338}{caffe\+::\+Flatten\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_eltwise_product_layer_a9d5b22fd37b476dd5cab2499c9a69a87}{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_data_layer_a7d9d69b7d2fbb6635b677ade18d9d8be}{caffe\+::\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_convolution_layer_a451a90070f9600b3bc33e0a9f9356ab2}{caffe\+::\+Convolution\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_concat_layer_a86ff8e3cd7ae4f06b23751b60d43ba76}{caffe\+::\+Concat\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_tan_h_layer_ae87d8ab7d2580ac38c3e11d87fdad983}{caffe\+::\+Tan\+H\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_cross_entropy_loss_layer_a7065249b414fc6eac3dd19d7ba4100f6}{caffe\+::\+Sigmoid\+Cross\+Entropy\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_layer_a322bf664195dc8cad77ce5c48293a3f7}{caffe\+::\+Sigmoid\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_re_l_u_layer_aa3e55cef6a34c973c8ecab251520f154}{caffe\+::\+Re\+L\+U\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_power_layer_a4f127b9f0a3977137f56e6e7a1184241}{caffe\+::\+Power\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_dropout_layer_aad9d0019a2760866e47f8dc61b2ff3d9}{caffe\+::\+Dropout\+Layer$<$ Dtype $>$}, and \hyperlink{classcaffe_1_1_b_n_l_l_layer_a9732b6f05aac77d59e9a906a300b7bfe}{caffe\+::\+B\+N\+L\+L\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_layer_aaf4524ce8641a30a8a4784aee1b2b4c8}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!blobs@{blobs}}
+\index{blobs@{blobs}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{blobs}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ vector$<$shared\+\_\+ptr$<${\bf Blob}$<$Dtype$>$ $>$ $>$\& {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::blobs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_layer_aaf4524ce8641a30a8a4784aee1b2b4c8}
+\hypertarget{classcaffe_1_1_layer_a90730e177e4b3b3516b1b69ba2f6b06a}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}}
+\index{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N (
+\begin{DoxyParamCaption}
+\item[{{\bf Layer}$<$ Dtype $>$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_layer_a90730e177e4b3b3516b1b69ba2f6b06a}
+\hypertarget{classcaffe_1_1_layer_a31d00947960a1334be6e45c9a43d8d58}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Forward@{Forward}}
+\index{Forward@{Forward}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Forward}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::Forward (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_layer_a31d00947960a1334be6e45c9a43d8d58}
+\hypertarget{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ virtual Dtype {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}
+
+
+Implemented in \hyperlink{classcaffe_1_1_window_data_layer_a2a2d216fc883126708892da7f1496d33}{caffe\+::\+Window\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_split_layer_acf59ddcda276674b1b315cfc0c48c861}{caffe\+::\+Split\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_with_loss_layer_a898274f4130f8180dca39b573726f8f8}{caffe\+::\+Softmax\+With\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_layer_a11afab015d5240699e45c44b5c4b64ff}{caffe\+::\+Softmax\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_pooling_layer_a94e0eecfd992d045bd0b8b0cee4523f0}{caffe\+::\+Pooling\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_multinomial_logistic_loss_layer_a5c506ead552d2764df152dd9c90b768b}{caffe\+::\+Multinomial\+Logistic\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_memory_data_layer_a124ae7ed94f0cad8a7c64b3c4b79eb33}{caffe\+::\+Memory\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_l_r_n_layer_a825208caabbaa227d532a5c0d780e77c}{caffe\+::\+L\+R\+N\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_inner_product_layer_afa97ce030d4fec47cca1bd758bc446f3}{caffe\+::\+Inner\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_infogain_loss_layer_ab5a8e36c29baa36e34b81a06d04043b6}{caffe\+::\+Infogain\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_image_data_layer_a3093be55fa03cc281778ba230a05456c}{caffe\+::\+Image\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_im2col_layer_a635af15bcfdf2ec96913d75de5763328}{caffe\+::\+Im2col\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_hinge_loss_layer_a1e6922952af5ac6989b080ef8cf0c89a}{caffe\+::\+Hinge\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_data_layer_afb70fc6efdfffa6ee155abe193b53e3d}{caffe\+::\+H\+D\+F5\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_output_layer_a91f77d8f66e4de8280e681f9155b20fa}{caffe\+::\+H\+D\+F5\+Output\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_flatten_layer_a53caee1cc9658db97e9daefbcdffdc12}{caffe\+::\+Flatten\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_euclidean_loss_layer_ab3b17e7f7064f68b253df8d463f44dfc}{caffe\+::\+Euclidean\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_eltwise_product_layer_a0c3daabf8f8075f4e94879218941a348}{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_data_layer_a35e60c6ea0e3b8b57671d42853e956c3}{caffe\+::\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_convolution_layer_a53eb4114d914f019bc873818d4f8e53b}{caffe\+::\+Convolution\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_concat_layer_a8d0ef15036059a8b5545c886360148ae}{caffe\+::\+Concat\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_accuracy_layer_a6b009239ed19e1568fda06654af26e39}{caffe\+::\+Accuracy\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_tan_h_layer_ae60a4fb43459c050d1e03fa301d5bcaa}{caffe\+::\+Tan\+H\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_cross_entropy_loss_layer_abfc9e224038c2052c3bbc4372914b3db}{caffe\+::\+Sigmoid\+Cross\+Entropy\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_layer_a0adfa69975f516a39d6996dfdc946973}{caffe\+::\+Sigmoid\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_re_l_u_layer_a4a9975e1e49982136fc6e8e478c122dd}{caffe\+::\+Re\+L\+U\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_power_layer_a3efa0e32fd71a6562838359915e05a03}{caffe\+::\+Power\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_dropout_layer_a031995973fec83788c03723d9855ec3f}{caffe\+::\+Dropout\+Layer$<$ Dtype $>$}, and \hyperlink{classcaffe_1_1_b_n_l_l_layer_a1a0cb5dd56ad7d93f0d70e93f00263b9}{caffe\+::\+B\+N\+L\+L\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Forward\+\_\+gpu@{Forward\+\_\+gpu}}
+\index{Forward\+\_\+gpu@{Forward\+\_\+gpu}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Forward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ virtual Dtype {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::Forward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}
+
+
+Reimplemented in \hyperlink{classcaffe_1_1_window_data_layer_a920786219c1bad25f41c39212e2d6fab}{caffe\+::\+Window\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_split_layer_a846e3484a6db332c52f38e70e673a5b8}{caffe\+::\+Split\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_with_loss_layer_a38d8051ca05ca2dbb1af137d6ce42a42}{caffe\+::\+Softmax\+With\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_layer_a37ede6eb847d766731b833e2f8923219}{caffe\+::\+Softmax\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_pooling_layer_a6997ba2f8adca32e201b2e3aa5271791}{caffe\+::\+Pooling\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_l_r_n_layer_ae6bf5efc998c6cc22fdfd64bf2b245c4}{caffe\+::\+L\+R\+N\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_inner_product_layer_a309180d8bbea21a281de52f3465ea786}{caffe\+::\+Inner\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_image_data_layer_a3719ea4c463b83e57ae7249e5e371332}{caffe\+::\+Image\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_im2col_layer_af60c215a0953742dc1ca2163f55bd9a7}{caffe\+::\+Im2col\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_data_layer_ab1413b32f9b5ad2182c7fd88b85240c3}{caffe\+::\+H\+D\+F5\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_output_layer_a9f78145efc3bb9ecc7d6a78a3e9c3856}{caffe\+::\+H\+D\+F5\+Output\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_flatten_layer_a30c8f30255ed20ef7351673aacdbe680}{caffe\+::\+Flatten\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_eltwise_product_layer_a53cf4aaa04a908dc7ed5ceee48f6054d}{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_data_layer_ae94ad93e1ad35123624e0aba0a2f03c6}{caffe\+::\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_convolution_layer_a1feac725539612918553e6b7bf299b4b}{caffe\+::\+Convolution\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_concat_layer_a92913d7f28a319354470e56fd306b628}{caffe\+::\+Concat\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_tan_h_layer_a9ab83424b20d909a8786043cc8139a33}{caffe\+::\+Tan\+H\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_cross_entropy_loss_layer_a255cf432942a246a456bbc8e4d499436}{caffe\+::\+Sigmoid\+Cross\+Entropy\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_layer_af13a499a9aabf1f615291f47ed1728ea}{caffe\+::\+Sigmoid\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_re_l_u_layer_a28eefafa10d35ebd85bc94fa6ceb9e10}{caffe\+::\+Re\+L\+U\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_power_layer_ad59217de2d3c6d0c363b89713155eae5}{caffe\+::\+Power\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_dropout_layer_a7f568b33a08534687ee840a89e004a35}{caffe\+::\+Dropout\+Layer$<$ Dtype $>$}, and \hyperlink{classcaffe_1_1_b_n_l_l_layer_a880ed4501379ea518a66bc7126b974bc}{caffe\+::\+B\+N\+L\+L\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_layer_a6478a1086c96f32d928bc40f336cbb81}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!layer\+\_\+param@{layer\+\_\+param}}
+\index{layer\+\_\+param@{layer\+\_\+param}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{layer\+\_\+param}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ const Layer\+Parameter\& {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::layer\+\_\+param (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_layer_a6478a1086c96f32d928bc40f336cbb81}
+\hypertarget{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ virtual void {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}
+
+
+Implemented in \hyperlink{classcaffe_1_1_window_data_layer_a9fe034abb37141b76180edd2002a095b}{caffe\+::\+Window\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_split_layer_ae906b539de55e5b996b471e3c3510501}{caffe\+::\+Split\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_with_loss_layer_a4e29194f599dc4f08b5aa48a4f9cf87e}{caffe\+::\+Softmax\+With\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_softmax_layer_ac6d690c48e66fa79f42938349e99a2e2}{caffe\+::\+Softmax\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_pooling_layer_ac88da7bd4cb54fceb0a22a6efc61292e}{caffe\+::\+Pooling\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_multinomial_logistic_loss_layer_af706bf27c3170a243660e7fe46ad0686}{caffe\+::\+Multinomial\+Logistic\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_memory_data_layer_a276f9246a9ff0e6f016dfb54f00da88d}{caffe\+::\+Memory\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_l_r_n_layer_a107b66d7985241c54d861cb9d940cfc1}{caffe\+::\+L\+R\+N\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_inner_product_layer_a3e95f827d46406c96575d8852b4d68fe}{caffe\+::\+Inner\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_infogain_loss_layer_a22a1826f68b20911bcd2941e2284fd9e}{caffe\+::\+Infogain\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_image_data_layer_a02eedd60b16ef4f2285cd75110a27226}{caffe\+::\+Image\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_im2col_layer_a869008ef04af4d7aed3e412e449b1aeb}{caffe\+::\+Im2col\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_hinge_loss_layer_a6674ffab4fc6a97a1545801dad068d42}{caffe\+::\+Hinge\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_data_layer_a1b1786da3b00f367508d5f89d8d7dd59}{caffe\+::\+H\+D\+F5\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_h_d_f5_output_layer_ac30de09e62b1ad98c377f48a7c271ee7}{caffe\+::\+H\+D\+F5\+Output\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_flatten_layer_a49568781c51bfd9e762007910127254e}{caffe\+::\+Flatten\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_euclidean_loss_layer_a636a0ded0ca547c4af9b150953bce124}{caffe\+::\+Euclidean\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_eltwise_product_layer_ab24fdd7f4a2b47c95fbe80ed1cd5ee08}{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_data_layer_a157c4ee7c0a8c1b961a80c9a6432c7ea}{caffe\+::\+Data\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_convolution_layer_ad3eebbeb87db98a784aea2ddd8e8199d}{caffe\+::\+Convolution\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_concat_layer_ad479a513d943035c1415309ed61e62d8}{caffe\+::\+Concat\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_accuracy_layer_a5c18f1e710a9d59c0180ad2cd6dc4537}{caffe\+::\+Accuracy\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_sigmoid_cross_entropy_loss_layer_ab45ec795cdd1c1a31c767aeaf2ed2b91}{caffe\+::\+Sigmoid\+Cross\+Entropy\+Loss\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_power_layer_a56719890adf4fbf31f1b63729a9a92f8}{caffe\+::\+Power\+Layer$<$ Dtype $>$}, \hyperlink{classcaffe_1_1_dropout_layer_a1314d858640aa6ef2453c7cb6209be4e}{caffe\+::\+Dropout\+Layer$<$ Dtype $>$}, and \hyperlink{classcaffe_1_1_neuron_layer_a8441089c3e6f2434a2683de22698352a}{caffe\+::\+Neuron\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_layer_a4a1754828dda22cc8daa2f63377f3579}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!To\+Proto@{To\+Proto}}
+\index{To\+Proto@{To\+Proto}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{To\+Proto}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::To\+Proto (
+\begin{DoxyParamCaption}
+\item[{Layer\+Parameter $\ast$}]{param, }
+\item[{bool}]{write\+\_\+diff = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_layer_a4a1754828dda22cc8daa2f63377f3579}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_layer_a8073fcf2c139b47eb99ce71b346b1321}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!blobs\+\_\+@{blobs\+\_\+}}
+\index{blobs\+\_\+@{blobs\+\_\+}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{blobs\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ vector$<$shared\+\_\+ptr$<${\bf Blob}$<$Dtype$>$ $>$ $>$ {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::blobs\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_layer_a8073fcf2c139b47eb99ce71b346b1321}
+\hypertarget{classcaffe_1_1_layer_a7ed12bb2df25c887e41d7ea9557fc701}{\index{caffe\+::\+Layer@{caffe\+::\+Layer}!layer\+\_\+param\+\_\+@{layer\+\_\+param\+\_\+}}
+\index{layer\+\_\+param\+\_\+@{layer\+\_\+param\+\_\+}!caffe\+::\+Layer@{caffe\+::\+Layer}}
+\subsubsection[{layer\+\_\+param\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype$>$ Layer\+Parameter {\bf caffe\+::\+Layer}$<$ Dtype $>$\+::layer\+\_\+param\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_layer_a7ed12bb2df25c887e41d7ea9557fc701}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{layer_8hpp}{layer.\+hpp}\end{DoxyCompactItemize}

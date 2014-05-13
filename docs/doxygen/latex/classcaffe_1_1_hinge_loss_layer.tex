@@ -1,0 +1,84 @@
+\hypertarget{classcaffe_1_1_hinge_loss_layer}{\section{caffe\+:\+:Hinge\+Loss\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_hinge_loss_layer}\index{caffe\+::\+Hinge\+Loss\+Layer$<$ Dtype $>$@{caffe\+::\+Hinge\+Loss\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Hinge\+Loss\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_hinge_loss_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_hinge_loss_layer_a358a5bd2625bb7fed61052dd8e1cb588}{Hinge\+Loss\+Layer} (const Layer\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_hinge_loss_layer_a6674ffab4fc6a97a1545801dad068d42}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_hinge_loss_layer_a1e6922952af5ac6989b080ef8cf0c89a}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_hinge_loss_layer_a467c0d92debbaddecf6b18d4bbc31526}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_hinge_loss_layer_a358a5bd2625bb7fed61052dd8e1cb588}{\index{caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}!Hinge\+Loss\+Layer@{Hinge\+Loss\+Layer}}
+\index{Hinge\+Loss\+Layer@{Hinge\+Loss\+Layer}!caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}}
+\subsubsection[{Hinge\+Loss\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Hinge\+Loss\+Layer}$<$ Dtype $>$\+::{\bf Hinge\+Loss\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_hinge_loss_layer_a358a5bd2625bb7fed61052dd8e1cb588}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_hinge_loss_layer_a467c0d92debbaddecf6b18d4bbc31526}{\index{caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Hinge\+Loss\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_hinge_loss_layer_a467c0d92debbaddecf6b18d4bbc31526}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_hinge_loss_layer_a1e6922952af5ac6989b080ef8cf0c89a}{\index{caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Hinge\+Loss\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_hinge_loss_layer_a1e6922952af5ac6989b080ef8cf0c89a}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_hinge_loss_layer_a6674ffab4fc6a97a1545801dad068d42}{\index{caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Hinge\+Loss\+Layer@{caffe\+::\+Hinge\+Loss\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Hinge\+Loss\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_hinge_loss_layer_a6674ffab4fc6a97a1545801dad068d42}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{loss__layer_8cpp}{loss\+\_\+layer.\+cpp}\end{DoxyCompactItemize}

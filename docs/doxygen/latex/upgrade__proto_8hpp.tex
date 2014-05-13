@@ -1,0 +1,30 @@
+\hypertarget{upgrade__proto_8hpp}{\section{include/caffe/util/upgrade\+\_\+proto.hpp File Reference}
+\label{upgrade__proto_8hpp}\index{include/caffe/util/upgrade\+\_\+proto.\+hpp@{include/caffe/util/upgrade\+\_\+proto.\+hpp}}
+}
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include \char`\"{}caffe/proto/caffe.\+pb.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/proto/caffe\+\_\+pretty\+\_\+print.\+pb.\+h\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{namespacecaffe_a83f79549cfd215fa6b8dc19ef3cc17f8}{caffe\+::\+Net\+Needs\+Upgrade} (const Net\+Parameter \&net\+\_\+param)
+\item 
+bool \hyperlink{namespacecaffe_a6b649169cf6f1639f5051e3e559985fd}{caffe\+::\+Upgrade\+V0\+Net} (const Net\+Parameter \&v0\+\_\+net\+\_\+param\+\_\+padding\+\_\+layers, Net\+Parameter $\ast$net\+\_\+param)
+\item 
+void \hyperlink{namespacecaffe_a772706c501bd181224155eeeb6cc9c04}{caffe\+::\+Upgrade\+V0\+Padding\+Layers} (const Net\+Parameter \&param, Net\+Parameter $\ast$param\+\_\+upgraded\+\_\+pad)
+\item 
+bool \hyperlink{namespacecaffe_ac9be5114eb970d9d6525516aecfbc5b6}{caffe\+::\+Upgrade\+Layer\+Parameter} (const Layer\+Parameter \&v0\+\_\+layer\+\_\+connection, Layer\+Parameter $\ast$layer\+\_\+param)
+\item 
+Layer\+Parameter\+\_\+\+Layer\+Type \hyperlink{namespacecaffe_a8fcad9c4e53394efe40b403eb0b7006b}{caffe\+::\+Upgrade\+V0\+Layer\+Type} (const string \&type)
+\item 
+void \hyperlink{namespacecaffe_acc4eafb4ddd81481b7e8a96c90d1fc0c}{caffe\+::\+Net\+Parameter\+To\+Pretty\+Print} (const Net\+Parameter \&param, Net\+Parameter\+Pretty\+Print $\ast$pretty\+\_\+param)
+\item 
+void \hyperlink{namespacecaffe_a8801bcd5125b2aec799adcc7f617be1a}{caffe\+::\+Read\+Net\+Params\+From\+Text\+File\+Or\+Die} (const string \&param\+\_\+file, Net\+Parameter $\ast$param)
+\item 
+void \hyperlink{namespacecaffe_aec4379a5d972592245df191bec9c75bd}{caffe\+::\+Read\+Net\+Params\+From\+Binary\+File\+Or\+Die} (const string \&param\+\_\+file, Net\+Parameter $\ast$param)
+\end{DoxyCompactItemize}

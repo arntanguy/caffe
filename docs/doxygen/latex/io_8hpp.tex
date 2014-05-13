@@ -1,0 +1,62 @@
+\hypertarget{io_8hpp}{\section{include/caffe/util/io.hpp File Reference}
+\label{io_8hpp}\index{include/caffe/util/io.\+hpp@{include/caffe/util/io.\+hpp}}
+}
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include \char`\"{}google/protobuf/message.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hdf5.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hdf5\+\_\+hl.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/proto/caffe.\+pb.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/blob.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{io_8hpp_a43a42c19a0b47dc28f81d07872bb9fe7}{H\+D\+F5\+\_\+\+N\+U\+M\+\_\+\+D\+I\+M\+S}~4
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{namespacecaffe_ab384abf6f635e4c5e2a779a5ec8223b6}{caffe\+::\+Read\+Proto\+From\+Text\+File} (const char $\ast$filename, Message $\ast$proto)
+\item 
+bool \hyperlink{namespacecaffe_a8e9cbf61e86c52f68a7adefe8d5380e7}{caffe\+::\+Read\+Proto\+From\+Text\+File} (const string \&filename, Message $\ast$proto)
+\item 
+void \hyperlink{namespacecaffe_ac61af043ef0a554362c306d71f5e3ec8}{caffe\+::\+Read\+Proto\+From\+Text\+File\+Or\+Die} (const char $\ast$filename, Message $\ast$proto)
+\item 
+void \hyperlink{namespacecaffe_aecbc91102c643097b7f677c18ba303c3}{caffe\+::\+Read\+Proto\+From\+Text\+File\+Or\+Die} (const string \&filename, Message $\ast$proto)
+\item 
+void \hyperlink{namespacecaffe_aa2f483e4300ceff4497891db10371056}{caffe\+::\+Write\+Proto\+To\+Text\+File} (const Message \&proto, const char $\ast$filename)
+\item 
+void \hyperlink{namespacecaffe_a06a4e7ad1a73458c73e45bbdd2eb207d}{caffe\+::\+Write\+Proto\+To\+Text\+File} (const Message \&proto, const string \&filename)
+\item 
+bool \hyperlink{namespacecaffe_a28f2320f8f918424c3b3de6263cf9373}{caffe\+::\+Read\+Proto\+From\+Binary\+File} (const char $\ast$filename, Message $\ast$proto)
+\item 
+bool \hyperlink{namespacecaffe_a6b764e3a59e45b9a0b5e1cc28426a78c}{caffe\+::\+Read\+Proto\+From\+Binary\+File} (const string \&filename, Message $\ast$proto)
+\item 
+void \hyperlink{namespacecaffe_a52a3e6165fee228f7976faccedc1d2b1}{caffe\+::\+Read\+Proto\+From\+Binary\+File\+Or\+Die} (const char $\ast$filename, Message $\ast$proto)
+\item 
+void \hyperlink{namespacecaffe_a9e124d475fbfbaeb7ad8b1baee9a2a9b}{caffe\+::\+Read\+Proto\+From\+Binary\+File\+Or\+Die} (const string \&filename, Message $\ast$proto)
+\item 
+void \hyperlink{namespacecaffe_a6e669ab7a89a744359cbb041021b6332}{caffe\+::\+Write\+Proto\+To\+Binary\+File} (const Message \&proto, const char $\ast$filename)
+\item 
+void \hyperlink{namespacecaffe_a982f1288dee62760b6599c0948652d6d}{caffe\+::\+Write\+Proto\+To\+Binary\+File} (const Message \&proto, const string \&filename)
+\item 
+bool \hyperlink{namespacecaffe_a8ff5217644f29055cdd8ded8d967af28}{caffe\+::\+Read\+Image\+To\+Datum} (const string \&filename, const int label, const int height, const int width, Datum $\ast$datum)
+\item 
+bool \hyperlink{namespacecaffe_a1004c0112552987ac24bb5b0b1de2116}{caffe\+::\+Read\+Image\+To\+Datum} (const string \&filename, const int label, Datum $\ast$datum)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void \hyperlink{namespacecaffe_a5243a4244e34275539dc9c9406f56ecb}{caffe\+::hdf5\+\_\+load\+\_\+nd\+\_\+dataset\+\_\+helper} (hid\+\_\+t file\+\_\+id, const char $\ast$dataset\+\_\+name\+\_\+, int min\+\_\+dim, int max\+\_\+dim, Blob$<$ Dtype $>$ $\ast$blob)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void \hyperlink{namespacecaffe_a674ad3e6b7d8802abc2e69e33ef667dc}{caffe\+::hdf5\+\_\+load\+\_\+nd\+\_\+dataset} (hid\+\_\+t file\+\_\+id, const char $\ast$dataset\+\_\+name\+\_\+, int min\+\_\+dim, int max\+\_\+dim, Blob$<$ Dtype $>$ $\ast$blob)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void \hyperlink{namespacecaffe_a5b1a30950ad4c633b9cda988cdefb86b}{caffe\+::hdf5\+\_\+save\+\_\+nd\+\_\+dataset} (const hid\+\_\+t file\+\_\+id, const string dataset\+\_\+name, const Blob$<$ Dtype $>$ \&blob)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{io_8hpp_a43a42c19a0b47dc28f81d07872bb9fe7}{\index{io.\+hpp@{io.\+hpp}!H\+D\+F5\+\_\+\+N\+U\+M\+\_\+\+D\+I\+M\+S@{H\+D\+F5\+\_\+\+N\+U\+M\+\_\+\+D\+I\+M\+S}}
+\index{H\+D\+F5\+\_\+\+N\+U\+M\+\_\+\+D\+I\+M\+S@{H\+D\+F5\+\_\+\+N\+U\+M\+\_\+\+D\+I\+M\+S}!io.\+hpp@{io.\+hpp}}
+\subsubsection[{H\+D\+F5\+\_\+\+N\+U\+M\+\_\+\+D\+I\+M\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+D\+F5\+\_\+\+N\+U\+M\+\_\+\+D\+I\+M\+S~4}}\label{io_8hpp_a43a42c19a0b47dc28f81d07872bb9fe7}

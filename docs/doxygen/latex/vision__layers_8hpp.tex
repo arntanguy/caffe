@@ -1,0 +1,111 @@
+\hypertarget{vision__layers_8hpp}{\section{include/caffe/vision\+\_\+layers.hpp File Reference}
+\label{vision__layers_8hpp}\index{include/caffe/vision\+\_\+layers.\+hpp@{include/caffe/vision\+\_\+layers.\+hpp}}
+}
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$utility$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}leveldb/db.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}pthread.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}boost/scoped\+\_\+ptr.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hdf5.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/blob.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/layer.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/proto/caffe.\+pb.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcaffe_1_1_neuron_layer}{caffe\+::\+Neuron\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_b_n_l_l_layer}{caffe\+::\+B\+N\+L\+L\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_dropout_layer}{caffe\+::\+Dropout\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_power_layer}{caffe\+::\+Power\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_re_l_u_layer}{caffe\+::\+Re\+L\+U\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_sigmoid_layer}{caffe\+::\+Sigmoid\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_sigmoid_cross_entropy_loss_layer}{caffe\+::\+Sigmoid\+Cross\+Entropy\+Loss\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_tan_h_layer}{caffe\+::\+Tan\+H\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_accuracy_layer}{caffe\+::\+Accuracy\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_concat_layer}{caffe\+::\+Concat\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_convolution_layer}{caffe\+::\+Convolution\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_data_layer}{caffe\+::\+Data\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_eltwise_product_layer}{caffe\+::\+Eltwise\+Product\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_euclidean_loss_layer}{caffe\+::\+Euclidean\+Loss\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_flatten_layer}{caffe\+::\+Flatten\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_h_d_f5_output_layer}{caffe\+::\+H\+D\+F5\+Output\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_h_d_f5_data_layer}{caffe\+::\+H\+D\+F5\+Data\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_hinge_loss_layer}{caffe\+::\+Hinge\+Loss\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_im2col_layer}{caffe\+::\+Im2col\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_image_data_layer}{caffe\+::\+Image\+Data\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_infogain_loss_layer}{caffe\+::\+Infogain\+Loss\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_inner_product_layer}{caffe\+::\+Inner\+Product\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_pooling_layer}{caffe\+::\+Pooling\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_split_layer}{caffe\+::\+Split\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_l_r_n_layer}{caffe\+::\+L\+R\+N\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_memory_data_layer}{caffe\+::\+Memory\+Data\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_multinomial_logistic_loss_layer}{caffe\+::\+Multinomial\+Logistic\+Loss\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_pooling_layer}{caffe\+::\+Pooling\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_softmax_layer}{caffe\+::\+Softmax\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_softmax_with_loss_layer}{caffe\+::\+Softmax\+With\+Loss\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_split_layer}{caffe\+::\+Split\+Layer$<$ Dtype $>$}
+\item 
+class \hyperlink{classcaffe_1_1_window_data_layer}{caffe\+::\+Window\+Data\+Layer$<$ Dtype $>$}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{vision__layers_8hpp_adc071d1562254dc318efab3e5efadc82}{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+D\+A\+T\+A\+S\+E\+T\+\_\+\+N\+A\+M\+E}~\char`\"{}data\char`\"{}
+\item 
+\#define \hyperlink{vision__layers_8hpp_acb0c8d312244617934ef7123f52e62b1}{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+L\+A\+B\+E\+L\+\_\+\+N\+A\+M\+E}~\char`\"{}label\char`\"{}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void $\ast$ \hyperlink{namespacecaffe_aa9933a49954956739e599dff49345ef7}{caffe\+::\+Data\+Layer\+Prefetch} (void $\ast$layer\+\_\+pointer)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void $\ast$ \hyperlink{namespacecaffe_a9a3cc169017ed8893e50354a78b8e079}{caffe\+::\+Image\+Data\+Layer\+Prefetch} (void $\ast$layer\+\_\+pointer)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\void $\ast$ \hyperlink{namespacecaffe_a3d9c1901651a78a2faebd1219bb08956}{caffe\+::\+Window\+Data\+Layer\+Prefetch} (void $\ast$layer\+\_\+pointer)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{vision__layers_8hpp_adc071d1562254dc318efab3e5efadc82}{\index{vision\+\_\+layers.\+hpp@{vision\+\_\+layers.\+hpp}!H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+D\+A\+T\+A\+S\+E\+T\+\_\+\+N\+A\+M\+E@{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+D\+A\+T\+A\+S\+E\+T\+\_\+\+N\+A\+M\+E}}
+\index{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+D\+A\+T\+A\+S\+E\+T\+\_\+\+N\+A\+M\+E@{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+D\+A\+T\+A\+S\+E\+T\+\_\+\+N\+A\+M\+E}!vision\+\_\+layers.\+hpp@{vision\+\_\+layers.\+hpp}}
+\subsubsection[{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+D\+A\+T\+A\+S\+E\+T\+\_\+\+N\+A\+M\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+D\+A\+T\+A\+S\+E\+T\+\_\+\+N\+A\+M\+E~\char`\"{}data\char`\"{}}}\label{vision__layers_8hpp_adc071d1562254dc318efab3e5efadc82}
+\hypertarget{vision__layers_8hpp_acb0c8d312244617934ef7123f52e62b1}{\index{vision\+\_\+layers.\+hpp@{vision\+\_\+layers.\+hpp}!H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+L\+A\+B\+E\+L\+\_\+\+N\+A\+M\+E@{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+L\+A\+B\+E\+L\+\_\+\+N\+A\+M\+E}}
+\index{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+L\+A\+B\+E\+L\+\_\+\+N\+A\+M\+E@{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+L\+A\+B\+E\+L\+\_\+\+N\+A\+M\+E}!vision\+\_\+layers.\+hpp@{vision\+\_\+layers.\+hpp}}
+\subsubsection[{H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+L\+A\+B\+E\+L\+\_\+\+N\+A\+M\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+D\+F5\+\_\+\+D\+A\+T\+A\+\_\+\+L\+A\+B\+E\+L\+\_\+\+N\+A\+M\+E~\char`\"{}label\char`\"{}}}\label{vision__layers_8hpp_acb0c8d312244617934ef7123f52e62b1}

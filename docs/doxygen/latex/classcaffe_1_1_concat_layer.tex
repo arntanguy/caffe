@@ -1,0 +1,154 @@
+\hypertarget{classcaffe_1_1_concat_layer}{\section{caffe\+:\+:Concat\+Layer$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_concat_layer}\index{caffe\+::\+Concat\+Layer$<$ Dtype $>$@{caffe\+::\+Concat\+Layer$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$vision\+\_\+layers.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Concat\+Layer$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_concat_layer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_concat_layer_aa06930bae7ed23c88546f35323e1792d}{Concat\+Layer} (const Layer\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_concat_layer_ad479a513d943035c1415309ed61e62d8}{Set\+Up} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_concat_layer_a8d0ef15036059a8b5545c886360148ae}{Forward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual Dtype \hyperlink{classcaffe_1_1_concat_layer_a92913d7f28a319354470e56fd306b628}{Forward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+virtual void \hyperlink{classcaffe_1_1_concat_layer_ad9f664216981e5f2248cdf88b49c5015}{Backward\+\_\+cpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\item 
+virtual void \hyperlink{classcaffe_1_1_concat_layer_a86ff8e3cd7ae4f06b23751b60d43ba76}{Backward\+\_\+gpu} (const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&top, const bool propagate\+\_\+down, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ \hyperlink{classcaffe_1_1_concat_layer_a03737f00c69377dd5170c407541d40ff}{col\+\_\+bob\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_concat_layer_a2e8c2179da287e21df345183f431bd72}{count\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_concat_layer_a29dac7e4ccd6c477006551b591269566}{num\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_concat_layer_a5f1ed4b44d327f638b683a6c34348e31}{channels\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_concat_layer_abef01ab0023d78b6df16a7d8e68817c0}{height\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_concat_layer_aae82aa5826cdd79a27c35da49728be4c}{width\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_concat_layer_a85d219531768269ba18f3c331ad94301}{concat\+\_\+dim\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_concat_layer_aa06930bae7ed23c88546f35323e1792d}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!Concat\+Layer@{Concat\+Layer}}
+\index{Concat\+Layer@{Concat\+Layer}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{Concat\+Layer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::{\bf Concat\+Layer} (
+\begin{DoxyParamCaption}
+\item[{const Layer\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}}\label{classcaffe_1_1_concat_layer_aa06930bae7ed23c88546f35323e1792d}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_concat_layer_ad9f664216981e5f2248cdf88b49c5015}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!Backward\+\_\+cpu@{Backward\+\_\+cpu}}
+\index{Backward\+\_\+cpu@{Backward\+\_\+cpu}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{Backward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::Backward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_concat_layer_ad9f664216981e5f2248cdf88b49c5015}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_ac2d82011d076237c67997f63e7ee4b80}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_concat_layer_a86ff8e3cd7ae4f06b23751b60d43ba76}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!Backward\+\_\+gpu@{Backward\+\_\+gpu}}
+\index{Backward\+\_\+gpu@{Backward\+\_\+gpu}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{Backward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::Backward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{top, }
+\item[{const bool}]{propagate\+\_\+down, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_concat_layer_a86ff8e3cd7ae4f06b23751b60d43ba76}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_adf07ffe1f22d2fd2b1b0ff475ef5a64b}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_concat_layer_a8d0ef15036059a8b5545c886360148ae}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!Forward\+\_\+cpu@{Forward\+\_\+cpu}}
+\index{Forward\+\_\+cpu@{Forward\+\_\+cpu}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{Forward\+\_\+cpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::Forward\+\_\+cpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_concat_layer_a8d0ef15036059a8b5545c886360148ae}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_a8f7f61da3b8b3ca7f2394dee33873353}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_concat_layer_a92913d7f28a319354470e56fd306b628}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!Forward\+\_\+gpu@{Forward\+\_\+gpu}}
+\index{Forward\+\_\+gpu@{Forward\+\_\+gpu}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{Forward\+\_\+gpu}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::Forward\+\_\+gpu (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_concat_layer_a92913d7f28a319354470e56fd306b628}
+
+
+Reimplemented from \hyperlink{classcaffe_1_1_layer_a2d78dbf5d8bc36928bd8f6fcfbafbcef}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_concat_layer_ad479a513d943035c1415309ed61e62d8}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!Set\+Up@{Set\+Up}}
+\index{Set\+Up@{Set\+Up}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::Set\+Up (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_concat_layer_ad479a513d943035c1415309ed61e62d8}
+
+
+Implements \hyperlink{classcaffe_1_1_layer_abd13c6489c13953b4fbcfcf6880835d0}{caffe\+::\+Layer$<$ Dtype $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_concat_layer_a5f1ed4b44d327f638b683a6c34348e31}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!channels\+\_\+@{channels\+\_\+}}
+\index{channels\+\_\+@{channels\+\_\+}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{channels\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::channels\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_concat_layer_a5f1ed4b44d327f638b683a6c34348e31}
+\hypertarget{classcaffe_1_1_concat_layer_a03737f00c69377dd5170c407541d40ff}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!col\+\_\+bob\+\_\+@{col\+\_\+bob\+\_\+}}
+\index{col\+\_\+bob\+\_\+@{col\+\_\+bob\+\_\+}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{col\+\_\+bob\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf Blob}$<$Dtype$>$ {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::col\+\_\+bob\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_concat_layer_a03737f00c69377dd5170c407541d40ff}
+\hypertarget{classcaffe_1_1_concat_layer_a85d219531768269ba18f3c331ad94301}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!concat\+\_\+dim\+\_\+@{concat\+\_\+dim\+\_\+}}
+\index{concat\+\_\+dim\+\_\+@{concat\+\_\+dim\+\_\+}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{concat\+\_\+dim\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::concat\+\_\+dim\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_concat_layer_a85d219531768269ba18f3c331ad94301}
+\hypertarget{classcaffe_1_1_concat_layer_a2e8c2179da287e21df345183f431bd72}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!count\+\_\+@{count\+\_\+}}
+\index{count\+\_\+@{count\+\_\+}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{count\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::count\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_concat_layer_a2e8c2179da287e21df345183f431bd72}
+\hypertarget{classcaffe_1_1_concat_layer_abef01ab0023d78b6df16a7d8e68817c0}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!height\+\_\+@{height\+\_\+}}
+\index{height\+\_\+@{height\+\_\+}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{height\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::height\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_concat_layer_abef01ab0023d78b6df16a7d8e68817c0}
+\hypertarget{classcaffe_1_1_concat_layer_a29dac7e4ccd6c477006551b591269566}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!num\+\_\+@{num\+\_\+}}
+\index{num\+\_\+@{num\+\_\+}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{num\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::num\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_concat_layer_a29dac7e4ccd6c477006551b591269566}
+\hypertarget{classcaffe_1_1_concat_layer_aae82aa5826cdd79a27c35da49728be4c}{\index{caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}!width\+\_\+@{width\+\_\+}}
+\index{width\+\_\+@{width\+\_\+}!caffe\+::\+Concat\+Layer@{caffe\+::\+Concat\+Layer}}
+\subsubsection[{width\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Concat\+Layer}$<$ Dtype $>$\+::width\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_concat_layer_aae82aa5826cdd79a27c35da49728be4c}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{vision__layers_8hpp}{vision\+\_\+layers.\+hpp}\item 
+src/caffe/layers/\hyperlink{concat__layer_8cpp}{concat\+\_\+layer.\+cpp}\item 
+src/caffe/layers/\hyperlink{concat__layer_8cu}{concat\+\_\+layer.\+cu}\end{DoxyCompactItemize}

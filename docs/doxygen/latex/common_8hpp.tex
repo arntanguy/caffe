@@ -1,0 +1,147 @@
+\hypertarget{common_8hpp}{\section{include/caffe/common.hpp File Reference}
+\label{common_8hpp}\index{include/caffe/common.\+hpp@{include/caffe/common.\+hpp}}
+}
+{\ttfamily \#include $<$boost/shared\+\_\+ptr.\+hpp$>$}\\*
+{\ttfamily \#include $<$cublas\+\_\+v2.\+h$>$}\\*
+{\ttfamily \#include $<$cuda.\+h$>$}\\*
+{\ttfamily \#include $<$curand.\+h$>$}\\*
+{\ttfamily \#include $<$driver\+\_\+types.\+h$>$}\\*
+{\ttfamily \#include $<$glog/logging.\+h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcaffe_1_1_caffe}{caffe\+::\+Caffe}
+\item 
+class \hyperlink{classcaffe_1_1_caffe_1_1_r_n_g}{caffe\+::\+Caffe\+::\+R\+N\+G}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{common_8hpp_a76c34faf687dd7ab915b39c6eef73006}{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}(classname)
+\item 
+\#define \hyperlink{common_8hpp_ac5f8c5d65aa34341a0c51a684b03b129}{I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S}(classname)
+\item 
+\#define \hyperlink{common_8hpp_aec2bcbab7ad208b42215cf4225e259e1}{N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+E\+D}~L\+O\+G(F\+A\+T\+A\+L) $<$$<$ \char`\"{}Not Implemented Yet\char`\"{}
+\item 
+\#define \hyperlink{common_8hpp_aabdf65e032725185b1f4ea42c7eb2e0b}{C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K}(condition)
+\item 
+\#define \hyperlink{common_8hpp_afdfc6012023db2a40142ba9140093b68}{C\+U\+B\+L\+A\+S\+\_\+\+C\+H\+E\+C\+K}(condition)
+\item 
+\#define \hyperlink{common_8hpp_aa9e728b1decb211d41565868144604fa}{C\+U\+R\+A\+N\+D\+\_\+\+C\+H\+E\+C\+K}(condition)
+\item 
+\#define \hyperlink{common_8hpp_aab638495f8b2376fdef4c318cee7b8c3}{C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P}(i, n)
+\item 
+\#define \hyperlink{common_8hpp_a6c6036f3724b9dfd4a5ab914243fd6f0}{C\+U\+D\+A\+\_\+\+P\+O\+S\+T\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+C\+H\+E\+C\+K}~\hyperlink{common_8hpp_aabdf65e032725185b1f4ea42c7eb2e0b}{C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K}(cuda\+Peek\+At\+Last\+Error())
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{namespacecaffe_ad035f2ba804d9d55dfe0076375a8516c}{caffe\+::cublas\+Get\+Error\+String} (cublas\+Status\+\_\+t error)
+\item 
+const char $\ast$ \hyperlink{namespacecaffe_a8a736b14d6bccddf4aaf8f6b91db9fc5}{caffe\+::curand\+Get\+Error\+String} (curand\+Status\+\_\+t error)
+\item 
+int \hyperlink{namespacecaffe_a8e21af5757c4326c467f2aafac590350}{caffe\+::\+C\+A\+F\+F\+E\+\_\+\+G\+E\+T\+\_\+\+B\+L\+O\+C\+K\+S} (const int N)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const int \hyperlink{namespacecaffe_a10ad8f44dec37737a660d1d5439b9cca}{caffe\+::\+C\+A\+F\+F\+E\+\_\+\+C\+U\+D\+A\+\_\+\+N\+U\+M\+\_\+\+T\+H\+R\+E\+A\+D\+S} = 512
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{common_8hpp_afdfc6012023db2a40142ba9140093b68}{\index{common.\+hpp@{common.\+hpp}!C\+U\+B\+L\+A\+S\+\_\+\+C\+H\+E\+C\+K@{C\+U\+B\+L\+A\+S\+\_\+\+C\+H\+E\+C\+K}}
+\index{C\+U\+B\+L\+A\+S\+\_\+\+C\+H\+E\+C\+K@{C\+U\+B\+L\+A\+S\+\_\+\+C\+H\+E\+C\+K}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{C\+U\+B\+L\+A\+S\+\_\+\+C\+H\+E\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+B\+L\+A\+S\+\_\+\+C\+H\+E\+C\+K(
+\begin{DoxyParamCaption}
+\item[{}]{condition}
+\end{DoxyParamCaption}
+)}}\label{common_8hpp_afdfc6012023db2a40142ba9140093b68}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{ \(\backslash\)
+    cublasStatus\_t status = condition; \(\backslash\)
+    CHECK\_EQ(status, CUBLAS\_STATUS\_SUCCESS) << \textcolor{stringliteral}{" "} \(\backslash\)
+      << \hyperlink{namespacecaffe_ad035f2ba804d9d55dfe0076375a8516c}{caffe::cublasGetErrorString}(status); \(\backslash\)
+  \} \textcolor{keywordflow}{while} (0)
+\end{DoxyCode}
+\hypertarget{common_8hpp_aabdf65e032725185b1f4ea42c7eb2e0b}{\index{common.\+hpp@{common.\+hpp}!C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K@{C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K}}
+\index{C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K@{C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K(
+\begin{DoxyParamCaption}
+\item[{}]{condition}
+\end{DoxyParamCaption}
+)}}\label{common_8hpp_aabdf65e032725185b1f4ea42c7eb2e0b}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{comment}{/* Code block avoids redefinition of cudaError\_t error */} \(\backslash\)
+  do \{ \(\backslash\)
+    cudaError\_t error = condition; \(\backslash\)
+    CHECK\_EQ(error, cudaSuccess) << \textcolor{stringliteral}{" "} << cudaGetErrorString(error); \(\backslash\)
+  \} \textcolor{keywordflow}{while} (0)
+\end{DoxyCode}
+\hypertarget{common_8hpp_aab638495f8b2376fdef4c318cee7b8c3}{\index{common.\+hpp@{common.\+hpp}!C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P@{C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P}}
+\index{C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P@{C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P(
+\begin{DoxyParamCaption}
+\item[{}]{i, }
+\item[{}]{n}
+\end{DoxyParamCaption}
+)}}\label{common_8hpp_aab638495f8b2376fdef4c318cee7b8c3}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = blockIdx.x * blockDim.x + threadIdx.x; \(\backslash\)
+       i < (n); \(\backslash\)
+       i += blockDim.x * gridDim.x)
+\end{DoxyCode}
+\hypertarget{common_8hpp_a6c6036f3724b9dfd4a5ab914243fd6f0}{\index{common.\+hpp@{common.\+hpp}!C\+U\+D\+A\+\_\+\+P\+O\+S\+T\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+C\+H\+E\+C\+K@{C\+U\+D\+A\+\_\+\+P\+O\+S\+T\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+C\+H\+E\+C\+K}}
+\index{C\+U\+D\+A\+\_\+\+P\+O\+S\+T\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+C\+H\+E\+C\+K@{C\+U\+D\+A\+\_\+\+P\+O\+S\+T\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+C\+H\+E\+C\+K}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{C\+U\+D\+A\+\_\+\+P\+O\+S\+T\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+C\+H\+E\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+D\+A\+\_\+\+P\+O\+S\+T\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+C\+H\+E\+C\+K~{\bf C\+U\+D\+A\+\_\+\+C\+H\+E\+C\+K}(cuda\+Peek\+At\+Last\+Error())}}\label{common_8hpp_a6c6036f3724b9dfd4a5ab914243fd6f0}
+\hypertarget{common_8hpp_aa9e728b1decb211d41565868144604fa}{\index{common.\+hpp@{common.\+hpp}!C\+U\+R\+A\+N\+D\+\_\+\+C\+H\+E\+C\+K@{C\+U\+R\+A\+N\+D\+\_\+\+C\+H\+E\+C\+K}}
+\index{C\+U\+R\+A\+N\+D\+\_\+\+C\+H\+E\+C\+K@{C\+U\+R\+A\+N\+D\+\_\+\+C\+H\+E\+C\+K}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{C\+U\+R\+A\+N\+D\+\_\+\+C\+H\+E\+C\+K}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+U\+R\+A\+N\+D\+\_\+\+C\+H\+E\+C\+K(
+\begin{DoxyParamCaption}
+\item[{}]{condition}
+\end{DoxyParamCaption}
+)}}\label{common_8hpp_aa9e728b1decb211d41565868144604fa}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{ \(\backslash\)
+    curandStatus\_t status = condition; \(\backslash\)
+    CHECK\_EQ(status, CURAND\_STATUS\_SUCCESS) << \textcolor{stringliteral}{" "} \(\backslash\)
+      << \hyperlink{namespacecaffe_a8a736b14d6bccddf4aaf8f6b91db9fc5}{caffe::curandGetErrorString}(status); \(\backslash\)
+  \} \textcolor{keywordflow}{while} (0)
+\end{DoxyCode}
+\hypertarget{common_8hpp_a76c34faf687dd7ab915b39c6eef73006}{\index{common.\+hpp@{common.\+hpp}!D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}}
+\index{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N(
+\begin{DoxyParamCaption}
+\item[{}]{classname}
+\end{DoxyParamCaption}
+)}}\label{common_8hpp_a76c34faf687dd7ab915b39c6eef73006}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{private}:\(\backslash\)
+  classname(\textcolor{keyword}{const} classname&);\(\backslash\)
+  classname& operator=(\textcolor{keyword}{const} classname&)
+\end{DoxyCode}
+\hypertarget{common_8hpp_ac5f8c5d65aa34341a0c51a684b03b129}{\index{common.\+hpp@{common.\+hpp}!I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S@{I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S}}
+\index{I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S@{I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+C\+L\+A\+S\+S(
+\begin{DoxyParamCaption}
+\item[{}]{classname}
+\end{DoxyParamCaption}
+)}}\label{common_8hpp_ac5f8c5d65aa34341a0c51a684b03b129}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keyword}{template} \textcolor{keyword}{class }classname<float>; \(\backslash\)
+  template \textcolor{keyword}{class }classname<double>
+\end{DoxyCode}
+\hypertarget{common_8hpp_aec2bcbab7ad208b42215cf4225e259e1}{\index{common.\+hpp@{common.\+hpp}!N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+E\+D@{N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+E\+D}}
+\index{N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+E\+D@{N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+E\+D}!common.\+hpp@{common.\+hpp}}
+\subsubsection[{N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+E\+D~L\+O\+G(F\+A\+T\+A\+L) $<$$<$ \char`\"{}Not Implemented Yet\char`\"{}}}\label{common_8hpp_aec2bcbab7ad208b42215cf4225e259e1}

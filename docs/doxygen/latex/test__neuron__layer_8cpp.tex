@@ -1,0 +1,64 @@
+\hypertarget{test__neuron__layer_8cpp}{\section{src/caffe/test/test\+\_\+neuron\+\_\+layer.cpp File Reference}
+\label{test__neuron__layer_8cpp}\index{src/caffe/test/test\+\_\+neuron\+\_\+layer.\+cpp@{src/caffe/test/test\+\_\+neuron\+\_\+layer.\+cpp}}
+}
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}cuda\+\_\+runtime.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}gtest/gtest.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/blob.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/filler.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/vision\+\_\+layers.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/test/test\+\_\+gradient\+\_\+check\+\_\+util.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/test/test\+\_\+caffe\+\_\+main.\+hpp\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcaffe_1_1_neuron_layer_test}{caffe\+::\+Neuron\+Layer\+Test$<$ Dtype $>$}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacecaffe_aa68fc3cdbfdc2044b77e42daa439f45c}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T\+\_\+\+C\+A\+S\+E} (Neuron\+Layer\+Test, Dtypes)
+\item 
+\hyperlink{namespacecaffe_ac3d90a4cb28476dc847d0adc639d7a03}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Re\+L\+U\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a9f4d36af4091b53a8911d9fc00675bdd}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Re\+L\+U\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_add935a80f9a578ae8a5ab278bd8feb15}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Re\+L\+U\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a608902b0bec09353121e3500b24d00ca}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Re\+L\+U\+Gradient\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a75f9126cbe97f2b6dc7894b9528f4814}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Sigmoid\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_aa4638759079db7dacde19fa3ad3aa5a7}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Sigmoid\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a4fdce4daf27057c46e5ac41c33eacc49}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Sigmoid\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_aef6f2f286e24685fbf90418e373e4fff}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Sigmoid\+Gradient\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_ad538d60d5afb9718019179fa9f59dcfc}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Dropout\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_acef73c655db65641c1da694375c6691f}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Dropout\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a6974fcca867bc014af426ec1fd8716d6}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Dropout\+C\+P\+U\+Test\+Phase)
+\item 
+\hyperlink{namespacecaffe_a9aa30748d330a1424448fa22c5c24593}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Dropout\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a47d4d4852f59e1990be706e36c600fe0}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Dropout\+Gradient\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a4728e55b8917d9ad09252ab46d6ac9d4}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+Dropout\+G\+P\+U\+Test\+Phase)
+\item 
+\hyperlink{namespacecaffe_a0007aaf79b23dc8e44c0f74d90f0b106}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+B\+N\+L\+L\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a821758a1ac6b1a24e73031eeb86fea3a}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+B\+N\+L\+L\+Gradient\+C\+P\+U)
+\item 
+\hyperlink{namespacecaffe_af2fa4fa4c275456ec096407d5ffa1a74}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+B\+N\+L\+L\+G\+P\+U)
+\item 
+\hyperlink{namespacecaffe_a5ae7adfd399c3f6559d4b503e1e99ba0}{caffe\+::\+T\+Y\+P\+E\+D\+\_\+\+T\+E\+S\+T} (Neuron\+Layer\+Test, Test\+B\+N\+L\+L\+Gradient\+G\+P\+U)
+\end{DoxyCompactItemize}

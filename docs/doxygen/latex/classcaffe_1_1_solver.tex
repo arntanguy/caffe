@@ -1,0 +1,208 @@
+\hypertarget{classcaffe_1_1_solver}{\section{caffe\+:\+:Solver$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_solver}\index{caffe\+::\+Solver$<$ Dtype $>$@{caffe\+::\+Solver$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$solver.\+hpp$>$}
+
+Inheritance diagram for caffe\+:\+:Solver$<$ Dtype $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcaffe_1_1_solver}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_solver_a153266a021a077d1e4b53819cf558780}{Solver} (const Solver\+Parameter \&param)
+\item 
+\hyperlink{classcaffe_1_1_solver_a8dea449cb5198e44b1ad975943ec0d64}{Solver} (const string \&param\+\_\+file)
+\item 
+void \hyperlink{classcaffe_1_1_solver_abf3071597032efde211e5b48cdcb99c5}{Init} (const Solver\+Parameter \&param)
+\item 
+virtual void \hyperlink{classcaffe_1_1_solver_a20db89c708755c9a1e150df9d0a4b79c}{Solve} (const char $\ast$resume\+\_\+file=N\+U\+L\+L)
+\item 
+void \hyperlink{classcaffe_1_1_solver_ac0be56a22aebd71d012e751c9e97c7e6}{Solve} (const string resume\+\_\+file)
+\item 
+virtual \hyperlink{classcaffe_1_1_solver_a4c1f70b043a8718c05e46a11d3abc8ca}{$\sim$\+Solver} ()
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_net}{Net}$<$ Dtype $>$ $>$ \hyperlink{classcaffe_1_1_solver_aed1d6d3b5d8c3bf43dd33464af0c9de1}{net} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classcaffe_1_1_solver_a11e0ac7956c882960497f0c26140e1eb}{Pre\+Solve} ()
+\item 
+virtual void \hyperlink{classcaffe_1_1_solver_a383bca772575006d34d05dd735a8abcc}{Compute\+Update\+Value} ()=0
+\item 
+void \hyperlink{classcaffe_1_1_solver_a54325448a46b2e5d05b8d3c03522c8f7}{Snapshot} ()
+\item 
+void \hyperlink{classcaffe_1_1_solver_a3d2823aa8f0f82ebbc63572369b756b9}{Test} ()
+\item 
+virtual void \hyperlink{classcaffe_1_1_solver_a8e5cbfef93c1d7d32aca3db7f270443e}{Snapshot\+Solver\+State} (Solver\+State $\ast$state)=0
+\item 
+void \hyperlink{classcaffe_1_1_solver_ac133985ef686e874f5bd326350d266d8}{Restore} (const char $\ast$resume\+\_\+file)
+\item 
+virtual void \hyperlink{classcaffe_1_1_solver_aa0383dd4b216989025cb56266a2b97ac}{Restore\+Solver\+State} (const Solver\+State \&state)=0
+\item 
+\hyperlink{classcaffe_1_1_solver_a3d7a623b6aa51f7971942d376652924f}{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N} (\hyperlink{classcaffe_1_1_solver}{Solver})
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Solver\+Parameter \hyperlink{classcaffe_1_1_solver_a718d67175eba4eb6195b19ef38c3f17a}{param\+\_\+}
+\item 
+int \hyperlink{classcaffe_1_1_solver_ade2a806f82be02b91f3c7c08d234dbbb}{iter\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_net}{Net}$<$ Dtype $>$ $>$ \hyperlink{classcaffe_1_1_solver_a93c9e9a8c4d0fd56432b12daf75dea04}{net\+\_\+}
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classcaffe_1_1_net}{Net}$<$ Dtype $>$ $>$ \hyperlink{classcaffe_1_1_solver_af24f195f59c68f08fcef0526d051e77d}{test\+\_\+net\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_solver_a153266a021a077d1e4b53819cf558780}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Solver@{Solver}}
+\index{Solver@{Solver}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Solver}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::{\bf Solver} (
+\begin{DoxyParamCaption}
+\item[{const Solver\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}}\label{classcaffe_1_1_solver_a153266a021a077d1e4b53819cf558780}
+\hypertarget{classcaffe_1_1_solver_a8dea449cb5198e44b1ad975943ec0d64}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Solver@{Solver}}
+\index{Solver@{Solver}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Solver}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::{\bf Solver} (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{param\+\_\+file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}}\label{classcaffe_1_1_solver_a8dea449cb5198e44b1ad975943ec0d64}
+\hypertarget{classcaffe_1_1_solver_a4c1f70b043a8718c05e46a11d3abc8ca}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!````~Solver@{$\sim$\+Solver}}
+\index{````~Solver@{$\sim$\+Solver}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{$\sim$\+Solver}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ virtual {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::$\sim${\bf Solver} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_solver_a4c1f70b043a8718c05e46a11d3abc8ca}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_solver_a383bca772575006d34d05dd735a8abcc}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Compute\+Update\+Value@{Compute\+Update\+Value}}
+\index{Compute\+Update\+Value@{Compute\+Update\+Value}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Compute\+Update\+Value}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ virtual void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Compute\+Update\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classcaffe_1_1_solver_a383bca772575006d34d05dd735a8abcc}
+
+
+Implemented in \hyperlink{classcaffe_1_1_s_g_d_solver_a15d1fb9c2fdcc59ab8ef1b69aae0f6ea}{caffe\+::\+S\+G\+D\+Solver$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_solver_a3d7a623b6aa51f7971942d376652924f}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}}
+\index{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N@{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::D\+I\+S\+A\+B\+L\+E\+\_\+\+C\+O\+P\+Y\+\_\+\+A\+N\+D\+\_\+\+A\+S\+S\+I\+G\+N (
+\begin{DoxyParamCaption}
+\item[{{\bf Solver}$<$ Dtype $>$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_a3d7a623b6aa51f7971942d376652924f}
+\hypertarget{classcaffe_1_1_solver_abf3071597032efde211e5b48cdcb99c5}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Init@{Init}}
+\index{Init@{Init}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Init}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Init (
+\begin{DoxyParamCaption}
+\item[{const Solver\+Parameter \&}]{param}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_solver_abf3071597032efde211e5b48cdcb99c5}
+\hypertarget{classcaffe_1_1_solver_aed1d6d3b5d8c3bf43dd33464af0c9de1}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!net@{net}}
+\index{net@{net}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{net}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Net}$<$Dtype$>$ $>$ {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::net (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_solver_aed1d6d3b5d8c3bf43dd33464af0c9de1}
+\hypertarget{classcaffe_1_1_solver_a11e0ac7956c882960497f0c26140e1eb}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Pre\+Solve@{Pre\+Solve}}
+\index{Pre\+Solve@{Pre\+Solve}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Pre\+Solve}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ virtual void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Pre\+Solve (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classcaffe_1_1_solver_a11e0ac7956c882960497f0c26140e1eb}
+
+
+Reimplemented in \hyperlink{classcaffe_1_1_s_g_d_solver_a6488286ff665df1907d64a92d4acf835}{caffe\+::\+S\+G\+D\+Solver$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_solver_ac133985ef686e874f5bd326350d266d8}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Restore@{Restore}}
+\index{Restore@{Restore}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Restore}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Restore (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{resume\+\_\+file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_ac133985ef686e874f5bd326350d266d8}
+\hypertarget{classcaffe_1_1_solver_aa0383dd4b216989025cb56266a2b97ac}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Restore\+Solver\+State@{Restore\+Solver\+State}}
+\index{Restore\+Solver\+State@{Restore\+Solver\+State}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Restore\+Solver\+State}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ virtual void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Restore\+Solver\+State (
+\begin{DoxyParamCaption}
+\item[{const Solver\+State \&}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classcaffe_1_1_solver_aa0383dd4b216989025cb56266a2b97ac}
+
+
+Implemented in \hyperlink{classcaffe_1_1_s_g_d_solver_aeda94078ad9653b9a63d59ea86bef04c}{caffe\+::\+S\+G\+D\+Solver$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_solver_a54325448a46b2e5d05b8d3c03522c8f7}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Snapshot@{Snapshot}}
+\index{Snapshot@{Snapshot}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Snapshot}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Snapshot (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_a54325448a46b2e5d05b8d3c03522c8f7}
+\hypertarget{classcaffe_1_1_solver_a8e5cbfef93c1d7d32aca3db7f270443e}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Snapshot\+Solver\+State@{Snapshot\+Solver\+State}}
+\index{Snapshot\+Solver\+State@{Snapshot\+Solver\+State}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Snapshot\+Solver\+State}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ virtual void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Snapshot\+Solver\+State (
+\begin{DoxyParamCaption}
+\item[{Solver\+State $\ast$}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classcaffe_1_1_solver_a8e5cbfef93c1d7d32aca3db7f270443e}
+
+
+Implemented in \hyperlink{classcaffe_1_1_s_g_d_solver_a986923b613b026ea23df4d348cb9e802}{caffe\+::\+S\+G\+D\+Solver$<$ Dtype $>$}.
+
+\hypertarget{classcaffe_1_1_solver_a20db89c708755c9a1e150df9d0a4b79c}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Solve@{Solve}}
+\index{Solve@{Solve}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Solve}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Solve (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{resume\+\_\+file = {\ttfamily NULL}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classcaffe_1_1_solver_a20db89c708755c9a1e150df9d0a4b79c}
+\hypertarget{classcaffe_1_1_solver_ac0be56a22aebd71d012e751c9e97c7e6}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Solve@{Solve}}
+\index{Solve@{Solve}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Solve}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Solve (
+\begin{DoxyParamCaption}
+\item[{const string}]{resume\+\_\+file}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_solver_ac0be56a22aebd71d012e751c9e97c7e6}
+\hypertarget{classcaffe_1_1_solver_a3d2823aa8f0f82ebbc63572369b756b9}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!Test@{Test}}
+\index{Test@{Test}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{Test}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::Test (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_a3d2823aa8f0f82ebbc63572369b756b9}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_solver_ade2a806f82be02b91f3c7c08d234dbbb}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!iter\+\_\+@{iter\+\_\+}}
+\index{iter\+\_\+@{iter\+\_\+}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{iter\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ int {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::iter\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_ade2a806f82be02b91f3c7c08d234dbbb}
+\hypertarget{classcaffe_1_1_solver_a93c9e9a8c4d0fd56432b12daf75dea04}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!net\+\_\+@{net\+\_\+}}
+\index{net\+\_\+@{net\+\_\+}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{net\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Net}$<$Dtype$>$ $>$ {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::net\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_a93c9e9a8c4d0fd56432b12daf75dea04}
+\hypertarget{classcaffe_1_1_solver_a718d67175eba4eb6195b19ef38c3f17a}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!param\+\_\+@{param\+\_\+}}
+\index{param\+\_\+@{param\+\_\+}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{param\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Solver\+Parameter {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::param\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_a718d67175eba4eb6195b19ef38c3f17a}
+\hypertarget{classcaffe_1_1_solver_af24f195f59c68f08fcef0526d051e77d}{\index{caffe\+::\+Solver@{caffe\+::\+Solver}!test\+\_\+net\+\_\+@{test\+\_\+net\+\_\+}}
+\index{test\+\_\+net\+\_\+@{test\+\_\+net\+\_\+}!caffe\+::\+Solver@{caffe\+::\+Solver}}
+\subsubsection[{test\+\_\+net\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ shared\+\_\+ptr$<${\bf Net}$<$Dtype$>$ $>$ {\bf caffe\+::\+Solver}$<$ Dtype $>$\+::test\+\_\+net\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_solver_af24f195f59c68f08fcef0526d051e77d}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/caffe/\hyperlink{solver_8hpp}{solver.\+hpp}\item 
+src/caffe/\hyperlink{solver_8cpp}{solver.\+cpp}\end{DoxyCompactItemize}

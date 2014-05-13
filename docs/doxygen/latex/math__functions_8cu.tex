@@ -1,0 +1,77 @@
+\hypertarget{math__functions_8cu}{\section{src/caffe/util/math\+\_\+functions.cu File Reference}
+\label{math__functions_8cu}\index{src/caffe/util/math\+\_\+functions.\+cu@{src/caffe/util/math\+\_\+functions.\+cu}}
+}
+{\ttfamily \#include $<$math\+\_\+functions.\+h$>$}\\*
+{\ttfamily \#include $<$thrust/device\+\_\+vector.\+h$>$}\\*
+{\ttfamily \#include $<$thrust/functional.\+h$>$}\\*
+{\ttfamily \#include $<$thrust/reduce.\+h$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include \char`\"{}caffe/common.\+hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}caffe/util/math\+\_\+functions.\+hpp\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacecaffe}{caffe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_ae97b58df87eb89d1ec96c2a016e90ced}{caffe\+::set\+\_\+kernel} (const int n, const Dtype alpha, Dtype $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a298e3ff433dffce569a6150a4bbea6c6}{caffe\+::caffe\+\_\+gpu\+\_\+set} (const int N, const float alpha, float $\ast$Y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a4156ed130860020848421280104678ab}{caffe\+::caffe\+\_\+gpu\+\_\+set} (const int N, const double alpha, double $\ast$Y)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a732b4e5823cbeb18b654845a8e0562d5}{caffe\+::add\+\_\+scalar\+\_\+kernel} (const int n, const Dtype alpha, Dtype $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_ad867b51206d97a333d76d4e1390a7fa3}{caffe\+::caffe\+\_\+gpu\+\_\+add\+\_\+scalar} (const int N, const float alpha, float $\ast$Y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a9d6e8b8173c0c8c4d0125082281ff529}{caffe\+::caffe\+\_\+gpu\+\_\+add\+\_\+scalar} (const int N, const double alpha, double $\ast$Y)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a2b2ad9026c6ca682e92ac7f06b2c1720}{caffe\+::mul\+\_\+kernel} (const int n, const Dtype $\ast$a, const Dtype $\ast$b, Dtype $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a96fc8a04e62e3f2ffdd79d5600262f0b}{caffe\+::caffe\+\_\+gpu\+\_\+mul$<$ float $>$} (const int N, const float $\ast$a, const float $\ast$b, float $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a6944cc28fe65abfa6cec8b8dc7aea26d}{caffe\+::caffe\+\_\+gpu\+\_\+mul$<$ double $>$} (const int N, const double $\ast$a, const double $\ast$b, double $\ast$y)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_aafc93f3ad4961c88d19ba574112250a8}{caffe\+::div\+\_\+kernel} (const int n, const Dtype $\ast$a, const Dtype $\ast$b, Dtype $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_ab16bf45f3c2b83f59c1991960bf23c2f}{caffe\+::caffe\+\_\+gpu\+\_\+div$<$ float $>$} (const int N, const float $\ast$a, const float $\ast$b, float $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_aa65bd487aa7c59bf85dfa626dae789c8}{caffe\+::caffe\+\_\+gpu\+\_\+div$<$ double $>$} (const int N, const double $\ast$a, const double $\ast$b, double $\ast$y)
+\item 
+{\footnotesize template$<$typename Dtype $>$ }\\\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_a9e8f995a5fe430af483f934f6db51ac8}{caffe\+::powx\+\_\+kernel} (const int n, const Dtype $\ast$a, const Dtype alpha, Dtype $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a5a3244754d20c867f7c3c0e13ede7b86}{caffe\+::caffe\+\_\+gpu\+\_\+powx$<$ float $>$} (const int N, const float $\ast$a, const float alpha, float $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a9ae99fa052a8edddd8d431595e8dc317}{caffe\+::caffe\+\_\+gpu\+\_\+powx$<$ double $>$} (const int N, const double $\ast$a, const double alpha, double $\ast$y)
+\item 
+\+\_\+\+\_\+global\+\_\+\+\_\+ void \hyperlink{namespacecaffe_ae307157ab0a91393f5708d5a37bf83bc}{caffe\+::popcll\+\_\+kernel} (const int n, const double $\ast$a, const double $\ast$b, uint8\+\_\+t $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\uint32\+\_\+t \hyperlink{namespacecaffe_aa9d0abbc1318f21d421c50b8e9681566}{caffe\+::caffe\+\_\+gpu\+\_\+hamming\+\_\+distance$<$ float $>$} (const int n, const float $\ast$x, const float $\ast$y)
+\item 
+{\footnotesize template$<$$>$ }\\uint32\+\_\+t \hyperlink{namespacecaffe_ae6f219822c198a5ebfc14b79d56aac7b}{caffe\+::caffe\+\_\+gpu\+\_\+hamming\+\_\+distance$<$ double $>$} (const int n, const double $\ast$x, const double $\ast$y)
+\item 
+void \hyperlink{namespacecaffe_aee22d10249c5dd157d15a79bb8891bf8}{caffe\+::caffe\+\_\+gpu\+\_\+rng\+\_\+uniform} (const int n, unsigned int $\ast$r)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a077eb739db57fe3655d0def343fe0c4c}{caffe\+::caffe\+\_\+gpu\+\_\+rng\+\_\+uniform$<$ float $>$} (const int n, const float a, const float b, float $\ast$r)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a31407c00a3d32c77016b8382ae19ebb2}{caffe\+::caffe\+\_\+gpu\+\_\+rng\+\_\+uniform$<$ double $>$} (const int n, const double a, const double b, double $\ast$r)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_aeb58f68cc8d5f8b7dba8537dc1932cb9}{caffe\+::caffe\+\_\+gpu\+\_\+rng\+\_\+gaussian} (const int n, const float mu, const float sigma, float $\ast$r)
+\item 
+{\footnotesize template$<$$>$ }\\void \hyperlink{namespacecaffe_a7536554fa0f49cb776354d384689e38b}{caffe\+::caffe\+\_\+gpu\+\_\+rng\+\_\+gaussian} (const int n, const double mu, const double sigma, double $\ast$r)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+x\mbox{[}index\mbox{]}$<$ Dtype(0)));\hyperlink{math__functions_8hpp_ae57554839d87a430797d905d402e9d62}{D\+E\+F\+I\+N\+E\+\_\+\+A\+N\+D\+\_\+\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+G\+P\+U\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}(sgnbit, \\*
+y\mbox{[}index\mbox{]}=signbit(x\mbox{[}index\mbox{]}));\hyperlink{math__functions_8hpp_ae57554839d87a430797d905d402e9d62}{D\+E\+F\+I\+N\+E\+\_\+\+A\+N\+D\+\_\+\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+E\+\_\+\+G\+P\+U\+\_\+\+U\+N\+A\+R\+Y\+\_\+\+F\+U\+N\+C}(fabs, \\*
+y\mbox{[}index\mbox{]}=fabs(x\mbox{[}index\mbox{]}));\+\_\+\+\_\+global\+\_\+\+\_\+voidpopc\+\_\+kernel(constintn, \\*
+constfloat $\ast$a, constfloat $\ast$b, \\*
+uint8\+\_\+t $\ast$y)\{\hyperlink{common_8hpp_aab638495f8b2376fdef4c318cee7b8c3}{C\+U\+D\+A\+\_\+\+K\+E\+R\+N\+E\+L\+\_\+\+L\+O\+O\+P}(index, \\*
+n)\{y\mbox{[}index\mbox{]}=\+\_\+\+\_\+popc(static\+\_\+cast\\*
+$<$ uint32\+\_\+t $>$ a\mbox{[}index\mbox{]} \hyperlink{namespacecaffe_a91eff1fdaaf60428c47eae6950deffb1}{caffe\+::static\+\_\+cast$<$ uint32\+\_\+t $>$} (b\mbox{[}index\mbox{]}))
+\end{DoxyCompactItemize}

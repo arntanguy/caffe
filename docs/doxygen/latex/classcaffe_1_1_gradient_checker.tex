@@ -1,0 +1,139 @@
+\hypertarget{classcaffe_1_1_gradient_checker}{\section{caffe\+:\+:Gradient\+Checker$<$ Dtype $>$ Class Template Reference}
+\label{classcaffe_1_1_gradient_checker}\index{caffe\+::\+Gradient\+Checker$<$ Dtype $>$@{caffe\+::\+Gradient\+Checker$<$ Dtype $>$}}
+}
+
+
+{\ttfamily \#include $<$test\+\_\+gradient\+\_\+check\+\_\+util.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcaffe_1_1_gradient_checker_a3669e5cf7ba11ee6858f628f7409fbdc}{Gradient\+Checker} (const Dtype stepsize, const Dtype threshold, const unsigned int seed=1701, const Dtype kink=0., const Dtype kink\+\_\+range=-\/1)
+\item 
+void \hyperlink{classcaffe_1_1_gradient_checker_acc5d8d420f39161eabcef0ba6985d2bb}{Check\+Gradient} (\hyperlink{classcaffe_1_1_layer}{Layer}$<$ Dtype $>$ $\ast$layer, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top, int check\+\_\+bottom=-\/1)
+\item 
+void \hyperlink{classcaffe_1_1_gradient_checker_ac54a3abf29ba9fdec8c638b9d64bafda}{Check\+Gradient\+Exhaustive} (\hyperlink{classcaffe_1_1_layer}{Layer}$<$ Dtype $>$ $\ast$layer, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top, int check\+\_\+bottom=-\/1)
+\item 
+void \hyperlink{classcaffe_1_1_gradient_checker_af91c345fb21a8ab832678f762a5c514b}{Check\+Gradient\+Eltwise} (\hyperlink{classcaffe_1_1_layer}{Layer}$<$ Dtype $>$ $\ast$layer, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top)
+\item 
+void \hyperlink{classcaffe_1_1_gradient_checker_a29485303acb43364b6070db03dde91d6}{Check\+Gradient\+Single} (\hyperlink{classcaffe_1_1_layer}{Layer}$<$ Dtype $>$ $\ast$layer, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$bottom, vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top, int check\+\_\+bottom, int top\+\_\+id, int top\+\_\+data\+\_\+id, bool element\+\_\+wise=false)
+\item 
+void \hyperlink{classcaffe_1_1_gradient_checker_added2b064b65c97e1e5fdf93839d2d87}{Check\+Gradient\+Net} (const \hyperlink{classcaffe_1_1_net}{Net}$<$ Dtype $>$ \&net, const vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ \&input)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Dtype \hyperlink{classcaffe_1_1_gradient_checker_a5a387a2f83155ed56ac065ea5e8598a5}{Get\+Obj\+And\+Gradient} (vector$<$ \hyperlink{classcaffe_1_1_blob}{Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$top, int top\+\_\+id=-\/1, int top\+\_\+data\+\_\+id=-\/1)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Dtype \hyperlink{classcaffe_1_1_gradient_checker_aaa427369839646baa465b09ead4ba5e7}{stepsize\+\_\+}
+\item 
+Dtype \hyperlink{classcaffe_1_1_gradient_checker_a2488c7b9f076c4578ba47cea46f8e947}{threshold\+\_\+}
+\item 
+unsigned int \hyperlink{classcaffe_1_1_gradient_checker_a2b5ddbc782ecee24eacf4e567e4bd954}{seed\+\_\+}
+\item 
+Dtype \hyperlink{classcaffe_1_1_gradient_checker_af6511d07455bbacdd61e79c33c13fbc9}{kink\+\_\+}
+\item 
+Dtype \hyperlink{classcaffe_1_1_gradient_checker_a827262b9c3ebcc0f20f9d135541a6c49}{kink\+\_\+range\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcaffe_1_1_gradient_checker_a3669e5cf7ba11ee6858f628f7409fbdc}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!Gradient\+Checker@{Gradient\+Checker}}
+\index{Gradient\+Checker@{Gradient\+Checker}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{Gradient\+Checker}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::{\bf Gradient\+Checker} (
+\begin{DoxyParamCaption}
+\item[{const Dtype}]{stepsize, }
+\item[{const Dtype}]{threshold, }
+\item[{const unsigned int}]{seed = {\ttfamily 1701}, }
+\item[{const Dtype}]{kink = {\ttfamily 0.}, }
+\item[{const Dtype}]{kink\+\_\+range = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_gradient_checker_a3669e5cf7ba11ee6858f628f7409fbdc}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcaffe_1_1_gradient_checker_acc5d8d420f39161eabcef0ba6985d2bb}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!Check\+Gradient@{Check\+Gradient}}
+\index{Check\+Gradient@{Check\+Gradient}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{Check\+Gradient}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::Check\+Gradient (
+\begin{DoxyParamCaption}
+\item[{{\bf Layer}$<$ Dtype $>$ $\ast$}]{layer, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top, }
+\item[{int}]{check\+\_\+bottom = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcaffe_1_1_gradient_checker_acc5d8d420f39161eabcef0ba6985d2bb}
+\hypertarget{classcaffe_1_1_gradient_checker_af91c345fb21a8ab832678f762a5c514b}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!Check\+Gradient\+Eltwise@{Check\+Gradient\+Eltwise}}
+\index{Check\+Gradient\+Eltwise@{Check\+Gradient\+Eltwise}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{Check\+Gradient\+Eltwise}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::Check\+Gradient\+Eltwise (
+\begin{DoxyParamCaption}
+\item[{{\bf Layer}$<$ Dtype $>$ $\ast$}]{layer, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_gradient_checker_af91c345fb21a8ab832678f762a5c514b}
+\hypertarget{classcaffe_1_1_gradient_checker_ac54a3abf29ba9fdec8c638b9d64bafda}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!Check\+Gradient\+Exhaustive@{Check\+Gradient\+Exhaustive}}
+\index{Check\+Gradient\+Exhaustive@{Check\+Gradient\+Exhaustive}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{Check\+Gradient\+Exhaustive}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::Check\+Gradient\+Exhaustive (
+\begin{DoxyParamCaption}
+\item[{{\bf Layer}$<$ Dtype $>$ $\ast$}]{layer, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top, }
+\item[{int}]{check\+\_\+bottom = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_gradient_checker_ac54a3abf29ba9fdec8c638b9d64bafda}
+\hypertarget{classcaffe_1_1_gradient_checker_added2b064b65c97e1e5fdf93839d2d87}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!Check\+Gradient\+Net@{Check\+Gradient\+Net}}
+\index{Check\+Gradient\+Net@{Check\+Gradient\+Net}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{Check\+Gradient\+Net}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::Check\+Gradient\+Net (
+\begin{DoxyParamCaption}
+\item[{const {\bf Net}$<$ Dtype $>$ \&}]{net, }
+\item[{const vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ \&}]{input}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_gradient_checker_added2b064b65c97e1e5fdf93839d2d87}
+\hypertarget{classcaffe_1_1_gradient_checker_a29485303acb43364b6070db03dde91d6}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!Check\+Gradient\+Single@{Check\+Gradient\+Single}}
+\index{Check\+Gradient\+Single@{Check\+Gradient\+Single}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{Check\+Gradient\+Single}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ void {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::Check\+Gradient\+Single (
+\begin{DoxyParamCaption}
+\item[{{\bf Layer}$<$ Dtype $>$ $\ast$}]{layer, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{bottom, }
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top, }
+\item[{int}]{check\+\_\+bottom, }
+\item[{int}]{top\+\_\+id, }
+\item[{int}]{top\+\_\+data\+\_\+id, }
+\item[{bool}]{element\+\_\+wise = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classcaffe_1_1_gradient_checker_a29485303acb43364b6070db03dde91d6}
+\hypertarget{classcaffe_1_1_gradient_checker_a5a387a2f83155ed56ac065ea5e8598a5}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!Get\+Obj\+And\+Gradient@{Get\+Obj\+And\+Gradient}}
+\index{Get\+Obj\+And\+Gradient@{Get\+Obj\+And\+Gradient}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{Get\+Obj\+And\+Gradient}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::Get\+Obj\+And\+Gradient (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf Blob}$<$ Dtype $>$ $\ast$ $>$ $\ast$}]{top, }
+\item[{int}]{top\+\_\+id = {\ttfamily -\/1}, }
+\item[{int}]{top\+\_\+data\+\_\+id = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_gradient_checker_a5a387a2f83155ed56ac065ea5e8598a5}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classcaffe_1_1_gradient_checker_af6511d07455bbacdd61e79c33c13fbc9}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!kink\+\_\+@{kink\+\_\+}}
+\index{kink\+\_\+@{kink\+\_\+}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{kink\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::kink\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_gradient_checker_af6511d07455bbacdd61e79c33c13fbc9}
+\hypertarget{classcaffe_1_1_gradient_checker_a827262b9c3ebcc0f20f9d135541a6c49}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!kink\+\_\+range\+\_\+@{kink\+\_\+range\+\_\+}}
+\index{kink\+\_\+range\+\_\+@{kink\+\_\+range\+\_\+}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{kink\+\_\+range\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::kink\+\_\+range\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_gradient_checker_a827262b9c3ebcc0f20f9d135541a6c49}
+\hypertarget{classcaffe_1_1_gradient_checker_a2b5ddbc782ecee24eacf4e567e4bd954}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!seed\+\_\+@{seed\+\_\+}}
+\index{seed\+\_\+@{seed\+\_\+}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{seed\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ unsigned int {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::seed\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_gradient_checker_a2b5ddbc782ecee24eacf4e567e4bd954}
+\hypertarget{classcaffe_1_1_gradient_checker_aaa427369839646baa465b09ead4ba5e7}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!stepsize\+\_\+@{stepsize\+\_\+}}
+\index{stepsize\+\_\+@{stepsize\+\_\+}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{stepsize\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::stepsize\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_gradient_checker_aaa427369839646baa465b09ead4ba5e7}
+\hypertarget{classcaffe_1_1_gradient_checker_a2488c7b9f076c4578ba47cea46f8e947}{\index{caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}!threshold\+\_\+@{threshold\+\_\+}}
+\index{threshold\+\_\+@{threshold\+\_\+}!caffe\+::\+Gradient\+Checker@{caffe\+::\+Gradient\+Checker}}
+\subsubsection[{threshold\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dtype $>$ Dtype {\bf caffe\+::\+Gradient\+Checker}$<$ Dtype $>$\+::threshold\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}}\label{classcaffe_1_1_gradient_checker_a2488c7b9f076c4578ba47cea46f8e947}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/caffe/test/\hyperlink{test__gradient__check__util_8hpp}{test\+\_\+gradient\+\_\+check\+\_\+util.\+hpp}\end{DoxyCompactItemize}
