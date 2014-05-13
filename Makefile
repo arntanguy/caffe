@@ -1,4 +1,4 @@
-# The makefile for caffe. Pretty hacky.
+#The makefile for caffe. Pretty hacky.
 PROJECT := caffe
 
 CONFIG_FILE := Makefile.config
@@ -181,6 +181,13 @@ ALL_BUILD_DIRS := $(sort \
 		$(PROTO_BUILD_DIR) $(PROTO_BUILD_INCLUDE_DIR) $(PY_PROTO_BUILD_DIR) \
 		$(DISTRIBUTE_SUBDIRS))
 
+###############################
+# Configure Doxygen
+###############################
+DOXYGEN_DIR ?= docs/doxygen
+DOXYGEN_BIN ?= /usr/bin/doxygen
+
+
 ##############################
 # Configure build
 ##############################
@@ -206,7 +213,7 @@ endif
 # clang++ instead of g++
 # libstdc++ instead of libc++ for CUDA compatibility on 10.9
 ifeq ($(OSX), 1)
-	CXX := /usr/bin/clang++
+	CXX ?= /usr/bin/clang++
 	# clang throws this warning for cuda headers
 	WARNINGS += -Wno-unneeded-internal-declaration
 	ifneq ($(findstring 10.9, $(shell sw_vers -productVersion)),)
@@ -499,12 +506,12 @@ $(PY_PROTO_BUILD_DIR)/%_pb2.py : $(PROTO_SRC_DIR)/%.proto \
 
 $(PY_PROTO_INIT): | $(PY_PROTO_BUILD_DIR)
 	touch $(PY_PROTO_INIT)
-
 clean:
 	@- $(RM) -rf $(ALL_BUILD_DIRS)
 	@- $(RM) -rf $(OTHER_BUILD_DIR)
 	@- $(RM) -rf $(BUILD_DIR_LINK)
 	@- $(RM) -rf $(DISTRIBUTE_DIR)
+	@- $(RM) -rf $(DOXYGEN_DIR)
 	@- $(RM) $(PY$(PROJECT)_SO)
 	@- $(RM) $(MAT$(PROJECT)_SO)
 
@@ -544,3 +551,19 @@ $(DISTRIBUTE_DIR): all py $(HXX_SRCS) | $(DISTRIBUTE_SUBDIRS)
 	cp $(STATIC_NAME) $(DISTRIBUTE_DIR)/lib
 	# add python - it's not the standard way, indeed...
 	cp -r python $(DISTRIBUTE_DIR)/python
+
+
+##################################
+# Generate Doxygen documentation 
+##################################
+
+doxygen: 
+	@ echo "Generating Doxygen documentation"; \
+		mkdir -p $(DOXYGEN_DIR); \
+		if [[ -x $(DOXYGEN_BIN) ]]; then \
+			export ENV_DOXYGEN_DIR=$(DOXYGEN_DIR); $(DOXYGEN_BIN) Doxyfile; \
+		else \
+			echo "Doxygen executable not found. Set DOXYGEN_BIN to the correct location"; \
+		fi	
+
+
