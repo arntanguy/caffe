@@ -93,7 +93,7 @@ layers {
   layer {
     name: "conv3"
     type: "conv"
-    num_output: 80
+    num_output: 60
     ntile_height: 5
     ntile_width: 4
     kernelsize: 3
@@ -170,26 +170,17 @@ layers {
 }
 layers {
 	layer{
-		name: "dropout_group_1"
-		type: "dropout_group"
-		dropout_ratio: 0.5
-	}
-	bottom: "pool3"
-	top: "dropout1"
-}
-layers {
-	layer{
 		name: "flat1"
 		type: "flatten"
 	}
-	bottom: "dropout1"
+	bottom: "pool3"
 	top: "flat1"
 }
 layers {
   layer {
     name: "conv4"
     type: "conv"
-    num_output: 120
+    num_output: 80
     kernelsize: 2
     ntile_height: 4
     ntile_width: 3
@@ -235,15 +226,6 @@ layers {
   }
   bottom: "conv4"
   top: "conv4"
-}
-layers {
-	layer{
-		name: "dropout_group_2"
-		type: "dropout_group"
-		dropout_ratio: 0.5
-	}
-	bottom: "conv4"
-	top: "conv4"
 }
 layers {
 	layer{

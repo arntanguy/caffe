@@ -688,8 +688,8 @@ class VerificationLossLayer : public Layer<Dtype> {
 
   void GetMeanDistance(vector<Dtype> &dists){ 
 	  dists.clear();
-	  Dtype avg[2];
-	  int cnt[2];
+	  Dtype avg[2] = {0.};
+	  int cnt[2] = {0};
 	  CHECK_EQ(distance_.size(), same_.size());
 	  for(size_t i=0;i<distance_.size();i++){
 		  int s = same_[i];
