@@ -1,4 +1,4 @@
-OBJS:=verif_train.prototxt verif_test.prototxt
+OBJS:=verif_train.prototxt verif_test.prototxt verif_feature.prototxt
 
 all: $(OBJS)
 

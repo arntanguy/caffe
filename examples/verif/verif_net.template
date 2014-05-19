@@ -2,13 +2,19 @@ name: NET_NAME
 layers {
   layer {
     name: "verif_dual_001"
+#ifndef FEATURE_EXTRACT
     type: "shuffle_data"
+#else
+    type: "data"
+#endif
     source: DB_NAME
     batchsize: 64
-    data_count: DATA_COUNT
     scale: 1.0
     bias: 0.0
+#ifndef FEATURE_EXTRACT
+    data_count: DATA_COUNT
     source_list: TRAIN_LIST
+#endif
   }
   top: "data"
   top: "label"

@@ -34,7 +34,6 @@ int main(int argc, char** argv) {
     return 0;
   }
 
-  cudaSetDevice(0);
   Caffe::set_phase(Caffe::TEST);
 
   if (argc == 6 && strcmp(argv[5], "GPU") == 0) {
@@ -51,6 +50,12 @@ int main(int argc, char** argv) {
   NetParameter trained_net_param;
   ReadProtoFromBinaryFile(argv[2], &trained_net_param);
   caffe_test_net.CopyTrainedLayersFrom(trained_net_param);
+
+#if 0
+  SolverState state;
+  std::string state_file = std::string(argv[2]) + ".solverstate";
+  ReadProtoFromBinaryFile(state_file, &state);
+#endif
 
   int total_iter = atoi(argv[3]);
   LOG(ERROR) << "Running " << total_iter << "Iterations.";
@@ -78,14 +83,14 @@ int main(int argc, char** argv) {
     const vector<Blob<float>*>& result =
         caffe_test_net.Forward(dummy_blob_input_vec);
 
-    sprintf(output_dir, "%s/feat_%d", argv[4], i);
+    sprintf(output_dir, "%s/feat_%05d", argv[4], i);
     save_blob(output_dir, output);
 
-    test_accuracy += result[0]->cpu_data()[0];
-    LOG(ERROR) << "Batch " << i << ", accuracy: " << result[0]->cpu_data()[0];
+    //test_accuracy += result[0]->cpu_data()[0];
+    //LOG(ERROR) << "Batch " << i << ", accuracy: " << result[0]->cpu_data()[0];
   }
-  test_accuracy /= total_iter;
-  LOG(ERROR) << "Test accuracy:" << test_accuracy;
+  //test_accuracy /= total_iter;
+  //LOG(ERROR) << "Test accuracy:" << test_accuracy;
 
   return 0;
 }

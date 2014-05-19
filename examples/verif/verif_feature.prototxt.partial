@@ -1,0 +1,6 @@
+#define NET_NAME "Sunyi-feature"
+#define DB_NAME "test_55_47_c_001.db"
+#define FEATURE_EXTRACT
+
+#include "verif_net.template"
+
