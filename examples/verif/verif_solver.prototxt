@@ -1,13 +1,13 @@
 # The training protocol buffer definition
-train_net: "verif_train.prototxt"
+train_net: "arnaud_verif_train.prototxt"
 # The testing protocol buffer definition
-test_net: "verif_test.prototxt"
+test_net: "arnaud_verif_test.prototxt"
 # test_iter specifies how many forward passes the test should carry out.
 # In the case of MNIST, we have test batch size 100 and 100 test iterations,
 # covering the full 10,000 testing images.
 test_iter: 375
 # Carry out testing every 500 training iterations.
-test_interval: 5000
+test_interval: 500
 # The base learning rate, momentum and the weight decay of the network.
 base_lr: 0.01
 momentum: 0.9
@@ -17,11 +17,11 @@ lr_policy: "inv"
 gamma: 0.000005
 power: 0.75
 # Display every 100 iterations
-display: 1000
+display: 100
 # The maximum number of iterations
 max_iter: 2000000
 # snapshot intermediate results
-snapshot: 5000
+snapshot: 500
 snapshot_prefix: "verif"
 # solver mode: 0 for CPU and 1 for GPU
 solver_mode: 1

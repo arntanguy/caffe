@@ -83,6 +83,7 @@ TEST_ALL_BIN := $(BUILD_DIR)/src/$(PROJECT)/test/test_all.testbin
 ##############################
 CUDA_INCLUDE_DIR := $(CUDA_DIR)/include
 CUDA_LIB_DIR := $(CUDA_DIR)/lib64 $(CUDA_DIR)/lib
+CUDA_FLAGS_COMMON+=-use_fast_math -DBOOST_NOINLINE='__attribute__ ((noinline))'
 MKL_INCLUDE_DIR := $(MKL_DIR)/include
 MKL_LIB_DIR := $(MKL_DIR)/lib $(MKL_DIR)/lib/intel64
 
@@ -95,13 +96,14 @@ LIBRARIES := cudart cublas curand \
 	snappy \
 	boost_system \
 	hdf5_hl hdf5 \
-	opencv_core opencv_highgui opencv_imgproc
+	opencv_core opencv_highgui opencv_imgproc \
+	boost_program_options
 PYTHON_LIBRARIES := boost_python python2.7
 WARNINGS := -Wall
 
-COMMON_FLAGS := -DNDEBUG -O2 $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
+COMMON_FLAGS := -O2 $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
 CXXFLAGS += -pthread -fPIC $(COMMON_FLAGS)
-NVCCFLAGS := -ccbin=$(CXX) -Xcompiler -fPIC $(COMMON_FLAGS)
+NVCCFLAGS := -ccbin=$(CXX) -Xcompiler -fPIC $(CUDA_FLAGS_COMMON) $(COMMON_FLAGS)
 LDFLAGS += $(foreach librarydir,$(LIBRARY_DIRS),-L$(librarydir)) \
 		$(foreach library,$(LIBRARIES),-l$(library))
 PYTHON_LDFLAGS := $(LDFLAGS) $(foreach library,$(PYTHON_LIBRARIES),-l$(library))

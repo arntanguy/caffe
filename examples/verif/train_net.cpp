@@ -67,7 +67,9 @@ class VeriSGDSolver : public Solver<Dtype> {
 				//Blob<Dtype>* & top_vec1 = this->net_->top_vecs()[TOP_LAYER_ID][0];
 				//Blob<Dtype>* & top_vec2 = this->shadow_net_->top_vecs()[TOP_LAYER_ID][0];
 
-				loss_layer.reset(new VerificationLossLayer<Dtype>(extra_layer_params_));
+				VerificationLossLayer<Dtype> *loss = new  VerificationLossLayer<Dtype>(extra_layer_params_);
+				loss->ReadCorrespondancesFile();
+				loss_layer.reset(loss);
 
 				loss_bottom.push_back(feat_vec1[0]);
 				loss_bottom.push_back(label_vec1);
@@ -78,10 +80,12 @@ class VeriSGDSolver : public Solver<Dtype> {
 
 				LOG(INFO) << "BUILD LOSS DONE";
 
+				LOG(INFO) << "Loading test network";
 				//Build test accuracy
 				NetParameter test_net_param;
 				ReadProtoFromTextFile(param.test_net(), &test_net_param);
 				test_net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_share_data(true);
+
 
 				LOG(INFO) << "TEST_INPUT " << test_net_param.layers(DATA_LAYER_IDX).layer().source();
 				shadow_test_net_.reset(new Net<Dtype>(test_net_param));
@@ -156,13 +160,13 @@ class VeriSGDSolver : public Solver<Dtype> {
 		}
 
 		// history maintains the historical momentum data.
-		vector<shared_ptr<Blob<Dtype> > > history_;
+		vector<boost::shared_ptr<Blob<Dtype> > > history_;
 
-		shared_ptr<Net<Dtype> > shadow_net_;
-		shared_ptr<Net<Dtype> > shadow_test_net_;
+		boost::shared_ptr<Net<Dtype> > shadow_net_;
+		boost::shared_ptr<Net<Dtype> > shadow_test_net_;
 
-		shared_ptr<VerificationLossLayer<Dtype> > loss_layer;
-		shared_ptr<VerificationAccuracyLayer<Dtype> > accuracy_layer;
+		boost::shared_ptr<VerificationLossLayer<Dtype> > loss_layer;
+		boost::shared_ptr<VerificationAccuracyLayer<Dtype> > accuracy_layer;
 
 		int FEATURE_LAYER_ID;
 		int DATA_LAYER_IDX;
@@ -228,6 +232,8 @@ void VeriSGDSolver<Dtype>::TestDual() {
 
 template <typename Dtype>
 void VeriSGDSolver<Dtype>::Solve(const char* resume_file) {
+	LOG(INFO) << "VeriSGDSolver::Solve";
+
 	Caffe::set_mode(Caffe::Brew(this->param_.solver_mode()));
 	if (this->param_.solver_mode() && this->param_.has_device_id()) {
 		Caffe::SetDevice(this->param_.device_id());
@@ -355,12 +361,12 @@ Dtype VeriSGDSolver<Dtype>::GetLearningRate() {
 template <typename Dtype>
 void VeriSGDSolver<Dtype>::PreSolve() {
 	// Initialize the history
-	vector<shared_ptr<Blob<Dtype> > >& net_params = this->net_->params();
+	vector<boost::shared_ptr<Blob<Dtype> > >& net_params = this->net_->params();
 	history_.clear();
 	LOG(INFO) << "VeriSGDSolver::PreSolve";
 	for (int i = 0; i < net_params.size(); ++i) {
 		const Blob<Dtype>* net_param = net_params[i].get();
-		history_.push_back(shared_ptr<Blob<Dtype> >(new Blob<Dtype>(
+		history_.push_back(boost::shared_ptr<Blob<Dtype> >(new Blob<Dtype>(
 						net_param->num(), net_param->channels(), net_param->height(),
 						net_param->width())));
 	}
@@ -369,7 +375,7 @@ void VeriSGDSolver<Dtype>::PreSolve() {
 
 template <typename Dtype>
 void VeriSGDSolver<Dtype>::ComputeUpdateValue() {
-	vector<shared_ptr<Blob<Dtype> > >& net_params = this->net_->params();
+	vector<boost::shared_ptr<Blob<Dtype> > >& net_params = this->net_->params();
 	vector<float>& net_params_lr = this->net_->params_lr();
 	vector<float>& net_params_weight_decay = this->net_->params_weight_decay();
 	// get the learning rate

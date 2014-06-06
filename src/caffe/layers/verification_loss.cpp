@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cfloat>
 #include <vector>
+#include <fstream>  // NOLINT(readability/streams)
+
 
 #include "caffe/layer.hpp"
 #include "caffe/vision_layers.hpp"
@@ -82,6 +84,37 @@ Dtype VerificationLossLayer<Dtype>::CalcThreshold(bool update) {
 }
 
 template <typename Dtype>
+void VerificationLossLayer<Dtype>::ReadCorrespondancesFile() {
+	//XXX: should not be hardcoded
+	correspondance_labels_.clear();
+	LOG(INFO) << "Reading correspondance labels for closed loops from file /media/DATA/Datasets/SLAM_LOOP/loop_closures.txt";
+	std::ifstream infile("/media/DATA/Datasets/SLAM_LOOP/loop_closures.txt");
+	int l1, l2;
+	int read=0;
+	std::string line;
+	std::vector<std::pair<float, float> > ssss;
+	if (infile.is_open())
+	  {
+	    while ( getline (infile,line) )
+	    {
+	    	std::istringstream ss( line );
+	    	ss >> l1 >> l2;
+	    	correspondance_labels_.push_back(std::make_pair(l1, l2));
+	    	ssss.push_back(std::make_pair(l1, l2));
+	    	read++;
+	    }
+	    infile.close();
+	  }
+//	while(infile >> l1 >> l2) {
+//		LOG(INFO) << "pair1: " << l1 << " " << l2;
+//		correspondance_labels_.push_back(std::make_pair(l1, l2));
+//		read++;
+//	}
+	LOG(INFO) << "Read "<< correspondance_labels_.size() << " correspondances";
+}
+
+
+template <typename Dtype>
 void VerificationLossLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
   CHECK_EQ(bottom.size(), 4) << "VerificationLoss Layer takes four blobs as input.";
@@ -126,10 +159,19 @@ Dtype VerificationLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top
   for (int i = 0; i < (*bottom)[0]->num(); ++i) {
 	int l1 = static_cast<int>(label_1[i]);
 	int l2 = static_cast<int>(label_2[i]);
+	LOG(INFO) << l1 << "\t" << l2;
 	int offset = i*feat_len;
-	if(l1 == l2){
+
+
+	auto it = std::find_if(correspondance_labels_.begin(),
+	                       correspondance_labels_.end(),
+	                      [&l1, &l2](const std::pair<int, int>& p)
+	                      { return p.first == l1 && p.second == l2 || p.first == l2 && p.second == l1; });
+	// If (l1,l2) is a loop closure do nothing
+	if(it != correspondance_labels_.end()){
 		/* nothing */
 	}else{
+		/* Update */
 		Dtype norm2 = caffe_cpu_dot(feat_len, bottom_diff1+offset, bottom_diff1+offset);
 		Dtype norm = sqrt(norm2);
 		if(norm > M_){

@@ -678,8 +678,7 @@ class SoftmaxWithLossLayer : public Layer<Dtype> {
 template <typename Dtype>
 class VerificationLossLayer : public Layer<Dtype> {
  public:
-  explicit VerificationLossLayer(const LayerParameter& param)
-      : Layer<Dtype>(param) {}
+  explicit VerificationLossLayer(const LayerParameter& param) : Layer<Dtype>(param) {}
   virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
 
@@ -705,6 +704,8 @@ class VerificationLossLayer : public Layer<Dtype> {
 	  same_.clear();
   }
   Dtype CalcThreshold(bool update);
+  void ReadCorrespondancesFile();
+
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
@@ -715,6 +716,7 @@ class VerificationLossLayer : public Layer<Dtype> {
   virtual Dtype Backward_gpu(const vector<Blob<Dtype>*>& top,
      const bool propagate_down, vector<Blob<Dtype>*>* bottom);
 
+
   Blob<Dtype> diffy1_;
   Blob<Dtype> diffy2_;
 
@@ -723,6 +725,7 @@ class VerificationLossLayer : public Layer<Dtype> {
 
   std::vector<Dtype> distance_;
   std::vector<int>   same_;
+  std::vector<std::pair<int, int> > correspondance_labels_;
 };
 
 

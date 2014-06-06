@@ -12,8 +12,13 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "caffe/proto/caffe.pb.h"
+
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
+
 
 uint32_t swap_endian(uint32_t val) {
     val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
@@ -115,16 +120,29 @@ static void read_label(const char *fn, std::vector<int> &m){
 	}
 	fclose(fi);
 }
+
+/**
+ * @param output
+ * 	Path of the output leveldb file
+ * @param pw
+ * 	width of the images
+ * @param ph
+ * 	height of the images
+ * @param color
+ * 	if true, channels=3, otherwise channels=1
+ * @parm labellist
+ * 	file mapping images to label
+ */
 static void convert(const char* input, const char *output, 
-		int local, int color, int ph, int pw,
-		const char *lablelist)
+		int local, bool color, int ph, int pw,
+		const char *labellist)
 {
 	//XXX
 	int local_flip;
 	std::vector<int> labels;
 	CHECK(local == 0);
 
-	read_label(lablelist, labels);
+	read_label(labellist, labels);
 
 	FILE *fi = fopen(input, "rb");
 	CHECK(fi != NULL);
@@ -184,18 +202,25 @@ static void convert(const char* input, const char *output,
 	fclose(fi);
 }
 
+void help()
+{
+    std::cout << "Required arguments:" << std::endl;
+    std::cout << "\tinput, output, local, color, ph, pw, labellist" << std::endl;
+}
+
 int main(int argc, char** argv) {
 	if (argc != 8) {
-		fprintf(stderr, "arg wrong\n");
+        help();
 		exit(1);
 	} else {
 		google::InitGoogleLogging(argv[0]);
-		convert(argv[1], argv[2], 
-				atoi(argv[3]), atoi(argv[4]), 
-				atoi(argv[5]), atoi(argv[6]),
-			argv[7]
-		       );
-	}
+        //const char* input, const char *output, 
+		//int local, int color, int ph, int pw,
+		//const char *lablelist
+        
+		// input, output, local, color, ph, pw, labellist
+	    convert(argv[1], argv[2], atoi(argv[3]), atoi(argv[4]), atoi(argv[5]), atoi(argv[6]), argv[7]);
+    }
 	return 0;
 }
 

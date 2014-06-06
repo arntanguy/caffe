@@ -22,6 +22,7 @@ template <typename Dtype>
 ShuffleDataLayer<Dtype>::~ShuffleDataLayer<Dtype>() {
 }
 
+
 template <typename Dtype>
 void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
@@ -69,8 +70,9 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   LOG(INFO) << "data count " << nd;
   LOG(INFO) << "Starting reading all";
   //prefetch_data_.reset(new Blob<Dtype>(nd, datum_channels_, datum_height_, datum_width_));
-  prefetch_data_.reset(new vector<Dtype>((size_t)nd * datum_channels_ * datum_height_ * datum_width_));
+  prefetch_data_.reset(new vector<Dtype>((size_t)nd * datum_size_));
   prefetch_label_.reset(new Blob<Dtype>(nd, 1, 1, 1));
+
   if(!this->layer_param_.share_data()){
 	  size_t i = 0;
 	  Dtype *pd_hdr = &((*prefetch_data_)[0]);
@@ -78,13 +80,17 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 		datum.ParseFromString(iter_->value().ToString());
 		Dtype *data_ptr = pd_hdr + datum_size_ * i;
 		prefetch_label_->mutable_cpu_data()[i] = datum.label();
-        	for (int j = 0; j < datum_size_; ++j) {
-			data_ptr[j] = (datum.float_data(j) + bias ) * scale;
+//		LOG(INFO) << "datum size: " << datum_size_;
+//		LOG(INFO) << "Datum: " << datum.channels() << " " << datum.width() << " " << datum.height();
 
+        for (int j = 0; j < datum_size_; ++j) {
+//        	LOG(INFO) << "data(" << j << "): " << (datum.data()[j] + bias ) * scale;
+			data_ptr[j] = (datum.data()[j] + bias ) * scale;
 		}
 		i ++;
 		iter_->Next();
 	  }
+/*
 	  CHECK_EQ(nd, i);
 	  LOG(INFO) << "Read Done";
           FILE *f = fopen(this->layer_param_.source_list().c_str(), "r");
@@ -104,7 +110,21 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 		  (*idx_[1])[i] = d2;
 	  }
 	  fclose(f);
-	  LOG(INFO) << "read list done";
+	  LOG(INFO) << "read list done"; */
+
+	  /***
+	   * XXX: experimental shuffle list
+	   */
+	  idx_[0].reset(new vector<int>(nd*nd));
+	  idx_[1].reset(new vector<int>(nd*nd));
+	  int ind=0;
+	  for(int i=0; i<nd; i++) {
+		  for (int j = 0; j < nd; ++j) {
+			(*idx_[0])[ind] = i;
+			(*idx_[1])[ind] = j;
+			ind++;
+		}
+	  }
   }else{
 	  LOG(INFO) << "skip read";
   }
