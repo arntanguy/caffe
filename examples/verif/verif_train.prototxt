@@ -1,14 +1,32 @@
-name: "TUM-Test"
+# 1 "verif_train.prototxt.partial"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
+# 1 "verif_train.prototxt.partial"
+
+
+
+
+
+# 1 "verif_net.template" 1
+name: "TUM-loop-test1"
 layers {
   layer {
     name: "verif_dual_001"
+
     type: "shuffle_data"
-    source: "/home/arnaud/Internship/code/caffe-veri/examples/verif/db"
+
+
+
+    source: "train_test1.db"
     batchsize: 64
     scale: 1.0
     bias: 0.0
-    data_count: 253 
-    source_list: "wtf"
+
+    data_count: 325540
+    source_list: "trainimagelist_.txt"
+
   }
   top: "data"
   top: "label"
@@ -169,12 +187,12 @@ layers {
   top: "pool3"
 }
 layers {
-	layer{
-		name: "flat1"
-		type: "flatten"
-	}
-	bottom: "pool3"
-	top: "flat1"
+ layer{
+  name: "flat1"
+  type: "flatten"
+ }
+ bottom: "pool3"
+ top: "flat1"
 }
 layers {
   layer {
@@ -228,22 +246,22 @@ layers {
   top: "conv4"
 }
 layers {
-	layer{
-		name: "flat2"
-		type: "flatten"
-	}
-	bottom: "conv4"
-	top: "flat2"
+ layer{
+  name: "flat2"
+  type: "flatten"
+ }
+ bottom: "conv4"
+ top: "flat2"
 }
 layers {
-	layer{
-		name: "concat1"
-		type: "concat"
-		concat_dim: 1
-	}
-	bottom: "flat1"
-	bottom: "flat2"
-	top: "concat1"
+ layer{
+  name: "concat1"
+  type: "concat"
+  concat_dim: 1
+ }
+ bottom: "flat1"
+ bottom: "flat2"
+ top: "concat1"
 }
 layers {
   layer {
@@ -270,7 +288,7 @@ layers {
   bottom: "ip1"
   top: "ip1"
 }
-
+# 7 "verif_train.prototxt.partial" 2
 layers {
   layer {
     name: "ip2"

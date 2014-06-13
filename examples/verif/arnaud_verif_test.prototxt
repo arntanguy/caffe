@@ -19,7 +19,7 @@ layers {
 
 
 
-    source: "/home/arnaud/Internship/code/caffe-veri/build/examples/verif/db"
+    source: "/home/arnaud/Internship/code/caffe-veri/examples/verif/db"
     batchsize: 64
     scale: 1.0
     bias: 0.0

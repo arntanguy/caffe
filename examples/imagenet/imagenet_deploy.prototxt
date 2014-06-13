@@ -1,9 +1,21 @@
+#
+# Imagenet network description
+# Input size expected is 227x227
+#
 name: "CaffeNet"
-input: "data"
-input_dim: 10
-input_dim: 3
-input_dim: 227
-input_dim: 227
+layers {
+  layer {
+    name: "data"
+    type: "data"
+    source: "/home/arnaud/Internship/code/caffe-veri/res/db/db_227x227_slam"
+    batchsize: 10 
+    scale: 1.0
+    bias: 0.0
+    data_count: 253
+  }
+  top: "data"
+  top: "label"
+}
 layers {
   layer {
     name: "conv1"

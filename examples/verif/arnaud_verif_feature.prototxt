@@ -13,19 +13,12 @@ name: "Sunyi-feature"
 layers {
   layer {
     name: "verif_dual_001"
-
-
-
-    type: "data"
-
+    type: "shuffle_data"
     source: "/home/arnaud/Internship/code/caffe-veri/examples/verif/db"
     batchsize: 64
     scale: 1.0
     bias: 0.0
-
-
-
-
+    data_count: 253
   }
   top: "data"
   top: "label"
