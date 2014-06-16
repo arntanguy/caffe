@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
 
     DLOG(INFO)<< "Processing image with label: " << label_str << ", file: " << filepath;
 
-    if (!ReadImageToDatum(filepath, label, height, width, &datum)) {
+    if (!ReadImageToDatum(filepath, label, width, height, &datum)) {
       LOG(ERROR)<< "Failed to read image " << filepath << " to Datum";
       continue;
     }

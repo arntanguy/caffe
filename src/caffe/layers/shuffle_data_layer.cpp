@@ -19,6 +19,7 @@ ShuffleDataLayer<Dtype>::~ShuffleDataLayer<Dtype>() {
 template<typename Dtype>
 void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
                                     vector<Blob<Dtype>*>* top) {
+  LOG(INFO)<< "SetUp ShuffleDataLayer";
   const Dtype scale = this->layer_param_.scale();
   const Dtype bias = this->layer_param_.bias();
   CHECK_EQ(bottom.size(), 0)<< "Shuffle Data Layer takes no input blobs.";
@@ -30,10 +31,10 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   options.max_open_files = 100;
   LOG(INFO)<< "Opening leveldb " << this->layer_param_.source();
   leveldb::Status status = leveldb::DB::Open(options,
-                                             this->layer_param_.source(),
-                                             &db_temp);
+      this->layer_param_.source(),
+      &db_temp);
   CHECK(status.ok()) << "Failed to open leveldb " << this->layer_param_.source()
-                        << std::endl << status.ToString();
+  << std::endl << status.ToString();
   db_.reset(db_temp);
   iter_.reset(db_->NewIterator(leveldb::ReadOptions()));
   iter_->SeekToFirst();
@@ -42,7 +43,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   Datum datum;
   datum.ParseFromString(iter_->value().ToString());
   (*top)[0]->Reshape(this->layer_param_.batchsize(), datum.channels(),
-                     datum.height(), datum.width());
+      datum.height(), datum.width());
   LOG(INFO)<< "output data size: " << (*top)[0]->num() << ","
   << (*top)[0]->channels() << "," << (*top)[0]->height() << ","
   << (*top)[0]->width();
@@ -55,9 +56,9 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   datum_size_ = datum.channels() * datum.height() * datum.width();
 
   LOG(INFO) << "Datum info:\n"
-            << "\tChannels: " << datum_channels_ << "\n"
-            << "\tWidth x Height: " << datum_width_ << "x" << datum_height_ << "\n"
-            << "\tSize: " << datum_size_ << "\n";
+  << "\tChannels: " << datum_channels_ << "\n"
+  << "\tWidth x Height: " << datum_width_ << "x" << datum_height_ << "\n"
+  << "\tSize: " << datum_size_ << "\n";
 
   int n = 0;
   iter_->SeekToFirst();
@@ -74,6 +75,10 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   if (!this->layer_param_.share_data()) {
     size_t i = 0;
     Dtype *pd_hdr = &((*prefetch_data_)[0]);
+    /**
+     * Read one batch of nd
+     *  elements
+     */
     while (i < nd && iter_->Valid()) {
       datum.ParseFromString(iter_->value().ToString());
       Dtype *data_ptr = pd_hdr + datum_size_ * i;
@@ -84,10 +89,16 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       }
 
       DLOG(INFO)<< "Label: " << datum.label() << ", Data[0,1..n-1,n]: " << data_ptr[0] << ", "
-          << data_ptr[1] << " ... " << data_ptr[datum_size_/sizeof(Dtype)-1] << ", " << data_ptr[datum_size_/sizeof(Dtype)];
+      << data_ptr[1] << " ... " << data_ptr[datum_size_/sizeof(Dtype)-1] << ", " << data_ptr[datum_size_/sizeof(Dtype)];
       i++;
       iter_->Next();
     }
+    /**
+     * Read pairs of loop-closures (50%) and non loop-closures (50%)
+     * from file.
+     * Fill in the id_[] array with these pairs. The training algorithm will
+     * select the appropriate one.
+     */
     /*
      CHECK_EQ(nd, i);
      LOG(INFO) << "Read Done";
@@ -100,10 +111,13 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
      idx_[1].reset(new vector<int>(n));
      for(int i=0;i<n;i++){
      int d1, d2;
+     // Read pair from file
      r = fscanf(f, "%d%d", &d1, &d2);
      CHECK_EQ(r, 2);
+     // Read ids in pair can't be greater than the number of images in the dataset!
      CHECK_GT(nd, d1);
      CHECK_GT(nd, d2);
+     // Assign pair to the class
      (*idx_[0])[i] = d1;
      (*idx_[1])[i] = d2;
      }
@@ -111,7 +125,8 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
      LOG(INFO) << "read list done"; */
 
     /***
-     * XXX: experimental shuffle list
+     * XXX: experimental shuffle list: create all possible pairs of images
+     * To be changed to a proper shuffle list with even ratio of positives and false positives.
      */
     idx_[0].reset(new vector<int>(nd * nd));
     idx_[1].reset(new vector<int>(nd * nd));
@@ -123,6 +138,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
         ind++;
       }
     }
+    LOG(INFO) << "ind = " << ind << ", idx[0][0]="<<(*idx_[0])[10] << ", idx[1][0]="<<(*idx_[1])[10];
   } else {
     LOG(INFO)<< "skip read";
   }
@@ -139,30 +155,37 @@ void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   CHECK(prefetch_label_.get() != NULL);
   CHECK(idx_[0].get() != NULL);
   const Dtype *ptr = &((*prefetch_data_)[0]);
-  //const Dtype *ptr = prefetch_data_->cpu_data();
-  //DLOG(INFO) << "datum_size_: " << datum_size_ << ", top[0] num: " << (*top)[0]->num();
-  for(size_t i=0;i<(*top)[0]->num();i++) {
-    //DLOG(INFO) << "current for " << OUTPUT_CHANNEL_ << " at " << current_[OUTPUT_CHANNEL_];
-    // XXX: original
-    size_t idx = (*idx_[OUTPUT_CHANNEL_])[current_[OUTPUT_CHANNEL_]];
-    //XXX: test
-    idx = i;
 
-    //LOG(INFO) << "Copying data (first,last): " << *(ptr + idx * datum_size_) << ", " << *(ptr + idx * datum_size_ + sizeof(Dtype)*datum_size_);
+  /**
+   * Copy all images for the current batch
+   */
+  for(size_t i=0;i<(*top)[0]->num();i++) {
+    /**
+     * OUTPUT_CHANNEL_ is set by the training algorithm.
+     * It is 0 for the network, and 1 for the shadow network.
+     * This allows to process data in batches while conserving the
+     * matching pairs of images.
+     */
+    size_t idx = (*idx_[OUTPUT_CHANNEL_])[current_[OUTPUT_CHANNEL_]];
+
     // dst, src, size
     memcpy((*top)[0]->mutable_cpu_data() + i * datum_size_, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
     (*top)[1]->mutable_cpu_data()[i] = prefetch_label_->cpu_data()[idx];
-    float *img = new float[datum_size_];
-    memcpy(img, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
-    //displayImageFromData(img, datum_width_, datum_height_);
-    //DLOG(INFO) << "Idx: "<< idx << ", Top label " << (*top)[1]->mutable_cpu_data()[i];
-    current_[OUTPUT_CHANNEL_]++;
-    if(current_[OUTPUT_CHANNEL_] >= idx_[OUTPUT_CHANNEL_]->size()) {
-      current_[OUTPUT_CHANNEL_] = 0;
-      LOG(INFO) << "Channel " << OUTPUT_CHANNEL_ << " rewind";
+
+#ifdef NDEBUG_GUI
+      float *img = new float[datum_size_];
+      memcpy(img, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
+      displayImageFromData(img, datum_width_, datum_height_);
+      delete[] img;
+#endif
+
+      current_[OUTPUT_CHANNEL_]++;
+      if(current_[OUTPUT_CHANNEL_] >= idx_[OUTPUT_CHANNEL_]->size()) {
+        current_[OUTPUT_CHANNEL_] = 0;
+        LOG(INFO) << "Channel " << OUTPUT_CHANNEL_ << " rewind";
+      }
     }
   }
-}
 
 template<typename Dtype>
 Dtype ShuffleDataLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,

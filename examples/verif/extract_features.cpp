@@ -103,7 +103,9 @@ int feature_extraction_pipeline(int argc, char** argv) {
       << "Unknown feature blob name " << extract_feature_blob_name
       << " in the network " << feature_extraction_proto;
 
-  string save_feature_leveldb_name(argv[++arg_pos]);
+  arg_pos++;
+  LOG(INFO)<< "Input leveldb " << argv[arg_pos];
+  string save_feature_leveldb_name(argv[arg_pos]);
   leveldb::DB* db;
   leveldb::Options options;
   options.error_if_exists = true;
@@ -130,7 +132,7 @@ int feature_extraction_pipeline(int argc, char** argv) {
     int num_features = feature_blob->num();
     int dim_features = feature_blob->count() / num_features;
     Dtype* feature_blob_data;
-    LOG(INFO)<< "dim features: " << dim_features;
+    DLOG(INFO)<< "dim features: " << dim_features;
     for (int n = 0; n < num_features; ++n) {
       feature_blob_data = feature_blob->mutable_cpu_data()
           + feature_blob->offset(n);
@@ -140,7 +142,7 @@ int feature_extraction_pipeline(int argc, char** argv) {
         data_stream << feature_blob_data[d] << " ";
       }
       data_stream << feature_blob_data[dim_features - 1];
-      LOG(INFO) << "DATA: " << data_stream.str();
+      LOG(INFO)<< "DATA: " << data_stream.str();
       std::ostringstream key_str_stream;
       key_str_stream << std::setfill('0') << std::setw(8) << image_index;
       batch->Put(string(key_str_stream.str()), data_stream.str());

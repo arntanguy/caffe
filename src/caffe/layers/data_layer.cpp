@@ -11,11 +11,14 @@
 #include "caffe/util/io.hpp"
 #include "caffe/vision_layers.hpp"
 
+#include "caffe/util/debug.hpp"
+
+
 using std::string;
 
 namespace caffe {
 
-template <typename Dtype>
+template<typename Dtype>
 void* DataLayerPrefetch(void* layer_pointer) {
   CHECK(layer_pointer);
   DataLayer<Dtype>* layer = reinterpret_cast<DataLayer<Dtype>*>(layer_pointer);
@@ -30,8 +33,8 @@ void* DataLayerPrefetch(void* layer_pointer) {
   const bool mirror = layer->layer_param_.mirror();
 
   if (mirror && cropsize == 0) {
-    LOG(FATAL) << "Current implementation requires mirror and cropsize to be "
-        << "set at the same time.";
+    LOG(FATAL)<< "Current implementation requires mirror and cropsize to be "
+    << "set at the same time.";
   }
   // datum scales
   const int channels = layer->datum_channels_;
@@ -65,12 +68,9 @@ void* DataLayerPrefetch(void* layer_pointer) {
           for (int h = 0; h < cropsize; ++h) {
             for (int w = 0; w < cropsize; ++w) {
               top_data[((itemid * channels + c) * cropsize + h) * cropsize
-                       + cropsize - 1 - w] =
-                  (static_cast<Dtype>(
-                      (uint8_t)data[(c * height + h + h_off) * width
-                                    + w + w_off])
-                    - mean[(c * height + h + h_off) * width + w + w_off])
-                  * scale;
+                  + cropsize - 1 - w] = (static_cast<Dtype>((uint8_t) data[(c
+                  * height + h + h_off) * width + w + w_off])
+                  - mean[(c * height + h + h_off) * width + w + w_off]) * scale;
             }
           }
         }
@@ -79,12 +79,11 @@ void* DataLayerPrefetch(void* layer_pointer) {
         for (int c = 0; c < channels; ++c) {
           for (int h = 0; h < cropsize; ++h) {
             for (int w = 0; w < cropsize; ++w) {
-              top_data[((itemid * channels + c) * cropsize + h) * cropsize + w]
-                  = (static_cast<Dtype>(
-                      (uint8_t)data[(c * height + h + h_off) * width
-                                    + w + w_off])
-                     - mean[(c * height + h + h_off) * width + w + w_off])
-                  * scale;
+              top_data[((itemid * channels + c) * cropsize + h) * cropsize + w] =
+                  (static_cast<Dtype>((uint8_t) data[(c * height + h + h_off)
+                      * width + w + w_off])
+                      - mean[(c * height + h + h_off) * width + w + w_off])
+                      * scale;
             }
           }
         }
@@ -93,13 +92,12 @@ void* DataLayerPrefetch(void* layer_pointer) {
       // we will prefer to use data() first, and then try float_data()
       if (data.size()) {
         for (int j = 0; j < size; ++j) {
-          top_data[itemid * size + j] =
-              (static_cast<Dtype>((uint8_t)data[j]) - mean[j]) * scale;
+          top_data[itemid * size + j] = (static_cast<Dtype>((uint8_t) data[j])
+              - mean[j]) * scale;
         }
       } else {
         for (int j = 0; j < size; ++j) {
-          top_data[itemid * size + j] =
-              (datum.float_data(j) - mean[j]) * scale;
+          top_data[itemid * size + j] = (datum.float_data(j) - mean[j]) * scale;
         }
       }
     }
@@ -109,7 +107,7 @@ void* DataLayerPrefetch(void* layer_pointer) {
     layer->iter_->Next();
     if (!layer->iter_->Valid()) {
       // We have reached the end. Restart from the first.
-      DLOG(INFO) << "Restarting data prefetching from start.";
+      DLOG(INFO)<< "Restarting data prefetching from start.";
       layer->iter_->SeekToFirst();
     }
   }
@@ -117,16 +115,16 @@ void* DataLayerPrefetch(void* layer_pointer) {
   return reinterpret_cast<void*>(NULL);
 }
 
-template <typename Dtype>
+template<typename Dtype>
 DataLayer<Dtype>::~DataLayer<Dtype>() {
   // Finally, join the thread
   CHECK(!pthread_join(thread_, NULL)) << "Pthread joining failed.";
 }
 
-template <typename Dtype>
+template<typename Dtype>
 void DataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
-      vector<Blob<Dtype>*>* top) {
-  CHECK_EQ(bottom.size(), 0) << "Data Layer takes no input blobs.";
+                             vector<Blob<Dtype>*>* top) {
+  CHECK_EQ(bottom.size(), 0)<< "Data Layer takes no input blobs.";
   CHECK_EQ(top->size(), 2) << "Data Layer takes two blobs as output.";
   // Initialize the leveldb
   leveldb::DB* db_temp;
@@ -137,7 +135,7 @@ void DataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   leveldb::Status status = leveldb::DB::Open(
       options, this->layer_param_.source(), &db_temp);
   CHECK(status.ok()) << "Failed to open leveldb "
-      << this->layer_param_.source() << std::endl << status.ToString();
+  << this->layer_param_.source() << std::endl << status.ToString();
   db_.reset(db_temp);
   iter_.reset(db_->NewIterator(leveldb::ReadOptions()));
   iter_->SeekToFirst();
@@ -162,18 +160,18 @@ void DataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
     (*top)[0]->Reshape(
         this->layer_param_.batchsize(), datum.channels(), cropsize, cropsize);
     prefetch_data_.reset(new Blob<Dtype>(
-        this->layer_param_.batchsize(), datum.channels(), cropsize, cropsize));
+            this->layer_param_.batchsize(), datum.channels(), cropsize, cropsize));
   } else {
     (*top)[0]->Reshape(
         this->layer_param_.batchsize(), datum.channels(), datum.height(),
         datum.width());
     prefetch_data_.reset(new Blob<Dtype>(
-        this->layer_param_.batchsize(), datum.channels(), datum.height(),
-        datum.width()));
+            this->layer_param_.batchsize(), datum.channels(), datum.height(),
+            datum.width()));
   }
   LOG(INFO) << "output data size: " << (*top)[0]->num() << ","
-      << (*top)[0]->channels() << "," << (*top)[0]->height() << ","
-      << (*top)[0]->width();
+  << (*top)[0]->channels() << "," << (*top)[0]->height() << ","
+  << (*top)[0]->width();
   // label
   (*top)[1]->Reshape(this->layer_param_.batchsize(), 1, 1, 1);
   prefetch_label_.reset(
@@ -208,29 +206,52 @@ void DataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   data_mean_.cpu_data();
   DLOG(INFO) << "Initializing prefetch";
   CHECK(!pthread_create(&thread_, NULL, DataLayerPrefetch<Dtype>,
-      reinterpret_cast<void*>(this))) << "Pthread execution failed.";
+          reinterpret_cast<void*>(this))) << "Pthread execution failed.";
   DLOG(INFO) << "Prefetch initialized.";
 }
 
-template <typename Dtype>
+template<typename Dtype>
 void DataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
-      vector<Blob<Dtype>*>* top) {
+                                   vector<Blob<Dtype>*>* top) {
   // First, join the thread
   CHECK(!pthread_join(thread_, NULL)) << "Pthread joining failed.";
   // Copy the data
+  int nb_images = sizeof(Dtype) * prefetch_data_->count()
+          / (sizeof(Dtype) * datum_size_);
+      DLOG(INFO)<< "Copying batch of " << nb_images << " images";
   memcpy((*top)[0]->mutable_cpu_data(), prefetch_data_->cpu_data(),
-      sizeof(Dtype) * prefetch_data_->count());
+         sizeof(Dtype) * prefetch_data_->count());
   memcpy((*top)[1]->mutable_cpu_data(), prefetch_label_->cpu_data(),
-      sizeof(Dtype) * prefetch_label_->count());
+           sizeof(Dtype) * prefetch_label_->count());
+
+
+  /**
+   * Debug: display image
+   */
+#ifdef NDEBUG_GUI
+  float *img = new float[datum_size_];
+  for(int i=0;i<nb_images; i++) {
+    memcpy(img,  prefetch_data_->cpu_data() + i * datum_size_, sizeof(Dtype) * datum_size_);
+    LOG(INFO) << img[0] << " " << img[1] << " " << img[2];
+    displayImageFromData(img, datum_height_, datum_width_);
+  }
+  delete[] img;
+#endif
+
+
+
+
+
   // Start a new prefetch thread
   CHECK(!pthread_create(&thread_, NULL, DataLayerPrefetch<Dtype>,
-      reinterpret_cast<void*>(this))) << "Pthread execution failed.";
+          reinterpret_cast<void*>(this))) << "Pthread execution failed.";
 }
 
 // The backward operations are dummy - they do not carry any computation.
-template <typename Dtype>
+template<typename Dtype>
 Dtype DataLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
-      const bool propagate_down, vector<Blob<Dtype>*>* bottom) {
+                                     const bool propagate_down,
+                                     vector<Blob<Dtype>*>* bottom) {
   return Dtype(0.);
 }
 

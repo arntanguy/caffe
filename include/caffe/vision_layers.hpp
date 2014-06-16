@@ -414,6 +414,18 @@ class ConcatLayer : public Layer<Dtype> {
 template <typename Dtype>
 void* DataLayerPrefetch(void* layer_pointer);
 
+/**
+ * Loads data from a leveldb dataset.
+ * The dataset should contains pairs of keys, Datum with
+ * key : some form of id for the image
+ * Datum : Data structure containing the image (number of channels, channel data, height, width)
+ *         Label is also contained withing this structure
+ *
+ * It will retrieve information from the network configuration about batch size...
+ *
+ * Images are loaded a batch at a time. While the network is running, another batch is independently prefetched
+ * to avoid latency when using the next batch.
+ */
 template <typename Dtype>
 class DataLayer : public Layer<Dtype> {
   // The function used to perform prefetching.
@@ -458,6 +470,7 @@ class ShuffleDataLayer : public Layer<Dtype> {
       vector<Blob<Dtype>*>* top);
 
   void CopyDataPtrFrom(const ShuffleDataLayer<Dtype>& source){
+    LOG(INFO) << "Copying Data Ptr (do not copy the data, just assign the pointers to the shared data)";
 	  prefetch_data_ = source.prefetch_data_;
 	  prefetch_label_ = source.prefetch_label_;
 	  idx_[0] = source.idx_[0];
@@ -487,6 +500,7 @@ class ShuffleDataLayer : public Layer<Dtype> {
   virtual Dtype Backward_gpu(const vector<Blob<Dtype>*>& top,
       const bool propagate_down, vector<Blob<Dtype>*>* bottom);
 
+  // Database of key => Datum
   shared_ptr<leveldb::DB> db_;
   shared_ptr<leveldb::Iterator> iter_;
   int datum_channels_;
@@ -494,13 +508,16 @@ class ShuffleDataLayer : public Layer<Dtype> {
   int datum_width_;
   size_t datum_size_;
 
+  // Number of elements in the dataset
   size_t DATA_COUNT_;
+  // ?
   int OUTPUT_CHANNEL_;
+
   //Blob fail to handle large data
-  //shared_ptr<Blob<Dtype> > prefetch_data_;
   shared_ptr<vector<Dtype> > prefetch_data_;
   shared_ptr<Blob<Dtype> > prefetch_label_;
   int current_[2];
+  // Image pairs
   shared_ptr<vector<int> > idx_[2];
 
 };
