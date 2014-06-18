@@ -2,6 +2,7 @@
 
 #include <leveldb/db.h>
 
+#include <fstream>
 #include <vector>
 
 #include "caffe/layer.hpp"
@@ -124,21 +125,27 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
      fclose(f);
      LOG(INFO) << "read list done"; */
 
-    /***
-     * XXX: experimental shuffle list: create all possible pairs of images
-     * To be changed to a proper shuffle list with even ratio of positives and false positives.
-     */
-    idx_[0].reset(new vector<int>(nd * nd));
-    idx_[1].reset(new vector<int>(nd * nd));
-    int ind = 0;
-    for (int i = 0; i < nd; ++i) {
-      for (int j = 0; j < nd; ++j) {
-        (*idx_[0])[ind] = i;
-        (*idx_[1])[ind] = j;
-        ind++;
+    LOG(INFO) << "Reading Shuffle List: "<< this->layer_param_.source_list();
+    std::ifstream ss(this->layer_param_.source_list().c_str());
+    CHECK(ss.is_open()) << "Failed to open shuffle list!";
+    int npairs = 0;
+    ss >> npairs;
+    idx_[0].reset(new vector<int>(npairs));
+    idx_[1].reset(new vector<int>(npairs));
+    int id1, id2;
+    int ind=0;
+    while(ss >> id1 >> id2) {
+      // Check if indexes are valid
+      CHECK_GE(nd, id1);
+      CHECK_GE(nd, id2);
+      if(id1 < nd && id2 < nd) {
+      // Add them to pair list
+      (*idx_[0])[ind] = id1;
+      (*idx_[1])[ind] = id2;
       }
+      ++ind;
     }
-    LOG(INFO) << "ind = " << ind << ", idx[0][0]="<<(*idx_[0])[10] << ", idx[1][0]="<<(*idx_[1])[10];
+    LOG(INFO) << idx_[0]->size() << " pairs added to shuffle list." << (*idx_[0])[1];
   } else {
     LOG(INFO)<< "skip read";
   }
@@ -159,6 +166,7 @@ void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   /**
    * Copy all images for the current batch
    */
+  DLOG(INFO) << "Copying batch of " << (*top)[0]->num() << " images for output channel " << OUTPUT_CHANNEL_;
   for(size_t i=0;i<(*top)[0]->num();i++) {
     /**
      * OUTPUT_CHANNEL_ is set by the training algorithm.
@@ -167,17 +175,20 @@ void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
      * matching pairs of images.
      */
     size_t idx = (*idx_[OUTPUT_CHANNEL_])[current_[OUTPUT_CHANNEL_]];
-
+    //LOG(INFO) << "Copying batch image " << i+1 << " of " << (*top)[0]->num() << "-- output channel: " << OUTPUT_CHANNEL_ << ", pair number: " << current_[OUTPUT_CHANNEL_] << ", image id: " << idx;
     // dst, src, size
     memcpy((*top)[0]->mutable_cpu_data() + i * datum_size_, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
-    (*top)[1]->mutable_cpu_data()[i] = prefetch_label_->cpu_data()[idx];
+    //(*top)[1]->mutable_cpu_data()[i] = prefetch_label_->cpu_data()[idx];
 
-#ifdef NDEBUG_GUI
-      float *img = new float[datum_size_];
-      memcpy(img, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
-      displayImageFromData(img, datum_width_, datum_height_);
-      delete[] img;
-#endif
+    // Label is current image id
+    (*top)[1]->mutable_cpu_data()[i] = idx;
+
+//#ifdef NDEBUG_GUI
+//      float *img = new float[datum_size_];
+//      memcpy(img, ptr + idx * datum_size_, sizeof(Dtype)*datum_size_);
+//      displayImageFromData(img, datum_height_, datum_width_);
+//      delete[] img;
+//#endif
 
       current_[OUTPUT_CHANNEL_]++;
       if(current_[OUTPUT_CHANNEL_] >= idx_[OUTPUT_CHANNEL_]->size()) {

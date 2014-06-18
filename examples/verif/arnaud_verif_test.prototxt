@@ -14,18 +14,13 @@ name: "Sunyi-test"
 layers {
   layer {
     name: "verif_dual_001"
-
     type: "shuffle_data"
-
-
-
-    source: "/home/arnaud/Internship/code/caffe-veri/examples/verif/db"
+    source: "/home/arnaud/Internship/code/caffe-veri/res/db/db_47x55_slam"
+    source_list: "/media/DATA/Datasets/SLAM_LOOP/shuffle_list.txt"
     batchsize: 64
     scale: 1.0
     bias: 0.0
-
     data_count: 253
-    source_list: "testimagelist.txt"
 
   }
   top: "data"

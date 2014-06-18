@@ -19,9 +19,9 @@ void displayImageFromData(float *data, const int width, const int height)
     interleaved[i*3+2] = data[i+2*width*height]/255.f;
   }
   Mat M(width, height, CV_32FC3, interleaved);
-  cv::namedWindow("img");
+  cv::namedWindow("img", WINDOW_AUTOSIZE);
   cv::imshow("img", M);
-  cv::imwrite("/tmp/img.png", M);
+  cv::imwrite("/tmp/img.png", M*255.);
   cv::waitKey(0);
   delete[] interleaved;
 }

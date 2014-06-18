@@ -12,6 +12,7 @@ using std::max;
 
 namespace caffe {
 
+
 template <typename Dtype>
 void VerificationLossLayer<Dtype>::Forward_gpu(
     const vector<Blob<Dtype>*>& bottom, vector<Blob<Dtype>*>* top) {
@@ -20,7 +21,8 @@ void VerificationLossLayer<Dtype>::Forward_gpu(
 template <typename Dtype>
 Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
     const bool propagate_down, vector<Blob<Dtype>*>* bottom) {
-	//TODO
+	//DLOG(INFO) << "VerificationLossLayer::Backward_gpu";
+  //TODO
   const Dtype* feat_1 = (*bottom)[0]->gpu_data();
   const Dtype* feat_2 = (*bottom)[2]->gpu_data();
   const Dtype* label_1 = (*bottom)[1]->cpu_data();
@@ -56,29 +58,70 @@ Dtype VerificationLossLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top
 	caffe_gpu_dot(feat_len, bottom_diff1+offset,
 		bottom_diff1+offset, &norm2);
 	distance_.push_back(sqrt(norm2));
-	same_.push_back((l1 == l2) ? 1: 0);
-	if(l1 == l2){
-		/* nothing */
-		//LOG(INFO) << i << " " << norm2;
-		//LOG(INFO) << "1";
-		loss += 0.5 * norm2;
-	}else{
-		//LOG(INFO) << i << " " << norm2;
-		//LOG(INFO) << "0";
-		Dtype dw = sqrt(norm2);
-		if(dw > M_){
-			CUDA_CHECK(cudaMemset(bottom_diff1+offset,0,
-						sizeof(Dtype)*feat_len));
-			CUDA_CHECK(cudaMemset(bottom_diff2+offset,0,
-					sizeof(Dtype)*feat_len));
-		}else{
-			loss += 0.5 * (M_ - dw) * (M_ - dw);
 
-			Dtype t = Dtype(1.0) - M_ / dw;
-			caffe_gpu_scal(feat_len, t, bottom_diff1+offset);
-			caffe_gpu_scal(feat_len, t, bottom_diff2+offset);
-		}
+	std::vector<std::pair<int,int> >::const_iterator it = correspondance_labels_.begin();
+	bool same = false;
+//	LOG(INFO) << "Looking for pair " << l1 << " " << l2;
+	while(it != correspondance_labels_.end()) {
+	  if(it->first == l2 && it->second == l1 || it->first == l1 && it->second == l2) {
+      same = true;
+      break;
+	  }
+	  it++;
 	}
+
+//	auto it = std::find_if(correspondance_labels_.begin(),
+//	                         correspondance_labels_.end(),
+//	                        [&l1, &l2](const std::pair<int, int>& p)
+//	                        { return p.first == l1 && p.second == l2 || p.first == l2 && p.second == l1; });
+	  // If (l1,l2) is a loop closure do nothing
+	  if(same){
+	    same_.push_back(1);
+//	    LOG(INFO) << "Pair (" << l1 << ", " << l2 << ") is a loop-closure";
+	    loss += 0.5 * norm2;
+	  } else {
+//      LOG(INFO) << "Pair (" << l1 << ", " << l2 << ") is not loop-closure";
+	    same_.push_back(0);
+
+	    Dtype dw = sqrt(norm2);
+	    if(dw > M_){
+	      CUDA_CHECK(cudaMemset(bottom_diff1+offset,0,
+	            sizeof(Dtype)*feat_len));
+	      CUDA_CHECK(cudaMemset(bottom_diff2+offset,0,
+	          sizeof(Dtype)*feat_len));
+	    }else{
+	      loss += 0.5 * (M_ - dw) * (M_ - dw);
+
+	      Dtype t = Dtype(1.0) - M_ / dw;
+	      caffe_gpu_scal(feat_len, t, bottom_diff1+offset);
+	      caffe_gpu_scal(feat_len, t, bottom_diff2+offset);
+	    }
+
+	  }
+
+//	same_.push_back((l1 == l2) ? 1: 0);
+//	if(l1 == l2){
+//		/* nothing */
+//		//LOG(INFO) << i << " " << norm2;
+//		//LOG(INFO) << "1";
+//		loss += 0.5 * norm2;
+//	}else{
+//		//LOG(INFO) << i << " " << norm2;
+//		//LOG(INFO) << "0";
+//		Dtype dw = sqrt(norm2);
+//		if(dw > M_){
+//			CUDA_CHECK(cudaMemset(bottom_diff1+offset,0,
+//						sizeof(Dtype)*feat_len));
+//			CUDA_CHECK(cudaMemset(bottom_diff2+offset,0,
+//					sizeof(Dtype)*feat_len));
+//		}else{
+//			loss += 0.5 * (M_ - dw) * (M_ - dw);
+//
+//			Dtype t = Dtype(1.0) - M_ / dw;
+//			caffe_gpu_scal(feat_len, t, bottom_diff1+offset);
+//			caffe_gpu_scal(feat_len, t, bottom_diff2+offset);
+//		}
+//	}
 	die |= (norm2 > 1e6);	
   }
 #if 0

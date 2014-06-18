@@ -87,29 +87,22 @@ template <typename Dtype>
 void VerificationLossLayer<Dtype>::ReadCorrespondancesFile() {
 	//XXX: should not be hardcoded
 	correspondance_labels_.clear();
-	LOG(INFO) << "Reading correspondance labels for closed loops from file /media/DATA/Datasets/SLAM_LOOP/loop_closures.txt";
-	std::ifstream infile("/media/DATA/Datasets/SLAM_LOOP/loop_closures.txt");
+	const std::string &corr_file = "/media/DATA/Datasets/SLAM_LOOP/loop_closures_positive.txt";
+	LOG(INFO) << "Reading correspondance labels for closed loops from file " << corr_file;
 	int l1, l2;
 	int read=0;
 	std::string line;
 	std::vector<std::pair<float, float> > ssss;
-	if (infile.is_open())
-	  {
-	    while ( getline (infile,line) )
-	    {
-	    	std::istringstream ss( line );
-	    	ss >> l1 >> l2;
-	    	correspondance_labels_.push_back(std::make_pair(l1, l2));
-	    	ssss.push_back(std::make_pair(l1, l2));
-	    	read++;
-	    }
-	    infile.close();
-	  }
-//	while(infile >> l1 >> l2) {
-//		LOG(INFO) << "pair1: " << l1 << " " << l2;
-//		correspondance_labels_.push_back(std::make_pair(l1, l2));
-//		read++;
-//	}
+
+	std::ifstream infile(corr_file);
+	CHECK(infile.is_open()) << "Impossible to open file " << corr_file;
+	std::getline(infile, line);
+	while(infile >> l1 >> l2) {
+		LOG(INFO) << "pair1: " << l1 << " " << l2;
+		correspondance_labels_.push_back(std::make_pair(l1, l2));
+		read++;
+	}
+	infile.close();
 	LOG(INFO) << "Read "<< correspondance_labels_.size() << " correspondances";
 }
 
@@ -169,8 +162,10 @@ Dtype VerificationLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top
 	                      { return p.first == l1 && p.second == l2 || p.first == l2 && p.second == l1; });
 	// If (l1,l2) is a loop closure do nothing
 	if(it != correspondance_labels_.end()){
+	  LOG(INFO) << "(" << l1 << ", " << l2 << ") is a loop-closure";
 		/* nothing */
 	}else{
+    LOG(INFO) << "(" << l1 << ", " << l2 << ") is not a loop-closure";
 		/* Update */
 		Dtype norm2 = caffe_cpu_dot(feat_len, bottom_diff1+offset, bottom_diff1+offset);
 		Dtype norm = sqrt(norm2);

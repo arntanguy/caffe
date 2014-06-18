@@ -232,7 +232,6 @@ void DataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   float *img = new float[datum_size_];
   for(int i=0;i<nb_images; i++) {
     memcpy(img,  prefetch_data_->cpu_data() + i * datum_size_, sizeof(Dtype) * datum_size_);
-    LOG(INFO) << img[0] << " " << img[1] << " " << img[2];
     displayImageFromData(img, datum_height_, datum_width_);
   }
   delete[] img;
