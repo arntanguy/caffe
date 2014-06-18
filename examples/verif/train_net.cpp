@@ -80,6 +80,12 @@ public:
 
     LOG(INFO) << "BUILD LOSS DONE";
 
+
+
+    /**
+     * Creating test network
+     **/
+
     LOG(INFO) << "Loading test network";
         //Build test accuracy
     NetParameter test_net_param;
@@ -114,7 +120,7 @@ public:
     accuracy_layer->SetUp(accuracy_bottom, &accuracy_top);
     LOG(INFO) << "BUILD ACC DONE";
 
-        //Setup dropout
+    //Setup dropout
     DROPOUT_TOP_ID = FindLayer("dropout_group_2");
     DROPOUT_BOTTOM_ID = -1;
     if(DROPOUT_TOP_ID >= 0){
@@ -136,7 +142,7 @@ public:
     }
   }
 
-    /* overload, hide Solve in base class */
+  /* overload, hide Solve in base class */
   void Solve(const char* resume_file);
 protected:
   virtual void PreSolve();
