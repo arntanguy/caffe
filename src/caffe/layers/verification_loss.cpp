@@ -79,12 +79,12 @@ void VerificationLossLayer<Dtype>::ReadCorrespondancesFile() {
   CHECK(infile.is_open()) << "Impossible to open file " << corr_file;
   std::getline(infile, line);
   while (infile >> l1 >> l2) {
-    LOG(INFO)<< "pair1: " << l1 << " " << l2;
+    //LOG(INFO)<< "pair: " << l1 << " " << l2;
     correspondance_labels_.push_back(std::make_pair(l1, l2));
     read++;
   }
   infile.close();
-  LOG(INFO)<< "Read "<< correspondance_labels_.size() << " correspondances";
+  LOG(INFO)<< "Read "<< correspondance_labels_.size() << " positive correspondances";
 }
 
 template<typename Dtype>

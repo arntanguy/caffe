@@ -9,16 +9,18 @@
 
 
 # 1 "verif_net.template" 1
-name: "Sunyi-feature"
+name: "TUM-feature"
 layers {
   layer {
     name: "verif_dual_001"
     type: "data"
-    source: "/home/arnaud/Internship/code/caffe-veri/res/db/db_47x55_slam"
-    batchsize: 10 
+    #source: "/home/arnaud/Internship/code/caffe-veri/res/db/db_47x55_slam_full"
+    source: "/media/DATA/Datasets/SLAM_LOOP/rgbd_dataset_freiburg1_room/db"
+    batchsize: 64
     scale: 1.0
     bias: 0.0
-    data_count: 253
+    data_count: 1150
+
   }
   top: "data"
   top: "label"
@@ -36,8 +38,6 @@ layers {
     bias_filler {
       type: "constant"
     }
-    blobs_lr: 1.
-    blobs_lr: 2.
   }
   bottom: "data"
   top: "conv1"
@@ -74,8 +74,6 @@ layers {
     bias_filler {
       type: "constant"
     }
-    blobs_lr: 1.
-    blobs_lr: 2.
   }
   bottom: "pool1"
   top: "conv2"
@@ -114,46 +112,6 @@ layers {
     bias_filler {
       type: "constant"
     }
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
 
   }
   bottom: "pool2"
@@ -201,30 +159,6 @@ layers {
     bias_filler {
       type: "constant"
     }
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 1.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
-    blobs_lr: 2.
   }
   bottom: "pool3"
   top: "conv4"
@@ -280,4 +214,21 @@ layers {
   bottom: "ip1"
   top: "ip1"
 }
-# 6 "verif_feature.prototxt.partial" 2
+
+layers {
+  layer {
+    name: "ip2"
+    type: "innerproduct"
+    num_output: 8192
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+    blobs_lr: 1.
+    blobs_lr: 2.
+  }
+  bottom: "ip1"
+  top: "ip2"
+}

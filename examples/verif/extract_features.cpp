@@ -9,6 +9,7 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 #include "caffe/blob.hpp"
 #include "caffe/common.hpp"
@@ -36,12 +37,13 @@ int feature_extraction_pipeline(int argc, char** argv) {
      * Num mini batches : number of image batch to process
      * batch size defined in prototxt
      */
-    LOG(ERROR)<<
-    "This program takes in a trained network and an input data layer, and then"
-    " extract features of the input data produced by the net.\n"
-    "Usage: demo_extract_features  pretrained_net_param(bin)"
-    "  feature_extraction_proto_file  extract_feature_blob_name"
-    "  save_feature_leveldb_name  num_mini_batches  [CPU/GPU]  [DEVICE_ID=0]";
+    std::cout <<    "Extracts feature using a trained CNN\n\n"
+    "Usage: demo_extract_features  trained_net trained_net_proto blob_name result_leveldb  num_batches  [CPU/GPU]  [DEVICE_ID=0]\n\n"
+    "trained_net          trained network binary file\n"
+    "trained_net_proto    trained network prototxt description file\n"
+    "blob_name            name of the blob to extract features from\n"
+    "result_leveldb       path to the leveldb where the results will be saved\n"
+    "num_batches          number of batches to compute features on\n";
     return 1;
   }
   int arg_pos = num_required_args;
@@ -126,7 +128,9 @@ int feature_extraction_pipeline(int argc, char** argv) {
   vector<Blob<Dtype>*> input_vec;
   int image_index = 0;
   for (int batch_index = 0; batch_index < num_mini_batches; ++batch_index) {
+    LOG(INFO) << "Batch " << batch_index;
     feature_extraction_net->Forward(input_vec);
+    LOG(INFO) << "Forward pass done";
     const shared_ptr<Blob<Dtype> > feature_blob = feature_extraction_net
         ->blob_by_name(extract_feature_blob_name);
     int num_features = feature_blob->num();
@@ -142,7 +146,7 @@ int feature_extraction_pipeline(int argc, char** argv) {
         data_stream << feature_blob_data[d] << " ";
       }
       data_stream << feature_blob_data[dim_features - 1];
-      LOG(INFO)<< "DATA: " << data_stream.str();
+      //LOG(INFO)<< "DATA( " << batch_index << ", " << n <<  "): "<< data_stream.str();
       std::ostringstream key_str_stream;
       key_str_stream << std::setfill('0') << std::setw(8) << image_index;
       batch->Put(string(key_str_stream.str()), data_stream.str());

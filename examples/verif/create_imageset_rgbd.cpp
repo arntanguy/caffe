@@ -37,13 +37,18 @@ int main(int argc, char** argv) {
   ::google::InitGoogleLogging(argv[0]);
   if (argc < 7) {
     std::cout
-        << "Convert a set of images to the leveldb format used as input for Caffe."
-        << std::endl
-        << std::endl
-        << "Usage:\n"
-        << "\tconvert_imageset LISTFILE DB_NAME EXTRA_DB_NAME width height RANDOM_SHUFFLE_DATA[0 or 1]\n";
+        << "Convert a set of images to the leveldb format used as input for Caffe.\n\n"
+        "Usage:\n\n"
+        "./create_imageset_rgbd dataset_file  save_db_path save_database_information width height random_shuffle[0 or 1]\n\n"
+        "datset_file                   file containing information about the dataset (label >> filepath >> depthpath >> tx >> ty >> tz >> q1 >> q2 >> q3 >> q4)\n"
+        "save_db_name                  path to which the database will be written. Only contains labels and images\n"
+        "save_database_information     complementary information written about the database (label >> filepath >> depthpath >> tx >> ty >> tz >> q1 >> q2 >> q3 >> q4)"
+        "width, height\n"
+        "random_shuffle\n";
     return 0;
   }
+
+  std::cout << "Converting " << argv[1] << " to leveldb " << argv[2] << std::endl;
 
   std::istringstream ssw(argv[4]), ssh(argv[5]);
   int width, height;
@@ -76,6 +81,7 @@ int main(int argc, char** argv) {
 
   leveldb::DB* db;
   leveldb::Options options;
+  options.max_open_files = 10000;
   options.error_if_exists = true;
   options.create_if_missing = true;
   options.write_buffer_size = 268435456;
@@ -103,9 +109,11 @@ int main(int argc, char** argv) {
     label_ss << std::setfill('0') << std::setw(8) << label;
     label_str = label_ss.str();
 
-    extra_db << label_str << " " << filepath << " " << depthpath << " " << tx << " " << ty << " " << tz << " " << q1 << " " << q2 << " " << q3 << " " << q4 << std::endl;
+    extra_db << label_str << " " << filepath << " " << depthpath << " " << tx
+             << " " << ty << " " << tz << " " << q1 << " " << q2 << " " << q3
+             << " " << q4 << std::endl;
 
-    DLOG(INFO)<< "Processing image with label: " << label_str << ", file: " << filepath;
+    LOG(INFO)<< "Processing image with label: " << label_str << ", file: " << filepath;
 
     if (!ReadImageToDatum(filepath, label, width, height, &datum)) {
       LOG(ERROR)<< "Failed to read image " << filepath << " to Datum";
@@ -127,7 +135,7 @@ int main(int argc, char** argv) {
     batch->Put(label_str, value);
     if (++count % 1000 == 0) {
       db->Write(leveldb::WriteOptions(), batch);
-      LOG(ERROR)<< "Processed " << count << " files.";
+      LOG(INFO)<< "Processed " << count << " files.";
       delete batch;
       batch = new leveldb::WriteBatch();
     }
@@ -135,11 +143,12 @@ int main(int argc, char** argv) {
 
   // write the last batch
   if (count % 1000 != 0) {
-    db->Write(leveldb::WriteOptions(), batch);
-    LOG(INFO)<< "Successfully processed " << count << " files. " << std::endl
-        << "Dataset has been written to " << argv[2] << std::endl
-        << "Extra information matching the dataset has been written to " << argv[3];
+    LOG(INFO)<< "Writing final batch of: " << count%1000 << " elements";
+   db->Write(leveldb::WriteOptions(), batch);
   }
+  LOG(INFO)<< "Successfully processed " << count << " files. " << std::endl
+  << "Dataset has been written to " << argv[2] << std::endl
+  << "Extra information matching the dataset has been written to " << argv[3];
 
   delete batch;
   delete db;

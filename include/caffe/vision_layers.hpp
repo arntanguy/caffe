@@ -815,6 +815,37 @@ class VerificationAccuracyLayer : public Layer<Dtype> {
 };
 
 
+template <typename Dtype>
+class VerificationAccuracyLayerSiamese : public Layer<Dtype> {
+ public:
+  explicit VerificationAccuracyLayerSiamese(const LayerParameter& param)
+      : Layer<Dtype>(param) {}
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  void SetThreshold(Dtype t) { M_ = t; }
+  Dtype GetThreshold(Dtype t) { return M_ ; }
+
+  void ReadCorrespondancesFile();
+
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  // The accuracy layer should not be used to compute backward operations.
+  virtual Dtype Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const bool propagate_down, vector<Blob<Dtype>*>* bottom) {
+    NOT_IMPLEMENTED;
+    return Dtype(0.);
+  }
+  virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  Blob<Dtype> diffy_;
+
+  Dtype M_;
+  std::vector<std::pair<int, int> > correspondance_labels_;
+};
+
+
 // This function is used to create a pthread that prefetches the window data.
 template <typename Dtype>
 void* WindowDataLayerPrefetch(void* layer_pointer);

@@ -103,7 +103,9 @@ public:
     shadow_test_data_layer->CopyDataPtrFrom(*test_data_layer);
     shadow_test_data_layer->SetOutputChannel(1);
 
-    accuracy_layer.reset(new VerificationAccuracyLayer<Dtype>(extra_layer_params_));
+    VerificationAccuracyLayerSiamese<Dtype> *verif_accuracy = new VerificationAccuracyLayerSiamese<Dtype>(extra_layer_params_);
+    verif_accuracy->ReadCorrespondancesFile();
+    accuracy_layer.reset(verif_accuracy);
 
     vector<Blob<Dtype>*> test_out_vec1 = this->test_net_->output_blobs();
     vector<Blob<Dtype>*> test_out_vec2 = this->shadow_test_net_->output_blobs();
@@ -172,7 +174,7 @@ protected:
   boost::shared_ptr<Net<Dtype> > shadow_test_net_;
 
   boost::shared_ptr<VerificationLossLayer<Dtype> > loss_layer;
-  boost::shared_ptr<VerificationAccuracyLayer<Dtype> > accuracy_layer;
+  boost::shared_ptr<VerificationAccuracyLayerSiamese<Dtype> > accuracy_layer;
 
   int FEATURE_LAYER_ID;
   int DATA_LAYER_IDX;

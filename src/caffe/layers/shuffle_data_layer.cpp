@@ -29,7 +29,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   leveldb::DB* db_temp;
   leveldb::Options options;
   options.create_if_missing = false;
-  options.max_open_files = 100;
+  options.max_open_files = 10000;
   LOG(INFO)<< "Opening leveldb " << this->layer_param_.source();
   leveldb::Status status = leveldb::DB::Open(options,
       this->layer_param_.source(),

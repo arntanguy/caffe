@@ -161,10 +161,11 @@ int main(int argc, char **argv) {
 
   if (argc < 4) {
     std::cout
-        << "Computes distance between features"
-        << std::endl
-        << "Usage feature_distance features_leveldb detailled_dataset_txt result_txt"
-        << std::endl;
+        << "Computes distance between features\n\n"
+           "Usage feature_distance features_leveldb detailled_dataset_txt result_txt\n\n"
+           "features_leveldb         dataset containing the extracted features\n"
+           "detailled_dataset_txt    full information about the dataset (id rgb depth tx ty tz q1 q2 q3 q4)\n"
+           "result_txt               file in which the resulting distances are written\n";
     return 1;
   }
   ProcessDescriptors<float, Distance<float>>(argv[1], argv[2], argv[3]);

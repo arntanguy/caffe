@@ -13,7 +13,6 @@
 
 #include "caffe/util/debug.hpp"
 
-
 using std::string;
 
 namespace caffe {
@@ -68,8 +67,8 @@ void* DataLayerPrefetch(void* layer_pointer) {
           for (int h = 0; h < cropsize; ++h) {
             for (int w = 0; w < cropsize; ++w) {
               top_data[((itemid * channels + c) * cropsize + h) * cropsize
-                  + cropsize - 1 - w] = (static_cast<Dtype>((uint8_t) data[(c
-                  * height + h + h_off) * width + w + w_off])
+              + cropsize - 1 - w] = (static_cast<Dtype>((uint8_t) data[(c
+                          * height + h + h_off) * width + w + w_off])
                   - mean[(c * height + h + h_off) * width + w + w_off]) * scale;
             }
           }
@@ -80,10 +79,10 @@ void* DataLayerPrefetch(void* layer_pointer) {
           for (int h = 0; h < cropsize; ++h) {
             for (int w = 0; w < cropsize; ++w) {
               top_data[((itemid * channels + c) * cropsize + h) * cropsize + w] =
-                  (static_cast<Dtype>((uint8_t) data[(c * height + h + h_off)
+              (static_cast<Dtype>((uint8_t) data[(c * height + h + h_off)
                       * width + w + w_off])
-                      - mean[(c * height + h + h_off) * width + w + w_off])
-                      * scale;
+                  - mean[(c * height + h + h_off) * width + w + w_off])
+              * scale;
             }
           }
         }
@@ -217,29 +216,23 @@ void DataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   CHECK(!pthread_join(thread_, NULL)) << "Pthread joining failed.";
   // Copy the data
   int nb_images = sizeof(Dtype) * prefetch_data_->count()
-          / (sizeof(Dtype) * datum_size_);
-      DLOG(INFO)<< "Copying batch of " << nb_images << " images";
+      / (sizeof(Dtype) * datum_size_);
+  DLOG(INFO)<< "Copying batch of " << nb_images << " images";
   memcpy((*top)[0]->mutable_cpu_data(), prefetch_data_->cpu_data(),
          sizeof(Dtype) * prefetch_data_->count());
   memcpy((*top)[1]->mutable_cpu_data(), prefetch_label_->cpu_data(),
-           sizeof(Dtype) * prefetch_label_->count());
-
-
+         sizeof(Dtype) * prefetch_label_->count());
   /**
    * Debug: display image
    */
-#ifdef NDEBUG_GUI
-  float *img = new float[datum_size_];
-  for(int i=0;i<nb_images; i++) {
-    memcpy(img,  prefetch_data_->cpu_data() + i * datum_size_, sizeof(Dtype) * datum_size_);
-    displayImageFromData(img, datum_height_, datum_width_);
-  }
-  delete[] img;
-#endif
-
-
-
-
+//#ifdef NDEBUG_GUI
+//  float *img = new float[datum_size_];
+//  for(int i=0;i<nb_images; i++) {
+//    memcpy(img,  prefetch_data_->cpu_data() + i * datum_size_, sizeof(Dtype) * datum_size_);
+//    displayImageFromData(img, datum_height_, datum_width_);
+//  }
+//  delete[] img;
+//#endif
 
   // Start a new prefetch thread
   CHECK(!pthread_create(&thread_, NULL, DataLayerPrefetch<Dtype>,
