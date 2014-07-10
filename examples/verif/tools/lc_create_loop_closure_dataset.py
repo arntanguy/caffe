@@ -38,25 +38,10 @@ import argparse
 ########################################
 parser = argparse.ArgumentParser(description='Generate a dataset of loop-closures from TUM SLAM Dataset.')
 parser.add_argument('--slam_dataset', dest='slam_dataset', 
-                    type=str, default='/media/DATA/Datasets/SLAM_LOOP', 
+                    type=str, default='.', 
                     help='Path to one of the RGB-D SLAM Dataset and Benchmark (http://vision.in.tum.de/data/datasets/rgbd-dataset)')
-parser.add_argument('--washington-dataset', dest="washington_dataset",
-                    type=str, default='/media/DATA/Datasets/Washington-converted',
-                    help='Path to washington\'s RGBD scene dataset (http://rgbd-dataset.cs.washington.edu/dataset/rgbd-scenes-v2/)')
-parser.add_argument('--translation', dest='translation', 
-                    type=float, default=2.,
-                    help='Maximal translation allowed between two images to be considered as a loop-closure (in meters). Default = 2m')
-parser.add_argument('--rotation', dest='rotation',
-                    type=float, default=30.,
-                    help='Maximal roation allowed between two images to be considered as a loop-closure (in degrees). Default = 30')
-parser.add_argument('--keyframe-step', dest='keyframe_step',
-                    type=int, default=10,
-                    help='Number of frames between two keyframes')
-parser.add_argument('--keyframe-distance', dest="keyframe_distance",
-                    type=int, default=10,
-                    help='Minimal number of keyframes separating two images to be considered as a loop-closure. This is used to reduce the number of redundant loop-closures detected')
 parser.add_argument('--save-dir', dest='save_dir_path',
-                    type=str, default="/tmp",
+                    type=str, default=".",
                     help='Directory where the loop-closure dataset will be saved')
 parser.add_argument('--save-positive-loops', dest="save_file_positive_name",
                     type=str, default='loop_closures_positive.txt',
@@ -67,10 +52,23 @@ parser.add_argument('--save-negative-loops', dest="save_file_negative_name",
 parser.add_argument('--save-dataset_info', dest="save_file_dataset_name",
                     type=str, default='loop_closures_dataset.txt',
                     help='Name of the destination file for the dataset information associated with the loop-closure pairs. Default: loop_closures_dataset.txt')
-parser.add_argument('--no-tum', dest='use_tum', default=True, action='store_false', help='Do not run on TUM Dataset')
-parser.add_argument('--no-washington', dest='use_washington', default=True, action='store_false', help='Do not run on TUM Dataset')
-parser.add_argument('--save-valid-loops-only', dest='save_all_loops', default=True, action='store_false',
-        help='Only save valid loop closures. Do not save the remaining pairs')
+
+
+parser.add_argument('--translation', dest='translation', 
+                    type=float, default=2.,
+                    help='Maximal translation allowed between two images to be considered as a loop-closure (in meters). Default = 2m')
+parser.add_argument('--rotation', dest='rotation',
+                    type=float, default=30.,
+                    help='Maximal roation allowed between two images to be considered as a loop-closure (in degrees). Default = 30')
+
+
+parser.add_argument('--keyframe-step', dest='keyframe_step',
+                    type=int, default=10,
+                    help='Number of frames between two keyframes')
+parser.add_argument('--keyframe-distance', dest="keyframe_distance",
+                    type=int, default=10,
+                    help='Minimal number of keyframes separating two images to be considered as a loop-closure. This is used to reduce the number of redundant loop-closures detected')
+parser.add_argument('--compute-all',dest='compute_all',action='store_true', help="Controls whether everything needs to be computed again, or if already computed datasets can be skipped")
 args = parser.parse_args()
 
 
@@ -117,7 +115,8 @@ def get_files(directory):
 
 class LoopClosureDataset:
 
-    def __init__(self, save_dir_path, save_file_positive, save_file_negative, save_file_dataset):
+    def __init__(self, save_dir_path, save_file_positive, save_file_negative, save_file_dataset, compute_all):
+        self.compute_all = compute_all
         self.current_label = 0
 
         #   Init names
@@ -140,7 +139,7 @@ class LoopClosureDataset:
         self.save_file_negative.write("# Negative loop-closures id pairs of loop-closure images")
 
         self.save_file_dataset = open(self.save_file_dataset_path, 'w')
-        self.save_file_dataset.write("# id rgb depth tx ty tz q1 q2 q3 q4")
+        self.save_file_dataset.write("# id rgb depth tx ty tz q1 q2 q3 q4\n")
 
     def read_file_tum(self, slam_directory, keyframe_step):
         """Reads the dataset.txt file, take a value for each keyframe (distance between keyframes is defined by keyframe_step), and return a parsed version of it as a list of lists, where each element of the list is 
@@ -238,9 +237,18 @@ class LoopClosureDataset:
     def create_from_tum_dataset(self, slam_dataset, max_translation, max_rotation, keyframe_step, keyframe_distance):
         print "Generating loop-closure dataset from %s" % (slam_dataset)
         print "The following directories have been found:"
-        dirs = get_directories(slam_dataset) 
-        for name in dirs:
-            print "\t%s" % (name)
+        all_dirs = get_directories(slam_dataset) 
+        dirs = []
+        if self.compute_all:
+            for name in dirs:
+                if os.path.isfile(slam_dataset + "/" + name + "/loop_closures.txt"):
+                    print "\tLoop-closure has already been computed for %s, skipping" % (name)
+                else:
+                    print "\tAdding %s to the compute queue" % (name)
+                    dirs.append(name)
+        else:
+            dirs = all_dirs
+            print "\tAdding %s to the compute queue" % ("\n".join(dirs))
 
         #for name in dirs[0:1]:
         for name in dirs:
@@ -269,12 +277,11 @@ class LoopClosureDataset:
 #
 
 
-lc = LoopClosureDataset(args.save_dir_path, args.save_file_positive_name, args.save_file_negative_name, args.save_file_dataset_name)
-if args.use_tum:
-    lc.create_from_tum_dataset(args.slam_dataset, args.translation, args.rotation, args.keyframe_step, args.keyframe_distance)
-
-
-if args.use_washington:
-    lc.create_from_tum_dataset(args.washington_dataset, args.translation, args.rotation, args.keyframe_step, args.keyframe_distance)
-
+print """"Running with parameters:
+    max translation: %f
+    max rotation: %f
+    keyframe step: %i
+    keyframe distance: %i""" % (args.translation, args.rotation, args.keyframe_step, args.keyframe_distance)
+lc = LoopClosureDataset(args.save_dir_path, args.save_file_positive_name, args.save_file_negative_name, args.save_file_dataset_name, args.compute_all)
+lc.create_from_tum_dataset(args.slam_dataset, args.translation, args.rotation, args.keyframe_step, args.keyframe_distance)
 

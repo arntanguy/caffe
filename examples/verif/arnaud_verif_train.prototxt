@@ -3,12 +3,12 @@ layers {
   layer {
     name: "verif_dual_001"
     type: "shuffle_data"
-    source: "/home/arnaud/Internship/code/caffe-veri/res/db/db_47x55_slam_full"
-    source_list: "/media/DATA/Datasets/SLAM_LOOP/shuffle_list.txt"
+    source: "/home/arnaud/Internship/code/caffe-veri/data/dataset/slightly_bigger/train/db"
+    source_list: "/home/arnaud/Internship/code/caffe-veri/data/dataset/slightly_bigger/train/loop_closures_shuffle_list.txt"
     batchsize: 64
     scale: 1.0
     bias: 0.0
-    data_count: 1150 
+    #data_count: 3212 
   }
   top: "data"
   top: "label"

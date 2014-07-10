@@ -34,7 +34,7 @@ Dtype VerificationLossLayer<Dtype>::CalcThreshold(bool update) {
   stat[2] = 0.5;
   th = -1.0;
 
-  for (i = 0; i < 400; i++) {
+  for (i = 0; i < 4000; i++) {
     th_c = i * 0.1;
     is = 0;
     id = 0;
@@ -65,10 +65,9 @@ Dtype VerificationLossLayer<Dtype>::CalcThreshold(bool update) {
 
 template<typename Dtype>
 void VerificationLossLayer<Dtype>::ReadCorrespondancesFile() {
-  //XXX: should not be hardcoded
   correspondance_labels_.clear();
-  const std::string &corr_file =
-      "/media/DATA/Datasets/SLAM_LOOP/loop_closures_positive.txt";
+  const std::string &corr_file = this->layer_param_.train_net_positive_lc().c_str();
+      //"/media/DATA/Datasets/SLAM_LOOP/loop_closures_positive.txt";
   LOG(INFO)<< "Reading correspondance labels for closed loops from file " << corr_file;
   int l1, l2;
   int read = 0;

@@ -450,6 +450,7 @@ class DataLayer : public Layer<Dtype> {
 
   shared_ptr<leveldb::DB> db_;
   shared_ptr<leveldb::Iterator> iter_;
+
   int datum_channels_;
   int datum_height_;
   int datum_width_;

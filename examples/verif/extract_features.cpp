@@ -41,14 +41,18 @@ int feature_extraction_pipeline(int argc, char** argv) {
     "Usage: demo_extract_features  trained_net trained_net_proto blob_name result_leveldb  num_batches  [CPU/GPU]  [DEVICE_ID=0]\n\n"
     "trained_net          trained network binary file\n"
     "trained_net_proto    trained network prototxt description file\n"
+    "source_leveldb       leveldb dataset to extract from\n"
     "blob_name            name of the blob to extract features from\n"
-    "result_leveldb       path to the leveldb where the results will be saved\n"
-    "num_batches          number of batches to compute features on\n";
+    "result_leveldb       path to the leveldb where the results will be saved\n";
     return 1;
   }
-  int arg_pos = num_required_args;
+  const std::string pretrained_binary_proto(argv[1]);
+  const std::string feature_extraction_proto(argv[2]);
+  const std::string source_leveldb = argv[3];
+  const std::string extract_feature_blob_name = argv[4];
+  const std::string save_feature_leveldb_name = argv[5];
 
-  arg_pos = num_required_args;
+  int arg_pos = num_required_args;
   if (argc > arg_pos && strcmp(argv[arg_pos], "GPU") == 0) {
     LOG(ERROR)<< "Using GPU";
     uint device_id = 0;
@@ -65,8 +69,7 @@ int feature_extraction_pipeline(int argc, char** argv) {
   }
   Caffe::set_phase(Caffe::TEST);
 
-  arg_pos = 0;  // the name of the executable
-  string pretrained_binary_proto(argv[++arg_pos]);
+
 
   // Expected prototxt contains at least one data layer such as
   //  the layer data_layer_name and one feature blob such as the
@@ -95,19 +98,33 @@ int feature_extraction_pipeline(int argc, char** argv) {
    top: "fc7"
    }
    */
-  string feature_extraction_proto(argv[++arg_pos]);
+
+  NetParameter net_param;
+  ReadProtoFromTextFile(feature_extraction_proto, &net_param);
+  if(net_param.layers_size() > 0) {
+    const int DATA_LAYER_IDX=0;
+    LOG(INFO) << "Layers exists";
+    LOG(INFO) << "source: " << net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->source();
+    net_param.mutable_layers(DATA_LAYER_IDX)->mutable_layer()->set_source(source_leveldb.c_str());
+  }
+
   shared_ptr<Net<Dtype> > feature_extraction_net(
-      new Net<Dtype>(feature_extraction_proto));
+      new Net<Dtype>(net_param));
   feature_extraction_net->CopyTrainedLayersFrom(pretrained_binary_proto);
 
-  string extract_feature_blob_name(argv[++arg_pos]);
   CHECK(feature_extraction_net->has_blob(extract_feature_blob_name))
       << "Unknown feature blob name " << extract_feature_blob_name
       << " in the network " << feature_extraction_proto;
 
+  //const shared_ptr<DataLayer<Dtype> >& data_layer =  boost::static_pointer_cast<DataLayer<Dtype>>(feature_extraction_net->layer_by_name("verif_dual_001"));
+  const shared_ptr< Layer<Dtype> >& data_layer =  feature_extraction_net->layer_by_name("verif_dual_001");
+  int data_count = data_layer->layer_param().data_count();
+  int batch_size = data_layer->layer_param().batchsize();
+  int num_mini_batches = ceil((float)data_count/(float)batch_size);
+  LOG(INFO) << "Data size: " <<  data_count << ", batch size: " << batch_size << ", number of batches: "<< num_mini_batches;
+
   arg_pos++;
-  LOG(INFO)<< "Input leveldb " << argv[arg_pos];
-  string save_feature_leveldb_name(argv[arg_pos]);
+  LOG(INFO)<< "Input leveldb " << save_feature_leveldb_name;
   leveldb::DB* db;
   leveldb::Options options;
   options.error_if_exists = true;
@@ -119,7 +136,6 @@ int feature_extraction_pipeline(int argc, char** argv) {
                                              &db);
   CHECK(status.ok()) << "Failed to open leveldb " << save_feature_leveldb_name;
 
-  int num_mini_batches = atoi(argv[++arg_pos]);
 
   LOG(ERROR)<< "Extacting Features";
 
@@ -128,12 +144,11 @@ int feature_extraction_pipeline(int argc, char** argv) {
   vector<Blob<Dtype>*> input_vec;
   int image_index = 0;
   for (int batch_index = 0; batch_index < num_mini_batches; ++batch_index) {
-    LOG(INFO) << "Batch " << batch_index;
+    LOG(INFO) << "Batch " << batch_index+1 << "/" << num_mini_batches;
     feature_extraction_net->Forward(input_vec);
-    LOG(INFO) << "Forward pass done";
     const shared_ptr<Blob<Dtype> > feature_blob = feature_extraction_net
         ->blob_by_name(extract_feature_blob_name);
-    int num_features = feature_blob->num();
+    int num_features = (data_count/batch_size > 0) ? batch_size : batch_size - data_count % batch_size + 1; //feature_blob->num();
     int dim_features = feature_blob->count() / num_features;
     Dtype* feature_blob_data;
     DLOG(INFO)<< "dim features: " << dim_features;

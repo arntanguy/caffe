@@ -14,12 +14,14 @@ layers {
   layer {
     name: "verif_dual_001"
     type: "data"
+    source: "/home/arnaud/Internship/code/caffe-veri/examples/verif/dataset/test/db"
     #source: "/home/arnaud/Internship/code/caffe-veri/res/db/db_47x55_slam_full"
-    source: "/media/DATA/Datasets/SLAM_LOOP/rgbd_dataset_freiburg1_room/db"
+    #source: "/media/DATA/Datasets/SLAM_LOOP/rgbd_dataset_freiburg1_room/db"
+    #source: "/media/DATA/Datasets/Washington-converted/washington_14/db"
     batchsize: 64
     scale: 1.0
     bias: 0.0
-    data_count: 1150
+    #data_count: 1150
 
   }
   top: "data"

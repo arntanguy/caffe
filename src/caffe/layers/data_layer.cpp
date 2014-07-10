@@ -67,8 +67,8 @@ void* DataLayerPrefetch(void* layer_pointer) {
           for (int h = 0; h < cropsize; ++h) {
             for (int w = 0; w < cropsize; ++w) {
               top_data[((itemid * channels + c) * cropsize + h) * cropsize
-              + cropsize - 1 - w] = (static_cast<Dtype>((uint8_t) data[(c
-                          * height + h + h_off) * width + w + w_off])
+                  + cropsize - 1 - w] = (static_cast<Dtype>((uint8_t) data[(c
+                  * height + h + h_off) * width + w + w_off])
                   - mean[(c * height + h + h_off) * width + w + w_off]) * scale;
             }
           }
@@ -79,10 +79,10 @@ void* DataLayerPrefetch(void* layer_pointer) {
           for (int h = 0; h < cropsize; ++h) {
             for (int w = 0; w < cropsize; ++w) {
               top_data[((itemid * channels + c) * cropsize + h) * cropsize + w] =
-              (static_cast<Dtype>((uint8_t) data[(c * height + h + h_off)
+                  (static_cast<Dtype>((uint8_t) data[(c * height + h + h_off)
                       * width + w + w_off])
-                  - mean[(c * height + h + h_off) * width + w + w_off])
-              * scale;
+                      - mean[(c * height + h + h_off) * width + w + w_off])
+                      * scale;
             }
           }
         }
@@ -136,7 +136,21 @@ void DataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   CHECK(status.ok()) << "Failed to open leveldb "
   << this->layer_param_.source() << std::endl << status.ToString();
   db_.reset(db_temp);
+
   iter_.reset(db_->NewIterator(leveldb::ReadOptions()));
+
+  if(!Layer<Dtype>::layer_param_.has_data_count()) {
+    LOG(INFO) << "Datacount is not set, counting number of elements in database";
+    // Determine number of elements in dataset
+    iter_->SeekToFirst();
+    int data_count=0;
+    for (iter_->SeekToFirst(); iter_->Valid(); iter_->Next()) {
+      ++data_count;
+    }
+    Layer<Dtype>::layer_param_.set_data_count(data_count+1);
+    LOG(INFO) << "data_count: " << Layer<Dtype>::layer_param_.data_count();
+  }
+
   iter_->SeekToFirst();
   // Check if we would need to randomly skip a few data points
   if (this->layer_param_.rand_skip()) {
@@ -233,7 +247,6 @@ void DataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 //  }
 //  delete[] img;
 //#endif
-
   // Start a new prefetch thread
   CHECK(!pthread_create(&thread_, NULL, DataLayerPrefetch<Dtype>,
           reinterpret_cast<void*>(this))) << "Pthread execution failed.";

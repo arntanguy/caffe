@@ -1,27 +1,14 @@
-# 1 "verif_test.prototxt.partial"
-# 1 "<built-in>"
-# 1 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3 4
-# 1 "<command-line>" 2
-# 1 "verif_test.prototxt.partial"
-
-
-
-
-
-# 1 "verif_net.template" 1
 name: "TUM-test"
 layers {
   layer {
     name: "verif_dual_001"
     type: "shuffle_data"
-    source: "/home/arnaud/Internship/code/caffe-veri/res/db/db_47x55_slam_full"
-    source_list: "/media/DATA/Datasets/SLAM_LOOP/shuffle_list.txt"
+    source: "/home/arnaud/Internship/code/caffe-veri/data/dataset/slightly_bigger/test/db"
+    source_list: "/home/arnaud/Internship/code/caffe-veri/data/dataset/slightly_bigger/test/loop_closures_shuffle_list.txt"
     batchsize: 64
     scale: 1.0
     bias: 0.0
-    data_count: 1150
-
+    #data_count: 488
   }
   top: "data"
   top: "label"
@@ -214,22 +201,4 @@ layers {
   }
   bottom: "ip1"
   top: "ip1"
-}
-
-layers {
-  layer {
-    name: "ip2"
-    type: "innerproduct"
-    num_output: 8192
-    weight_filler {
-      type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-    }
-    blobs_lr: 1.
-    blobs_lr: 2.
-  }
-  bottom: "ip1"
-  top: "ip2"
 }

@@ -63,6 +63,8 @@ def convert_associated_all_to_dataset(associated_all_path, dataset_path):
                 dataset_dir_path=os.path.abspath(".")
                 rgb_file = dataset_dir_path+"/"+line[9]
                 depth_file = dataset_dir_path+"/"+line[11]
+                print rgb_file
+                print depth_file
                 save_file.write("%s %s %s %s %s\n" % (key, rgb_file, depth_file, position, rotation))
             
 

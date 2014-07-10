@@ -294,8 +294,8 @@ template<typename Dtype>
 void VerificationAccuracyLayerSiamese<Dtype>::ReadCorrespondancesFile() {
   //XXX: should not be hardcoded
   correspondance_labels_.clear();
-  const std::string &corr_file =
-      "/media/DATA/Datasets/SLAM_LOOP/loop_closures_positive.txt";
+  const std::string &corr_file = this->layer_param_.test_net_positive_lc().c_str();
+      //"/media/DATA/Datasets/SLAM_LOOP/loop_closures_positive.txt";
   LOG(INFO)<< "Reading correspondance labels for closed loops from file " << corr_file;
   int l1, l2;
   int read = 0;

@@ -43,6 +43,8 @@ distribute/*
 
 # User's build configuration
 Makefile.config
+# For CLANG
+compile_commands.json
 
 # Data and examples are either
 # 1. reference, and not casually committed

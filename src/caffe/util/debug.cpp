@@ -25,3 +25,4 @@ void displayImageFromData(float *data, const int width, const int height)
   cv::waitKey(0);
   delete[] interleaved;
 }
+

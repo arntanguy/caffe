@@ -7,6 +7,7 @@
 #include "caffe/layer.hpp"
 #include "caffe/vision_layers.hpp"
 #include "caffe/util/math_functions.hpp"
+#include "caffe/util/debug.hpp"
 
 using std::max;
 
@@ -15,8 +16,11 @@ namespace caffe {
 template <typename Dtype>
 void SoftmaxWithLossLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
+  LOG(INFO) << "SoftmaxWithLossLayer::Setup";
   CHECK_EQ(bottom.size(), 2) << "SoftmaxLoss Layer takes two blobs as input.";
   CHECK_EQ(top->size(), 0) << "SoftmaxLoss Layer takes no blob as output.";
+  LOG(INFO) << "bottom blob 0: " << *(bottom[0]);
+  LOG(INFO) << "bottom blob 1: " << *(bottom[1]);
   softmax_bottom_vec_.clear();
   softmax_bottom_vec_.push_back(bottom[0]);
   softmax_top_vec_.push_back(&prob_);
@@ -42,13 +46,16 @@ Dtype SoftmaxWithLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   const Dtype* label = (*bottom)[1]->cpu_data();
   int num = prob_.num();
   int dim = prob_.count() / num;
+  //LOG(INFO) << "num: " << num << ", count: " << prob_.count() << ", dim: " << dim;
   Dtype loss = 0;
   for (int i = 0; i < num; ++i) {
-	  CHECK_LT(label[i], dim);
+    //LOG(INFO) << "label["<<i<<"] = " << label[i];
+	  //CHECK_LT(label[i], dim);
     bottom_diff[i * dim + static_cast<int>(label[i])] -= 1;
     loss += -log(max(prob_data[i * dim + static_cast<int>(label[i])],
                      Dtype(FLT_MIN)));
   }
+  //exit(123);
   // Scale down gradient
   caffe_scal(prob_.count(), Dtype(1) / num, bottom_diff);
   return loss / num;

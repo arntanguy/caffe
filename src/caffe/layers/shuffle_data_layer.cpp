@@ -29,7 +29,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   leveldb::DB* db_temp;
   leveldb::Options options;
   options.create_if_missing = false;
-  options.max_open_files = 10000;
+  options.max_open_files = 100;
   LOG(INFO)<< "Opening leveldb " << this->layer_param_.source();
   leveldb::Status status = leveldb::DB::Open(options,
       this->layer_param_.source(),
@@ -56,13 +56,20 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   datum_width_ = datum.width();
   datum_size_ = datum.channels() * datum.height() * datum.width();
 
-  LOG(INFO) << "Datum info:\n"
-  << "\tChannels: " << datum_channels_ << "\n"
-  << "\tWidth x Height: " << datum_width_ << "x" << datum_height_ << "\n"
-  << "\tSize: " << datum_size_ << "\n";
+  LOG(INFO) << "Datum info: "  << *(*top)[0];
 
   int n = 0;
   iter_->SeekToFirst();
+  if(!Layer<Dtype>::layer_param_.has_data_count()) {
+     LOG(INFO) << "Datacount is not set, counting number of elements in database";
+     // Determine number of elements in dataset
+     iter_->SeekToFirst();
+     int data_count=0;
+     for (iter_->SeekToFirst(); iter_->Valid(); iter_->Next()) {
+       ++data_count;
+     }
+     Layer<Dtype>::layer_param_.set_data_count(data_count+1);
+   }
   size_t nd = this->layer_param_.data_count();
   CHECK(nd != 0);
   DATA_COUNT_ = nd;
@@ -145,7 +152,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       }
       ++ind;
     }
-    LOG(INFO) << idx_[0]->size() << " pairs added to shuffle list." << (*idx_[0])[1];
+    LOG(INFO) << idx_[0]->size() << " pairs added to shuffle list.";
   } else {
     LOG(INFO)<< "skip read";
   }

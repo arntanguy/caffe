@@ -113,7 +113,7 @@ int main(int argc, char** argv) {
              << " " << ty << " " << tz << " " << q1 << " " << q2 << " " << q3
              << " " << q4 << std::endl;
 
-    LOG(INFO)<< "Processing image with label: " << label_str << ", file: " << filepath;
+    //LOG(INFO)<< "Processing image with label: " << label_str << ", file: " << filepath;
 
     if (!ReadImageToDatum(filepath, label, width, height, &datum)) {
       LOG(ERROR)<< "Failed to read image " << filepath << " to Datum";

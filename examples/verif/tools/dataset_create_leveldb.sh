@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "This script must be run from the dataset ROOT directory"
-echo "In case of the washington dataset, the file dataset.txt has already been created by the conversion script"
+echo "The file dataset.txt must exist in all subdirectories"
 WIDTH=47
 HEIGHT=55
 RANDOM_SHUFFLE=0

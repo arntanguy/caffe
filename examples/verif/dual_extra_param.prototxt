@@ -1,2 +1,5 @@
 dual_lamda: 0.05
 dual_threshold: 39.9
+
+train_net_positive_lc: "/home/arnaud/Internship/code/caffe-veri/data/dataset/slightly_bigger/train/loop_closures_positive.txt"
+test_net_positive_lc: "/home/arnaud/Internship/code/caffe-veri/data/dataset/slightly_bigger/test/loop_closures_positive.txt"
