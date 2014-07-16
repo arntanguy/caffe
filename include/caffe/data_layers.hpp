@@ -18,6 +18,7 @@
 #include "caffe/filler.hpp"
 #include "caffe/layer.hpp"
 #include "caffe/proto/caffe.pb.h"
+#include "caffe/internal_thread.hpp"
 
 namespace caffe {
 
@@ -27,15 +28,8 @@ namespace caffe {
 // TODO: DataLayer, ImageDataLayer, and WindowDataLayer all have the
 // same basic structure and a lot of duplicated code.
 
-// This function is used to create a pthread that prefetches the data.
 template <typename Dtype>
-void* DataLayerPrefetch(void* layer_pointer);
-
-template <typename Dtype>
-class DataLayer : public Layer<Dtype> {
-  // The function used to perform prefetching.
-  friend void* DataLayerPrefetch<Dtype>(void* layer_pointer);
-
+class DataLayer : public Layer<Dtype>, public InternalThread {
  public:
   explicit DataLayer(const LayerParameter& param)
       : Layer<Dtype>(param) {}
@@ -63,6 +57,8 @@ class DataLayer : public Layer<Dtype> {
   virtual void CreatePrefetchThread();
   virtual void JoinPrefetchThread();
   virtual unsigned int PrefetchRand();
+  // The thread's function
+  virtual void InternalThreadEntry();
 
   shared_ptr<Caffe::RNG> prefetch_rng_;
 
@@ -182,15 +178,8 @@ class HDF5OutputLayer : public Layer<Dtype> {
   Blob<Dtype> label_blob_;
 };
 
-// This function is used to create a pthread that prefetches the data.
 template <typename Dtype>
-void* ImageDataLayerPrefetch(void* layer_pointer);
-
-template <typename Dtype>
-class ImageDataLayer : public Layer<Dtype> {
-  // The function used to perform prefetching.
-  friend void* ImageDataLayerPrefetch<Dtype>(void* layer_pointer);
-
+class ImageDataLayer : public Layer<Dtype>, public InternalThread {
  public:
   explicit ImageDataLayer(const LayerParameter& param)
       : Layer<Dtype>(param) {}
@@ -219,6 +208,7 @@ class ImageDataLayer : public Layer<Dtype> {
   virtual void CreatePrefetchThread();
   virtual void JoinPrefetchThread();
   virtual unsigned int PrefetchRand();
+  virtual void InternalThreadEntry();
 
   shared_ptr<Caffe::RNG> prefetch_rng_;
   vector<std::pair<std::string, int> > lines_;
@@ -277,15 +267,8 @@ class MemoryDataLayer : public Layer<Dtype> {
   int pos_;
 };
 
-// This function is used to create a pthread that prefetches the window data.
 template <typename Dtype>
-void* WindowDataLayerPrefetch(void* layer_pointer);
-
-template <typename Dtype>
-class WindowDataLayer : public Layer<Dtype> {
-  // The function used to perform prefetching.
-  friend void* WindowDataLayerPrefetch<Dtype>(void* layer_pointer);
-
+class WindowDataLayer : public Layer<Dtype>, public InternalThread {
  public:
   explicit WindowDataLayer(const LayerParameter& param)
       : Layer<Dtype>(param) {}
@@ -312,6 +295,7 @@ class WindowDataLayer : public Layer<Dtype> {
   virtual void CreatePrefetchThread();
   virtual void JoinPrefetchThread();
   virtual unsigned int PrefetchRand();
+  virtual void InternalThreadEntry();
 
   shared_ptr<Caffe::RNG> prefetch_rng_;
   pthread_t thread_;
