@@ -62,7 +62,7 @@ args = parser.parse_args()
 
 import random
 
-def read_loop_closure_files(path, max_iter):
+def read_loop_closure_files(path, max_iter, positive):
     lc = []
     i=0
     for line in open(path):
@@ -71,7 +71,7 @@ def read_loop_closure_files(path, max_iter):
         li = line.strip()
         if not li.startswith('#'):
             line = line.rstrip().split(" ")
-            lc.append( (int(line[0]), int(line[1])) )
+            lc.append( [int(line[0]), int(line[1]), positive] )
         i = i+1
     return lc
 
@@ -79,7 +79,7 @@ def save_shuffle_list(shuffle_list, save_file_path):
     save_file = open(save_file_path, 'w')
     save_file.write("%i\n" % len(shuffle_list))
     for l in shuffle_list:
-        save_file.write("%i %i\n" % (l[0], l[1]))
+        save_file.write("%i %i %i\n" % (l[0], l[1], l[2]))
     save_file.close()
 
 
@@ -88,9 +88,9 @@ def save_shuffle_list(shuffle_list, save_file_path):
 
 
 print "Reading positive loop-closures"
-positive_lc = read_loop_closure_files(args.positive, 10000000)
+positive_lc = read_loop_closure_files(args.positive, 10000000, 1)
 print "Reading negative loop-closures"
-negative_lc = read_loop_closure_files(args.negative, len(positive_lc))
+negative_lc = read_loop_closure_files(args.negative, len(positive_lc), 0)
 
 
 # Maximum number of loop-closures

@@ -20,6 +20,8 @@
 #include "caffe/proto/caffe.pb.h"
 #include "caffe/internal_thread.hpp"
 
+#include "caffe/internal_thread.hpp"
+
 namespace caffe {
 
 #define HDF5_DATA_DATASET_NAME "data"
@@ -82,6 +84,82 @@ class DataLayer : public Layer<Dtype>, public InternalThread {
   Blob<Dtype> data_mean_;
   bool output_labels_;
   Caffe::Phase phase_;
+};
+
+template <typename Dtype>
+class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
+ public:
+  explicit ShuffleDataLayer(const LayerParameter& param)
+      : Layer<Dtype>(param) {}
+  virtual ~ShuffleDataLayer();
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  virtual inline LayerParameter_LayerType type() const {
+    return LayerParameter_LayerType_DATA;
+  }
+  virtual inline int ExactNumBottomBlobs() const { return 0; }
+  virtual inline int MinTopBlobs() const { return 1; }
+  virtual inline int MaxTopBlobs() const { return 2; }
+
+ protected:
+  virtual Dtype Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual Dtype Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom) {}
+  virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom) {}
+
+  virtual void CreatePrefetchThread();
+  virtual void JoinPrefetchThread();
+  virtual unsigned int PrefetchRand();
+  virtual void InternalThreadEntry();
+
+  void ReadShuffleList();
+  void SwapChannel();
+
+  shared_ptr<Caffe::RNG> prefetch_rng_;
+
+  // LEVELDB
+  shared_ptr<leveldb::DB> db_;
+  shared_ptr<leveldb::Iterator> iter_;
+  // LMDB
+  MDB_env* mdb_env_;
+  MDB_dbi mdb_dbi_;
+  MDB_txn* mdb_txn_;
+  MDB_cursor* mdb_cursor_;
+  MDB_val mdb_key_, mdb_value_;
+
+  int batch_size_;
+  int datum_channels_;
+  int datum_height_;
+  int datum_width_;
+  int datum_size_;
+  pthread_t thread_;
+  shared_ptr<Blob<Dtype> > prefetch_data_;
+  shared_ptr<Blob<Dtype> > prefetch_label_;
+  Blob<Dtype> data_mean_;
+  bool output_labels_;
+  Caffe::Phase phase_;
+
+  /**
+   * Channel = 0 : read from first column of shuffle list (left side of network)
+   * Channel = 1 : read from second column of shuffle list (right side of network)
+   **/
+  int channel_;
+  /**
+   * Vectors containing the loop-closure ids.
+   * pair.first : id of the first image 
+   * pair.second : id of the corresponding image
+   **/
+  std::vector< std::pair<int, int> > idx_;
+  int current_id_;
+  /**
+   * lc_[id] tells whether idx_[id] is a loop closure
+   **/
+  std::vector<bool> lc_;
 };
 
 template <typename Dtype>

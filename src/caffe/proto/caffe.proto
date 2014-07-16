@@ -127,7 +127,7 @@ message LayerParameter {
   // line above the enum. Update the next available ID when you add a new
   // LayerType.
   //
-  // LayerType next available ID: 33 (last added: DUMMY_DATA)
+  // LayerType next available ID: 34 (last added: SHUFFLE_DATA)
   enum LayerType {
     // "NONE" layer type is 0th enum element so that we don't cause confusion
     // by defaulting to an existent LayerType (instead, should usually error if
@@ -139,6 +139,7 @@ message LayerParameter {
     CONCAT = 3;
     CONVOLUTION = 4;
     DATA = 5;
+    SHUFFLE_DATA = 33;
     DROPOUT = 6;
     DUMMY_DATA = 32;
     EUCLIDEAN_LOSS = 7;
@@ -274,6 +275,8 @@ message DataParameter {
   // be larger than the number of keys in the leveldb.
   optional uint32 rand_skip = 7 [default = 0];
   optional DB backend = 8 [default = LEVELDB];
+
+  optional string source_list = 9;
 }
 
 // Message that stores parameters used by DropoutLayer
