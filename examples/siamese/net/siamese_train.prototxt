@@ -1,0 +1,65 @@
+# Training Network
+#
+##################
+# Weight sharing
+##################
+# To define layers sharing the same weights, set the 'param' attribute to the
+# same name in both layers.
+# Data will be split as necessary to accomodate this. 
+
+name: "SiameseTrain"
+# The shuffle data layer reads a shuffle list from source_list, containing pairings of
+# image keys (corresponding to keys in the leveldb dataset). The shuffle
+# list is then used to load the appropiate data from the dataset.
+#
+# Labels correspond the the image pairs: 1 for loop closure, 0 otherwise
+#
+# Only one shuffle data layer is necessary, as a split layer will automatically be created
+# to feed data to both sides of the network. The internal code of the shuffle data layer
+# will take care of reading the appropriate data for each side of the network.
+layers {
+  name: "data"
+  type: SHUFFLE_DATA
+  data_param {
+    source: "../../../data/siamese/small/train/db"
+    source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
+    #mean_file: "../../data/ilsvrc12/imagenet_mean.binaryproto"
+    batch_size: 64
+    #crop_size: 55 
+    #mirror: true
+  }
+  
+  top: "data"
+  top: "label"
+}
+
+layers: {
+  name: 'innerproduct1'
+  type: INNER_PRODUCT
+  inner_product_param {
+    num_output: 10
+    bias_term: false
+    weight_filler {
+      type: 'gaussian'
+      std: 10
+    }
+  }
+  param: 'sharedweights'
+  bottom: 'data'
+  top: 'innerproduct1'
+}
+layers: {
+  name: 'innerproduct2'
+  type: INNER_PRODUCT
+  inner_product_param {
+    num_output: 10
+    bias_term: false
+    weight_filler {
+      type: 'gaussian'
+      std: 10
+    }
+  }
+  param: 'sharedweights'
+  bottom: 'data'
+  top: 'innerproduct2'
+}
