@@ -16,26 +16,32 @@
 #define DEBUG_GUI 0
 #endif
 
+/**
+ * Display a batch of images from continuus data by converting it to opencv's
+ * interleaved format and sticking them together
+ * This is meant for debug purposes only
+ **/
 template <typename Dtype>
 void displayImageFromData(Dtype *data, const int width, const int height, const int batchsize, const int channels)
 {
-  float *interleaved = new float[channels*width*height];
-  cv::Mat M(width, height, CV_32FC3, interleaved);
+  float *interleaved = new float[batchsize*channels*width*height];
+  cv::Mat M(batchsize*width, height, CV_32FC3, interleaved);
   cv::namedWindow("img", cv::WINDOW_AUTOSIZE);
   for(int j=0; j<batchsize; j++) {
     float *d = reinterpret_cast<float*>(data + j * width * height * channels);
+    float *ci = interleaved + j * height * width * channels;
     CHECK(d != 0) << "Null image, can't display!";
     for (int i = 0; i < width*height; ++i) {
       /**
        * Convert to OpenCV's RGB format
        */
-      interleaved[i*3] = d[i]/255.f;
-      interleaved[i*3+1] = d[i+width*height]/255.f;
-      interleaved[i*3+2] = d[i+2*width*height]/255.f;
+      ci[i*channels] = d[i]/255.f;
+      ci[i*channels+1] = d[i+width*height]/255.f;
+      ci[i*channels+2] = d[i+2*width*height]/255.f;
     }
-    cv::imshow("img", M);
-    cv::waitKey(0);
   }
+  cv::imshow("img", M);
+  cv::waitKey(0);
   delete[] interleaved;
 }
 
