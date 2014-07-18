@@ -31,7 +31,7 @@ layers {
     backend: LMDB
     source: "../../../data/siamese/small/train/db"
     #mean_file: "../../data_l/ilsvrc12/imagenet_mean.binaryproto"
-    batch_size: 2 
+    batch_size: 64 
     #crop_size: 55 
     #mirror: true
     #
@@ -50,7 +50,7 @@ layers {
     backend: LMDB
     source: "../../../data/siamese/small/train/db"
     #mean_file: "../../data_l/ilsvrc12/imagenet_mean.binaryproto"
-    batch_size: 2 
+    batch_size: 64 
     #crop_size: 55 
     #mirror: true
     #
@@ -577,3 +577,12 @@ layers {
 # ===============================================================================
 # ============    TODO: Write appropriate loss function            ==============
 # ===============================================================================
+layers {
+  name: "verif_loss"
+  type: SIAMESE_LOSS 
+
+  bottom: "ip2_l"
+  bottom: "ip2_r"
+  bottom: "label_l"
+}
+

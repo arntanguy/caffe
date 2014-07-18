@@ -255,6 +255,114 @@ class SoftmaxWithLossLayer : public Layer<Dtype> {
   vector<Blob<Dtype>*> softmax_top_vec_;
 };
 
+
+template <typename Dtype>
+class SiameseLossLayer : public Layer<Dtype> {
+ public:
+  explicit SiameseLossLayer(const LayerParameter& param)
+      : Layer<Dtype>(param) {}
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+                     vector<Blob<Dtype>*>* top);
+  virtual inline LayerParameter_LayerType type() const {
+    return LayerParameter_LayerType_SIAMESE_LOSS;
+  }
+ protected:
+  virtual Dtype Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual Dtype Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom);
+  virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom);
+
+  Blob<Dtype> diff_;
+};
+
+/* SiameseAccuracyLayer
+  Note: not an actual loss layer! Does not implement backwards step.
+  Computes the accuracy of argmax(a) with respect to b.
+*/
+template <typename Dtype>
+class SiameseAccuracyLayer : public Layer<Dtype> {
+ public:
+  explicit SiameseAccuracyLayer(const LayerParameter& param)
+      : Layer<Dtype>(param) {}
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  virtual inline LayerParameter_LayerType type() const {
+    return LayerParameter_LayerType_SIAMESE_ACCURACY;
+  }
+
+  virtual inline int ExactNumBottomBlobs() const { return 3; }
+  virtual inline int ExactNumTopBlobs() const { return 1; }
+
+ protected:
+  virtual Dtype Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom) {
+    NOT_IMPLEMENTED;
+  }
+};
+
+template <typename Dtype>
+class VerificationLossLayer : public Layer<Dtype> {
+ public:
+  explicit VerificationLossLayer(const LayerParameter& param)
+      : Layer<Dtype>(param) {}
+  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+                     vector<Blob<Dtype>*>* top);
+
+  void SetThreshold(Dtype t) { M_ = t; }
+  Dtype GetThreshold() { return M_ ; }
+
+  void GetMeanDistance(vector<Dtype> &dists){
+    dists.clear();
+    Dtype avg[2] = {0.};
+    int cnt[2] = {0};
+    CHECK_EQ(distance_.size(), same_.size());
+    for(size_t i=0;i<distance_.size();i++){
+      int s = same_[i];
+      avg[s] += distance_[i];
+      cnt[s] ++;
+    }
+
+    for(int i=0;i<2;i++)
+      dists.push_back(avg[i] / std::max(cnt[i], 1));
+  }
+  void ResetDistanceStat(){
+    distance_.clear();
+    same_.clear();
+  }
+  Dtype CalcThreshold(bool update);
+ protected:
+  virtual Dtype Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+                            vector<Blob<Dtype>*>* top);
+  virtual Dtype Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+                            vector<Blob<Dtype>*>* top);
+  // Backward functions: compute the gradients for any parameters and
+  // for the bottom blobs if propagate_down is true.
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+                            const vector<bool>& propagate_down,
+                            vector<Blob<Dtype>*>* bottom);
+  virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+                            const vector<bool>& propagate_down,
+                            vector<Blob<Dtype>*>* bottom);
+
+  Blob<Dtype> diffy1_;
+  Blob<Dtype> diffy2_;
+
+  Dtype M_;
+  Dtype LAMDA_;
+
+  std::vector<Dtype> distance_;
+  std::vector<int> same_;
+};
+
+
+
 }  // namespace caffe
 
 #endif  // CAFFE_LOSS_LAYERS_HPP_

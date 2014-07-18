@@ -24,6 +24,8 @@ Layer<Dtype>* GetLayer(const LayerParameter& param) {
   switch (type) {
   case LayerParameter_LayerType_ACCURACY:
     return new AccuracyLayer<Dtype>(param);
+  case LayerParameter_LayerType_SIAMESE_ACCURACY:
+    return new SiameseAccuracyLayer<Dtype>(param);
   case LayerParameter_LayerType_ARGMAX:
     return new ArgMaxLayer<Dtype>(param);
   case LayerParameter_LayerType_BNLL:
@@ -80,6 +82,10 @@ Layer<Dtype>* GetLayer(const LayerParameter& param) {
     return new SoftmaxLayer<Dtype>(param);
   case LayerParameter_LayerType_SOFTMAX_LOSS:
     return new SoftmaxWithLossLayer<Dtype>(param);
+  case LayerParameter_LayerType_SIAMESE_LOSS:
+    return new SiameseLossLayer<Dtype>(param);
+  case LayerParameter_LayerType_VERIFICATION_LOSS:
+    return new VerificationLossLayer<Dtype>(param);
   case LayerParameter_LayerType_SPLIT:
     return new SplitLayer<Dtype>(param);
   case LayerParameter_LayerType_TANH:

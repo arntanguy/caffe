@@ -96,7 +96,7 @@ class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
       vector<Blob<Dtype>*>* top);
 
   virtual inline LayerParameter_LayerType type() const {
-    return LayerParameter_LayerType_DATA;
+    return LayerParameter_LayerType_SHUFFLE_DATA;
   }
   virtual inline int ExactNumBottomBlobs() const { return 0; }
   virtual inline int MinTopBlobs() const { return 1; }

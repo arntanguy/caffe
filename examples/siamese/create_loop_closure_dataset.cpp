@@ -58,7 +58,7 @@ class CreateLoopClosures {
 
   void find_loop_closures() {
     LOG(INFO) << "find_loop_closures";
-    int nb_pos, nb_neg = 0;
+    int nb_pos = 0, nb_neg = 0;
     for(int i=0; i<ids_.size(); i++) {
       const Vec3& current_translation = position_[i];
       const Quaternion& current_rotation = quaternion_[i];

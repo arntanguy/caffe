@@ -127,13 +127,14 @@ message LayerParameter {
   // line above the enum. Update the next available ID when you add a new
   // LayerType.
   //
-  // LayerType next available ID: 34 (last added: SHUFFLE_DATA)
+  // LayerType next available ID: 37 (last added: VERIFICATION_LOSS)
   enum LayerType {
     // "NONE" layer type is 0th enum element so that we don't cause confusion
     // by defaulting to an existent LayerType (instead, should usually error if
     // the type is unspecified).
     NONE = 0;
     ACCURACY = 1;
+    SIAMESE_ACCURACY = 35;
     ARGMAX = 30;
     BNLL = 2;
     CONCAT = 3;
@@ -162,6 +163,8 @@ message LayerParameter {
     SIGMOID_CROSS_ENTROPY_LOSS = 27;
     SOFTMAX = 20;
     SOFTMAX_LOSS = 21;
+    SIAMESE_LOSS = 34;
+    VERIFICATION_LOSS = 36;
     SPLIT = 22;
     TANH = 23;
     WINDOW_DATA = 24;
