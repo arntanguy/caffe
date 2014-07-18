@@ -22,11 +22,11 @@
  * This is meant for debug purposes only
  **/
 template <typename Dtype>
-void displayImageFromData(Dtype *data, const int width, const int height, const int batchsize, const int channels)
+void displayImageFromData(const char* window_name, Dtype *data, const int width, const int height, const int batchsize=1, const int channels=3)
 {
   float *interleaved = new float[batchsize*channels*width*height];
   cv::Mat M(batchsize*width, height, CV_32FC3, interleaved);
-  cv::namedWindow("img", cv::WINDOW_AUTOSIZE);
+  cv::namedWindow(window_name, cv::WINDOW_NORMAL);
   for(int j=0; j<batchsize; j++) {
     float *d = reinterpret_cast<float*>(data + j * width * height * channels);
     float *ci = interleaved + j * height * width * channels;
@@ -40,13 +40,13 @@ void displayImageFromData(Dtype *data, const int width, const int height, const 
       ci[i*channels+2] = d[i+2*width*height]/255.f;
     }
   }
-  cv::imshow("img", M);
+  cv::imshow(window_name, M);
   cv::waitKey(0);
   delete[] interleaved;
 }
 
-template void displayImageFromData<float>(float*, const int, const int, const int, const int);
-template void displayImageFromData<double>(double*, const int, const int, const int, const int);
+template void displayImageFromData<float>(const char*, float*, const int, const int, const int, const int);
+template void displayImageFromData<double>(const char*, double*, const int, const int, const int, const int);
 
 template<typename T>
 std::ostream& operator << (std::ostream &out, const caffe::Blob<T> &blob) {

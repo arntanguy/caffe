@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "caffe/layer.hpp"
 #include "caffe/util/io.hpp"
@@ -29,7 +30,9 @@ Dtype ShuffleDataLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
 #if (DEBUG_GUI)
   const int batchsize = (*top)[0]->num();
   //const int channels = (*top)[0]->channels();
-  displayImageFromData((*top)[0]->mutable_cpu_data(), datum_height_, datum_width_, batchsize, 3);
+  std::ostringstream ss;
+  ss << "ShuffleDataLayer, channel " << channel_;
+  displayImageFromData(ss.str().c_str(), (*top)[0]->mutable_cpu_data(), datum_height_, datum_width_, batchsize, 3);
 #endif
 
   if (output_labels_) {
