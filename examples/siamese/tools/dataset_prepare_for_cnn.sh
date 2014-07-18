@@ -15,6 +15,7 @@ KEYFRAME_STEP=5
 KEYFRAME_DISTANCE=10
 ROTATION=5
 TRANSLATION=0.5
+DB_BACKEND="lmdb"
 
 echo "Preparing dataset for CNN"
 rm -rf db
@@ -33,4 +34,4 @@ merge_loop_closure_dataset.py
 echo "Creating the shuffle list"
 lc_create_shuffle_list.py
 echo "Packing images into leveldb dataset"
-create_imageset_rgbd.bin loop_closures_dataset.txt db db.txt $WIDTH $HEIGHT $RANDOM_SHUFFLE
+create_imageset_rgbd.bin loop_closures_dataset.txt db db.txt $WIDTH $HEIGHT $DB_BACKEND $RANDOM_SHUFFLE
