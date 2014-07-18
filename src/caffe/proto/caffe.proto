@@ -250,6 +250,11 @@ message ConvolutionParameter {
   optional FillerParameter bias_filler = 8; // The filler for the bias
 }
 
+message ShuffleDataParameter {
+  required string source_list = 1;
+  required uint32 channel = 2 [default = 0];
+}
+
 // Message that stores parameters used by DataLayer
 message DataParameter {
   enum DB {
@@ -276,7 +281,7 @@ message DataParameter {
   optional uint32 rand_skip = 7 [default = 0];
   optional DB backend = 8 [default = LEVELDB];
 
-  optional string source_list = 9;
+  optional ShuffleDataParameter shuffle_param = 9;
 }
 
 // Message that stores parameters used by DropoutLayer

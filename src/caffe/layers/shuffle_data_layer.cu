@@ -37,8 +37,7 @@ Dtype ShuffleDataLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
         (*top)[1]->mutable_gpu_data());
   }
 
-  // Change channel (fetch data for the other part of the network)
-  SwapChannel();
+  current_id_ += batch_size_; 
 
   // Start a new prefetch thread
   CreatePrefetchThread();

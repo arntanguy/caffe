@@ -51,27 +51,34 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
         LOG(INFO) << "Restarting data prefetching from start.";
         current_id_ = 0;
     }
+    //
+    // XXX: maybe store the labels as int in the dataset.
+    // However, if done that way it would depend on the encoding used for
+    // int (endian...).
+    const int id = idx_[current_id];
+    std::ostringstream label_ss;
+    label_ss << std::setfill('0') << std::setw(8) << id;
+    std::string key = label_ss.str();
+    //LOG(INFO) << "Id: " << current_id << ", Image " << key << " from channel " << channel_;
+    
     // get a blob
     switch (this->layer_param_.data_param().backend()) {
       case DataParameter_DB_LEVELDB:
         {
-          const int id = (channel_ == 0) ? std::get<0>(idx_[current_id]) 
-              : std::get<1>(idx_[current_id]);
-          // XXX: maybe store the labels as int in the dataset.
-          // However, if done that way it would depend on the encoding used for
-          // int (endian...).
-          std::ostringstream label_ss;
-          label_ss << std::setfill('0') << std::setw(8) << id;
           std::string value;
-          leveldb::Status s = db_->Get(leveldb::ReadOptions(), label_ss.str(), &value);
-          CHECK(s.ok()) << "Failed to read image with id " << label_ss.str() << ": " << s.ToString();
-          //LOG(INFO) << "Id: " << current_id << ", Image " << label_ss.str() << " from channel " << channel_;
+          leveldb::Status s = db_->Get(leveldb::ReadOptions(), key, &value);
+          CHECK(s.ok()) << "Failed to read image with id " << key << ": " << s.ToString();
           datum.ParseFromString(value);
           break;
         }
       case DataParameter_DB_LMDB:
         {
-          LOG(ERROR) << "LMDB Backedn not implemented!";
+          MDB_val mdb_key;
+          mdb_key.mv_size = key.size();
+          mdb_key.mv_data = reinterpret_cast<void*>(&key[0]);
+          CHECK_EQ(mdb_get(mdb_txn_, mdb_dbi_, &mdb_key, &mdb_value_), MDB_SUCCESS);
+          datum.ParseFromArray(mdb_value_.mv_data,
+                               mdb_value_.mv_size);
           break;
         }
       default:
@@ -150,53 +157,42 @@ ShuffleDataLayer<Dtype>::~ShuffleDataLayer<Dtype>() {
   case DataParameter_DB_LEVELDB:
     break;  // do nothing
   case DataParameter_DB_LMDB:
-    LOG(INFO) << "LMDB not implemented";
+    mdb_cursor_close(mdb_cursor_);
+    mdb_close(mdb_env_, mdb_dbi_);
+    mdb_txn_abort(mdb_txn_);
+    mdb_env_close(mdb_env_);
     break;
   default:
     LOG(FATAL) << "Unknown database backend";
   }
 }
 
-template<typename Dtype>
-void ShuffleDataLayer<Dtype>::SwapChannel()
-{
-  // Change channel (fetch data for the other part of the network)
-  if(channel_ == 1) {
-    channel_ = 0;
-    current_id_ += batch_size_; 
-    LOG(INFO) << "Channel 1->0";
-  } else {
-    LOG(INFO) << "Channel 0->1";
-    channel_ = 1;
-  }
-}
-
 template<typename Dtype> 
 void ShuffleDataLayer<Dtype>::ReadShuffleList()
 {
-  LOG(INFO) << "Reading Shuffle List from: "<< this->layer_param_.data_param().source_list();
-  std::ifstream ss(this->layer_param_.data_param().source_list().c_str());
+  LOG(INFO) << "Reading Shuffle List from: "<< this->layer_param_.data_param().shuffle_param().source_list();
+  std::ifstream ss(this->layer_param_.data_param().shuffle_param().source_list().c_str());
   CHECK(ss.is_open()) << "Failed to open shuffle list!";
   int npairs = 0;
   ss >> npairs;
   LOG(INFO) << npairs;
   idx_.reserve(npairs);
   lc_.reserve(npairs);
-  int id1, id2;
+  int id[2];
   int lc;
   int ind=0;
-  while(ss >> id1 >> id2 >> lc) {
+  while(ss >> id[0] >> id[1] >> lc) {
     // Check if indexes are valid
     //CHECK_GE(max_index_in_dataset, id1);
     //CHECK_GE(max_index_in_dataset, id2);
     //if(id1 < max_index_in_dataset && id2 < max_index_in_dataset) {
       // Add them to pair list
-      idx_.push_back(std::make_pair(id1, id2));
+      idx_.push_back(id[channel_]);
       lc_.push_back(lc);
     //}
     ++ind;
   }
-  LOG(INFO) << idx_.size() << " pairs added to shuffle list.";
+  LOG(INFO) << idx_.size() << " ids added to shuffle list.";
 }
 
 template <typename Dtype>
@@ -210,11 +206,13 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   }
   batch_size_ = this->layer_param_.data_param().batch_size();
   LOG(INFO) << "Set batch size: " << batch_size_;
-  ReadShuffleList();
-
+  
   // start with channel 0
-  channel_ = 0;
+  channel_ = this->layer_param_.data_param().shuffle_param().channel();
+  CHECK(channel_ == 0 || channel_ == 1) << "shuffle_param.channel must be 0 or 1!";
   current_id_ = 0;
+
+  ReadShuffleList();
 
   // Initialize DB
   switch (this->layer_param_.data_param().backend()) {
@@ -236,7 +234,20 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
     }
     break;
   case DataParameter_DB_LMDB:
-    LOG(INFO) << "LMDB backend not implemented";
+    CHECK_EQ(mdb_env_create(&mdb_env_), MDB_SUCCESS) << "mdb_env_create failed";
+    CHECK_EQ(mdb_env_set_mapsize(mdb_env_, 1099511627776), MDB_SUCCESS);  // 1TB
+    CHECK_EQ(mdb_env_open(mdb_env_,
+             this->layer_param_.data_param().source().c_str(),
+             MDB_RDONLY|MDB_NOTLS, 0664), MDB_SUCCESS) << "mdb_env_open failed";
+    CHECK_EQ(mdb_txn_begin(mdb_env_, NULL, MDB_RDONLY, &mdb_txn_), MDB_SUCCESS)
+        << "mdb_txn_begin failed";
+    CHECK_EQ(mdb_open(mdb_txn_, NULL, 0, &mdb_dbi_), MDB_SUCCESS)
+        << "mdb_open failed";
+    CHECK_EQ(mdb_cursor_open(mdb_txn_, mdb_dbi_, &mdb_cursor_), MDB_SUCCESS)
+        << "mdb_cursor_open failed";
+    LOG(INFO) << "Opening lmdb " << this->layer_param_.data_param().source();
+    CHECK_EQ(mdb_cursor_get(mdb_cursor_, &mdb_key_, &mdb_value_, MDB_FIRST),
+        MDB_SUCCESS) << "mdb_cursor_get failed";
     break;
   default:
     LOG(FATAL) << "Unknown database backend";
@@ -271,7 +282,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
     datum.ParseFromString(iter_->value().ToString());
     break;
   case DataParameter_DB_LMDB:
-    LOG(INFO) << "LMDB backend not implemented";
+    datum.ParseFromArray(mdb_value_.mv_data, mdb_value_.mv_size);
     break;
   default:
     LOG(FATAL) << "Unknown database backend";
@@ -340,7 +351,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 
 template <typename Dtype>
 void ShuffleDataLayer<Dtype>::CreatePrefetchThread() {
-  LOG(INFO) << "Prefetch from channel " << channel_;
+  //LOG(INFO) << "Prefetch from channel " << channel_;
   phase_ = Caffe::phase();
   const bool prefetch_needs_rand = (phase_ == Caffe::TRAIN) &&
       (this->layer_param_.data_param().mirror() ||
@@ -383,8 +394,7 @@ Dtype ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
                (*top)[1]->mutable_cpu_data());
   }
 
-  // Change channel (fetch data for the other part of the network)
-  SwapChannel();
+  current_id_ += batch_size_; 
 
   // Start a new prefetch thread
   CreatePrefetchThread();

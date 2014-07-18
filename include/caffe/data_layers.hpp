@@ -118,7 +118,6 @@ class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
   virtual void InternalThreadEntry();
 
   void ReadShuffleList();
-  void SwapChannel();
 
   shared_ptr<Caffe::RNG> prefetch_rng_;
 
@@ -154,7 +153,7 @@ class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
    * pair.first : id of the first image 
    * pair.second : id of the corresponding image
    **/
-  std::vector< std::pair<int, int> > idx_;
+  std::vector<int> idx_;
   int current_id_;
   /**
    * lc_[id] tells whether idx_[id] is a loop closure

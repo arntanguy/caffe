@@ -21,16 +21,42 @@ layers {
   name: "data"
   type: SHUFFLE_DATA
   data_param {
+    backend: LMDB
     source: "../../../data/siamese/small/train/db"
-    source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
     #mean_file: "../../data/ilsvrc12/imagenet_mean.binaryproto"
-    batch_size: 64
+    batch_size: 32
     #crop_size: 55 
     #mirror: true
+    #
+    shuffle_param {
+      source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
+      channel: 0
+    }
   }
   
   top: "data"
   top: "label"
+}
+
+layers {
+  name: "data_r"
+  type: SHUFFLE_DATA
+  data_param {
+    backend: LMDB
+    source: "../../../data/siamese/small/train/db"
+    #mean_file: "../../data/ilsvrc12/imagenet_mean.binaryproto"
+    batch_size: 32 
+    #crop_size: 55 
+    #mirror: true
+    #
+    shuffle_param {
+      source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
+      channel: 1
+    }
+  }
+  
+  top: "data_r"
+  top: "label_r"
 }
 
 layers: {
@@ -60,6 +86,6 @@ layers: {
     }
   }
   param: 'sharedweights'
-  bottom: 'data'
+  bottom: 'data_r'
   top: 'innerproduct2'
 }
