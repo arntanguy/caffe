@@ -9,6 +9,8 @@
 #include "caffe/vision_layers.hpp"
 #include "caffe/util/math_functions.hpp"
 
+#include "caffe/util/debug.hpp"
+
 namespace caffe {
 
 template <typename Dtype>
@@ -22,11 +24,16 @@ void DistanceLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   CHECK_EQ(bottom[0]->height(), bottom[1]->height());
   CHECK_EQ(bottom[0]->width(), bottom[1]->width());
 
+  LOG(INFO) << "X1: " << *(bottom[0]);
+  LOG(INFO) << "X2: " << *(bottom[1]);
+
   // Figure out the dimensions for the difference
   difference_.Reshape(bottom[0]->num(), bottom[0]->channels(),
       bottom[0]->height(), bottom[0]->width());
   difference_squared_.Reshape(bottom[0]->num(), bottom[0]->channels(),
       bottom[0]->height(), bottom[0]->width());
+  LOG(INFO) << "Difference: " << difference_;
+  LOG(INFO) << "Difference squared: " << difference_squared_;
 
   CHECK_EQ(top->size(), 1) << "EM Layer takes a single blob as output.";
   const int num_output = this->layer_param_.distance_param().num_output();
@@ -36,6 +43,8 @@ void DistanceLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   K_ = bottom[0]->count() / bottom[0]->num();
   N_ = num_output;
   (*top)[0]->Reshape(bottom[0]->num(), num_output, 1, 1);
+
+  LOG(INFO) << *((*top)[0]);
 
   // Check if we need to set up the weights
   if (this->blobs_.size() > 0) {

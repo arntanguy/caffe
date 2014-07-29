@@ -11,11 +11,17 @@
 #include "caffe/vision_layers.hpp"
 #include "caffe/util/math_functions.hpp"
 
+#include "caffe/util/debug.hpp"
+
 namespace caffe {
 
 template <typename Dtype>
 Dtype DistanceLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
+  return Forward_cpu(bottom, top);
+
+  CHECK_EQ(bottom.size(), 2) << "Distance Layer takes two input blobs x1 and x2";
+  CHECK_EQ(top->size(), 1) << "Distance Layer has 1 output blob";
   const Dtype* bottom_data_0 = bottom[0]->gpu_data();
   const Dtype* bottom_data_1 = bottom[1]->gpu_data();
   Dtype* top_data = (*top)[0]->mutable_gpu_data();
@@ -24,12 +30,16 @@ Dtype DistanceLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
   const Dtype* diff_sq_data = difference_squared_.gpu_data();
 
   int count = bottom[0]->count();
+  LOG(INFO) << "Count: " << count;
+  LOG(INFO) << "Difference_: " << difference_;
 
   switch (this->layer_param_.distance_param().distance()) {
   case DistanceParameter_Distance_Squared:
-    caffe_gpu_copy(count, bottom_data_0, difference_.mutable_gpu_data());
-    caffe_gpu_axpy(count, Dtype(-1), bottom_data_1,
+    caffe_gpu_memcpy(count, bottom_data_0, difference_.mutable_gpu_data());
+    LOG(INFO) << "Before axpy";
+    caffe_axpy(count, Dtype(-1), bottom_data_1,
         difference_.mutable_gpu_data());
+    LOG(INFO) << "After axpy";
 
     caffe_gpu_mul(count, diff_data, diff_data,
         difference_squared_.mutable_gpu_data());
@@ -57,6 +67,9 @@ template <typename Dtype>
 void DistanceLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
     const vector<bool>& propagate_down,
     vector<Blob<Dtype>*>* bottom) {
+  Backward_cpu(top, propagate_down, bottom);
+  return;
+
   const Dtype* top_diff = top[0]->gpu_diff();
   const Dtype* diff_sq_data = difference_squared_.gpu_data();
   const Dtype* diff_data = difference_.gpu_data();

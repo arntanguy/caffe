@@ -127,19 +127,21 @@ message LayerParameter {
   // line above the enum. Update the next available ID when you add a new
   // LayerType.
   //
-  // LayerType next available ID: 34 (last added: DISTANCE)
+  // LayerType next available ID: 38 (last added: DISTANCE)
   enum LayerType {
     // "NONE" layer type is 0th enum element so that we don't cause confusion
     // by defaulting to an existent LayerType (instead, should usually error if
     // the type is unspecified).
     NONE = 0;
     ACCURACY = 1;
+    SIAMESE_ACCURACY = 35;
     ARGMAX = 30;
     BNLL = 2;
     CONCAT = 3;
     CONVOLUTION = 4;
     DATA = 5;
-    DISTANCE = 33;
+    DISTANCE = 37;
+    SHUFFLE_DATA = 33;
     DROPOUT = 6;
     DUMMY_DATA = 32;
     EUCLIDEAN_LOSS = 7;
@@ -162,6 +164,8 @@ message LayerParameter {
     SIGMOID_CROSS_ENTROPY_LOSS = 27;
     SOFTMAX = 20;
     SOFTMAX_LOSS = 21;
+    SIAMESE_LOSS = 34;
+    VERIFICATION_LOSS = 36;
     SPLIT = 22;
     TANH = 23;
     WINDOW_DATA = 24;
@@ -251,6 +255,11 @@ message ConvolutionParameter {
   optional FillerParameter bias_filler = 8; // The filler for the bias
 }
 
+message ShuffleDataParameter {
+  required string source_list = 1;
+  required uint32 channel = 2 [default = 0];
+}
+
 // Message that stores parameters used by DataLayer
 message DataParameter {
   enum DB {
@@ -276,6 +285,8 @@ message DataParameter {
   // be larger than the number of keys in the leveldb.
   optional uint32 rand_skip = 7 [default = 0];
   optional DB backend = 8 [default = LEVELDB];
+
+  optional ShuffleDataParameter shuffle_param = 9;
 }
 
 // Message that stores parameters used by DropoutLayer
@@ -422,11 +433,17 @@ message PoolingParameter {
     STOCHASTIC = 2;
   }
   optional PoolMethod pool = 1 [default = MAX]; // The pooling method
-  optional uint32 kernel_size = 2; // The kernel size
-  optional uint32 stride = 3 [default = 1]; // The stride
-  // The padding size -- currently implemented only for average and max pooling.
-  // average pooling zero pads. max pooling -inf pads.
-  optional uint32 pad = 4 [default = 0];
+  // Pad, kernel size, and stride are all given as a single value for equal
+  // dimensions in height and width or as Y, X pairs.
+  optional uint32 pad = 4 [default = 0]; // The padding size (equal in Y, X)
+  optional uint32 pad_h = 9 [default = 0]; // The padding height
+  optional uint32 pad_w = 10 [default = 0]; // The padding width
+  optional uint32 kernel_size = 2; // The kernel size (square)
+  optional uint32 kernel_h = 5; // The kernel height
+  optional uint32 kernel_w = 6; // The kernel width
+  optional uint32 stride = 3 [default = 1]; // The stride (equal in Y, X)
+  optional uint32 stride_h = 7; // The stride height
+  optional uint32 stride_w = 8; // The stride width
 }
 
 // Message that stores parameters used by PowerLayer

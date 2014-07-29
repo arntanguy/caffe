@@ -1,0 +1,589 @@
+# Testing Network
+#
+##################
+# Weight sharing
+##################
+# To define layers sharing the same weights, set the 'param' attribute to the
+# same name in both layers.
+# For a detailled explanation, look at https://github.com/BVLC/caffe/pull/500
+#
+# The file is structured as an alternance of layer definition for the left and right side of the network
+# Due to caffe's limitation, it is currently impossible to defined shared layers without copying the whole
+# layer definition... Unfortunate
+#
+
+name: "SiameseTest"
+#
+# The shuffle data_l layer reads a shuffle list from source_list, containing pairings of
+# image keys (corresponding to keys in the leveldb dataset). The shuffle
+# list is then used to load the appropiate data from the dataset.
+#
+# the parameter channel controls which column of the shuffle list to read from
+#
+# Labels correspond the the image pairs: 1 for loop closure, 0 otherwise
+layers {
+  name: "data_l"
+  type: SHUFFLE_DATA
+  top: "data_l"
+  top: "label_l"
+
+  data_param {
+    backend: LMDB
+    source: "../../../data/siamese/small/train/db"
+    #mean_file: "../../data_l/ilsvrc12/imagenet_mean.binaryproto"
+    batch_size: 64 
+    #crop_size: 55 
+    #mirror: true
+    #
+    shuffle_param {
+      source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
+      # Read from channel 0  (data for the left part of the network)
+      channel: 0
+    }
+  }
+}
+
+layers {
+  name: "data_r"
+  type: SHUFFLE_DATA
+  data_param {
+    backend: LMDB
+    source: "../../../data/siamese/small/train/db"
+    #mean_file: "../../data_l/ilsvrc12/imagenet_mean.binaryproto"
+    batch_size: 64 
+    #crop_size: 55 
+    #mirror: true
+    #
+    shuffle_param {
+      source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
+      # Read from channel 1 (data for the right side of the network)
+      channel: 1
+    }
+  }
+  
+  top: "data_r"
+  top: "label_r"
+}
+
+# ---------------------------------------------
+layers: {
+  name: "conv1_l"
+  type: CONVOLUTION 
+
+  bottom: "data_l"
+  top: "conv1_l"
+  # Share weights
+  param: "conv1_shared"
+  # Do not share bias
+  param: ''
+
+  # The ratio that is multiplied on the global learning rate. If you want to
+  # set the learning ratio for one blob, you need to set it for all blobs.
+  blobs_lr: 1
+  blobs_lr: 2
+  weight_decay: 1
+  weight_decay: 0
+
+  convolution_param { 
+    num_output: 20
+    kernel_size: 4
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    } 
+  }
+}
+
+layers {
+  name: "conv1_r"
+  type: CONVOLUTION 
+
+  bottom: "data_r"
+  top: "conv1_r"
+  param: "conv1_shared"
+  param: ''
+
+  # The ratio that is multiplied on the global learning rate. If you want to
+  # set the learning ratio for one blob, you need to set it for all blobs.
+  blobs_lr: 1
+  blobs_lr: 2
+  weight_decay: 1
+  weight_decay: 0
+
+  convolution_param { 
+    num_output: 20
+    kernel_size: 4
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    } 
+  }
+}
+
+# -----------------------------------------
+layers {
+  name: "relu1_l"
+  type: RELU 
+
+  bottom: "conv1_l"
+  top: "conv1_l"
+}
+layers {
+  name: "relu1_r"
+  type: RELU 
+
+  bottom: "conv1_r"
+  top: "conv1_r"
+}
+
+# -------------------------------------------
+layers {
+  name: "pool1_l"
+  type: POOLING 
+
+  bottom: "conv1_l"
+  top: "pool1_l"
+
+  pooling_param {
+    kernel_size: 2
+    stride: 2
+    pool: MAX
+  }
+}
+
+layers {
+  name: "pool1_r"
+  type: POOLING 
+
+  bottom: "conv1_r"
+  top: "pool1_r"
+
+  pooling_param {
+    kernel_size: 2
+    stride: 2
+    pool: MAX
+  }
+}
+
+
+# ==============================================
+
+layers {
+  name: "conv2_l"
+  type: CONVOLUTION 
+
+  bottom: "pool1_l"
+  top: "conv2_l"
+  param: "conv2_shared"
+  param: ""
+
+  blobs_lr: 1.
+  blobs_lr: 2.
+
+  convolution_param {
+    num_output: 40
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "conv2_r"
+  type: CONVOLUTION 
+
+  bottom: "pool1_r"
+  top: "conv2_r"
+  param: "conv2_shared"
+  param: ""
+
+  blobs_lr: 1.
+  blobs_lr: 2.
+
+  convolution_param {
+    num_output: 40
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+
+# ---------------------------------------
+layers {
+  name: "relu2_l"
+  type: RELU 
+
+  bottom: "conv2_l"
+  top: "conv2_l"
+}
+layers {
+  name: "relu2_r"
+  type: RELU 
+
+  bottom: "conv2_r"
+  top: "conv2_r"
+}
+
+# ----------------------------------------
+layers {
+  name: "pool2_l"
+  type: POOLING 
+
+  bottom: "conv2_l"
+  top: "pool2_l"
+
+  pooling_param {
+    kernel_size: 2
+    stride: 2
+    pool: MAX
+  }
+}
+layers {
+  name: "pool2_r"
+  type: POOLING 
+
+  bottom: "conv2_r"
+  top: "pool2_r"
+
+  pooling_param {
+    kernel_size: 2
+    stride: 2
+    pool: MAX
+  }
+}
+
+
+# =================================================
+layers {
+  name: "conv3_l"
+  type: CONVOLUTION 
+
+  bottom: "pool2_l"
+  top: "conv3_l"
+  param: "conv3_shared"
+  param: ""
+
+  convolution_param {
+    num_output: 60
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "conv3_r"
+  type: CONVOLUTION 
+  param: "conv3_shared"
+  param: ""
+
+  bottom: "pool2_r"
+  top: "conv3_r"
+
+  convolution_param {
+    num_output: 60
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+# ------------------------------------
+layers {
+  name: "relu3_l"
+  type: RELU 
+
+  bottom: "conv3_l"
+  top: "conv3_l"
+}
+layers {
+  name: "relu3_r"
+  type: RELU 
+
+  bottom: "conv3_r"
+  top: "conv3_r"
+}
+
+# -------------------------------------
+layers {
+  name: "pool3_l"
+  type: POOLING 
+
+  bottom: "conv3_l"
+  top: "pool3_l"
+
+  pooling_param {
+    kernel_size: 2
+    stride: 2
+    pool: MAX
+  }
+}
+layers {
+  name: "pool3_r"
+  type: POOLING 
+
+  bottom: "conv3_r"
+  top: "pool3_r"
+
+  pooling_param {
+    kernel_size: 2
+    stride: 2
+    pool: MAX
+  }
+}
+
+# =====================================================
+layers {
+	name: "flat1_l"
+	type: FLATTEN 
+
+	bottom: "pool3_l"
+	top: "flat1_l"
+}
+layers {
+	name: "flat1_r"
+	type: FLATTEN 
+
+	bottom: "pool3_r"
+	top: "flat1_r"
+}
+
+# =====================================================
+layers {
+  name: "conv4_l"
+  type: CONVOLUTION 
+
+  bottom: "pool3_l"
+  top: "conv4_l"
+  param: "conv4_shared"
+  param: ""
+
+  convolution_param {
+   num_output: 80
+   kernel_size: 2
+   stride: 1
+   weight_filler {
+     type: "xavier"
+   }
+   bias_filler {
+     type: "constant"
+   }
+  }
+}
+layers {
+  name: "conv4_r"
+  type: CONVOLUTION 
+
+  bottom: "pool3_r"
+  top: "conv4_r"
+  param: "conv4_shared"
+  param: ""
+
+  convolution_param {
+   num_output: 80
+   kernel_size: 2
+   stride: 1
+   weight_filler {
+     type: "xavier"
+   }
+   bias_filler {
+     type: "constant"
+   }
+  }
+}
+
+# -----------------------------------------
+layers {
+  name: "relu4_l"
+  type: RELU 
+
+  bottom: "conv4_l"
+  top: "conv4_l"
+}
+layers {
+  name: "relu4_r"
+  type: RELU 
+
+  bottom: "conv4_r"
+  top: "conv4_r"
+}
+
+# =======================================================
+layers {
+	name: "flat2_l"
+	type: FLATTEN 
+
+	bottom: "conv4_l"
+	top: "flat2_l"
+}
+layers {
+	name: "flat2_r"
+	type: FLATTEN 
+
+	bottom: "conv4_r"
+	top: "flat2_r"
+}
+
+# ----------------------------------------
+layers {
+	name: "concat1_l"
+	type: CONCAT 
+
+	bottom: "flat1_l"
+	bottom: "flat2_l"
+	top: "concat1_l"
+
+  concat_param {
+	  concat_dim: 1
+  }
+}
+layers {
+	name: "concat1_r"
+	type: CONCAT 
+
+	bottom: "flat1_r"
+	bottom: "flat2_r"
+	top: "concat1_r"
+
+  concat_param {
+	  concat_dim: 1
+  }
+}
+
+# ==================================================================
+layers {
+  name: "ip1_l"
+  type: INNER_PRODUCT 
+
+  bottom: "concat1_l"
+  top: "ip1_l"
+  param: "ip1_shared"
+  param: ""
+
+  inner_product_param {
+    num_output: 160
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "ip1_r"
+  type: INNER_PRODUCT 
+
+  bottom: "concat1_r"
+  top: "ip1_r"
+  param: "ip1_shared"
+  param: ""
+
+  inner_product_param {
+    num_output: 160
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+# ---------------------------------------------------
+layers {
+  name: "relu5_l"
+  type: RELU 
+
+  bottom: "ip1_l"
+  top: "ip1_l"
+}
+layers {
+  name: "relu5_r"
+  type: RELU 
+
+  bottom: "ip1_r"
+  top: "ip1_r"
+}
+
+
+# =========================================================================
+layers {
+  name: "ip2_l"
+  type: INNER_PRODUCT 
+
+  bottom: "ip1_l"
+  top: "ip2_l"
+  param: "ip2_shared"
+  param: ""
+
+  inner_product_param {
+    num_output: 8192
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "ip2_r"
+  type: INNER_PRODUCT 
+
+  bottom: "ip1_r"
+  top: "ip2_r"
+  param: "ip2_shared"
+  param: ""
+
+  inner_product_param {
+    num_output: 8192
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+# ===============================================================================
+# ============    TODO: Write appropriate loss function            ==============
+# ===============================================================================
+layers {
+  name: "accuracy"
+  type: SIAMESE_ACCURACY
+
+  bottom: "ip2_l"
+  bottom: "ip2_r"
+  bottom: "label_l"
+  top: "accuracy"
+}
+

@@ -10,6 +10,8 @@
 #include "caffe/util/math_functions.hpp"
 #include "caffe/util/io.hpp"
 
+#include "caffe/util/debug.hpp"
+
 using std::max;
 
 namespace caffe {
@@ -24,17 +26,22 @@ Dtype HingeLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   int count = bottom[0]->count();
   int dim = count / num;
 
+  DLOG(INFO) << "Bottom data: " << *(bottom[0]);
+  DLOG(INFO) << "Bottom label: " << *(bottom[1]);
+
   caffe_copy(count, bottom_data, bottom_diff);
   for (int i = 0; i < num; ++i) {
     bottom_diff[i * dim + static_cast<int>(label[i])] *= -1;
   }
   for (int i = 0; i < num; ++i) {
     for (int j = 0; j < dim; ++j) {
+      //LOG(INFO) << i*dim+j << " = " << bottom_diff[i * dim + j]; 
       bottom_diff[i * dim + j] = max(Dtype(0), 1 + bottom_diff[i * dim + j]);
     }
   }
   switch (this->layer_param_.hinge_loss_param().norm()) {
   case HingeLossParameter_Norm_L1:
+    DLOG(INFO) << "Loss: " <<caffe_cpu_asum(count, bottom_diff) / num;
     return caffe_cpu_asum(count, bottom_diff) / num;
   case HingeLossParameter_Norm_L2:
     return caffe_cpu_dot(count, bottom_diff, bottom_diff) / num;
