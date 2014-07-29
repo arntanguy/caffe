@@ -16,7 +16,7 @@ namespace caffe {
 
 template <typename Dtype>
 void SiameseAccuracyLayer<Dtype>::SetUp(
-  const vector<Blob<Dtype>*>& bottom, vector<Blob<Dtype>*>* top) {
+    const vector<Blob<Dtype>*>& bottom, vector<Blob<Dtype>*>* top) {
   Layer<Dtype>::SetUp(bottom, top);
   CHECK_EQ(bottom[0]->num(), bottom[1]->num())
       << "Both input images should have the same blob configuration!";
@@ -34,7 +34,7 @@ void SiameseAccuracyLayer<Dtype>::SetUp(
  **/
 template <typename Dtype>
 Dtype SiameseAccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
-    vector<Blob<Dtype>*>* top) {
+                                               vector<Blob<Dtype>*>* top) {
   //Dtype accuracy = 0;
   const Dtype* feat1_blob = bottom[0]->cpu_data();
   const Dtype* feat2_blob = bottom[1]->cpu_data();
@@ -51,33 +51,33 @@ Dtype SiameseAccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& botto
   // [1] : average distance for positive loops
   Dtype average_distance[2];
   int num_pos_neg[2];
+  int average_count[2] = {1, 1};
 
   for(int i=0; i<num; i++) {
     const Dtype* feat1 = feat1_blob + feature_size*i;
     const Dtype* feat2 = feat2_blob + feature_size*i;
-    int current_label=0;
-    if(label[i] == -1) current_label = 0;
-    else current_label = 1;
-    //int current_label = label[i];
+    const int current_label = label[i];
+    CHECK(current_label == 0 || current_label == 1) << "Label must be 0 or 1";
 
     Dtype dot = caffe_cpu_dot(feature_size, feat1, feat2);
 
-    average_distance[current_label] = dot;
+    // Rolling average by using a weighted sum
+    // Multiply average by current count, add the new element, divide by count+1
+    average_distance[current_label] = 
+        ( average_distance[current_label] * average_count[current_label] + dot )
+        / (average_count[current_label]+1);
+    average_count[current_label]++;
     num_pos_neg[current_label]++;
-    //LOG(INFO) << "Euclidian distance = " << dot << " => " << ((label[i]==1)?"positive":"negative");
+    //LOG(INFO) << "Euclidian distance = " << dot << " => " 
+    //          << ((label[i]==1)?"positive":"negative");
 
     feat1 += feature_size;
     feat2 += feature_size;
   }
-  if(num_pos_neg[0] > 0)
-    average_distance[0] /= num_pos_neg[0];
-  if(num_pos_neg[1] > 0)
-    average_distance[1] /= num_pos_neg[0];
-
 
   Dtype margin = average_distance[1]-average_distance[0];
-  DLOG(INFO) << "Average margin between positive and negative: " << margin; 
-  
+  //LOG(INFO) << "Average margin between positive and negative: " << margin; 
+
   // Minimal margin
   Dtype epsilon = 0.01;
   if(margin > epsilon) {
