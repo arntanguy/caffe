@@ -41,6 +41,7 @@ args = parser.parse_args()
 
 
 import os
+import random
 
 class Merge:
     def __init__(self):
@@ -48,12 +49,16 @@ class Merge:
         self.lc_dataset = open("loop_closures_dataset.txt", 'w')
         self.lc_positive = open("loop_closures_positive.txt", 'w')
         self.lc_negative = open("loop_closures_negative.txt", 'w')
+        self.loop_closure_dataset = []
 
         for dir in self.get_directories("."):
             dataset = dir+"/dataset.txt"
             positive = dir+"/loop_closures_positive.txt"
             negative = dir+"/loop_closures_negative.txt"
             self.merge(dataset, positive, negative)
+        # Shuffle dataset to mix images from all directories
+        random.shuffle(self.loop_closure_dataset)
+        self.lc_dataset.write("".join(self.loop_closure_dataset))
     
     def merge(self, dataset, positive, negative):
         offset=0
@@ -62,7 +67,8 @@ class Merge:
                 l = line.split(" ")
                 l[0] = str(int(l[0])+self.current_label)
                 offset += 1
-                self.lc_dataset.write(" ".join(l))
+                self.loop_closure_dataset.append(" ".join(l))
+                #self.lc_dataset.write(" ".join(l))
         for line in open(positive):
             if not line.startswith("#"):
                 l = line.split(" ")

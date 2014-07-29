@@ -64,19 +64,14 @@ LC_DEPTH = 2
 LC_TRANSLATION = 3
 LC_ROTATION = 6
 
-rgb = []
-depth = []
-translation = []
-rotation = []
+dic = {}
 for line in open(args.loop_closure_dataset, 'r'):
     if not line.startswith("#"):
         line = line.rstrip().split(" ")
-        rgb.append( line[LC_RGB] )
-        depth.append( line[LC_DEPTH] )
         trans = np.array(line[3:6], dtype=np.float)
         rot = np.array(line[6:10], dtype=np.float)
-        translation.append(trans)
-        rotation.append(rot)
+        print "Key %i" % (int(line[0]))
+        dic[int(line[0])] = [line[LC_RGB], line[LC_DEPTH], trans, rot]
 
 
 pair_indices = []
@@ -89,23 +84,26 @@ begin=args.range[0]
 end=args.range[1]
 # Load and display test image
 axes = AxesSequence()
-for i in range(begin, min(end, len(rgb))):
-    id1 = pair_indices[i][0]
-    id2 = pair_indices[i][1]
-    trans = np.linalg.norm(np.subtract(translation[id1], translation[id2]))
-    rot = np.degrees(np.arccos(2*np.power(np.dot(rotation[id1], rotation[id2]),2) -1))
+i=0
+for (id1,id2) in pair_indices:
+    if i > end-begin:
+        break
+    data1 = dic[id1]
+    data2 = dic[id2]
+    trans = np.linalg.norm(np.subtract(data1[2], data2[2]))
+    rot = np.degrees(np.arccos(2*np.power(np.dot(data1[3], data2[3]),2) -1))
     if args.rgb:
-        rgb1 = mpimg.imread(rgb[id1])
-        rgb2 = mpimg.imread(rgb[id2])
+        print "Img: " + data1[0] + data2[0]
+        rgb1 = mpimg.imread(data1[0])
+        rgb2 = mpimg.imread(data2[0])
         concat_rgb = np.concatenate((rgb1, rgb2), axis=1)
-        showimage(concat_rgb, axes, u'Loop-closure %i (rgb): translation=%.2fm, rotation=%.2f°' % (i, trans, rot))
+        showimage(concat_rgb, axes, u'Loop-closure (%i-%i) (rgb): translation=%.2fm, rotation=%.2f°' % (id1, id2, trans, rot))
     if args.depth:
-        depth1 = mpimg.imread(depth[pair_indices[i][0]])
-        depth2 = mpimg.imread(depth[pair_indices[i][1]])
+        depth1 = mpimg.imread(data1[1])
+        depth2 = mpimg.imread(data2[1])
         concat_depth = np.concatenate((depth1, depth2), axis=1)
         showimage(concat_depth, axes, 'Loop-closure '+str(i)+ ' (depth)', ccmap=pylab.gray()) 
-    #concat_depth = np.fliplr(concat_depth.reshape(-1,3)).reshape(concat_depth.shape)
-    #showimage(rgb1, axes, 'Image '+str(i)) 
+    i += 1
 
 
 
