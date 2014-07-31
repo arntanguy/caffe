@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
   ::google::InitGoogleLogging(argv[0]);
   if (argc < 8) {
     std::cout
-        << "Convert a set of images to the leveldb format used as input for Caffe.\n\n"
+        << "Convert a set of images to the lmdb format used as input for Caffe.\n\n"
         "Usage:\n\n"
         "./create_imageset_rgbd dataset_file  save_db_path save_database_information width height random_shuffle[0 or 1]\n\n"
         "datset_file                   file containing information about the dataset (label >> filepath >> depthpath >> tx >> ty >> tz >> q1 >> q2 >> q3 >> q4)\n"

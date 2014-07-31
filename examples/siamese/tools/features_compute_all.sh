@@ -6,9 +6,9 @@ HEIGHT=55
 RANDOM_SHUFFLE=0
 
 #NET_TRAINED="/home/arnaud/Internship/code/caffe-veri/examples/verif/verif_iter_4000"
-NET_TRAINED="/home/arnaud/Internship/code/caffe-veri/examples/verif/verif_iter_1000"
-NET_PROTO="/home/arnaud/Internship/code/caffe-veri/examples/verif/arnaud_verif_feature.prototxt"
-BLOB_NAME="ip2"
+NET_TRAINED="/home/arnaud/Internship/code/caffe-veri/examples/siamese/net/trained/siamese_trained_iter_20000"
+NET_PROTO="/home/arnaud/Internship/code/caffe-veri/examples/siamese/net/siamese_features.prototxt"
+BLOB_NAME="ip2_l"
 
 FEATURES="features"
 FEATURES_DISTANCE="features_distance.txt"
