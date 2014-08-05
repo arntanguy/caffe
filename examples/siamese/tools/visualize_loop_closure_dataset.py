@@ -82,12 +82,14 @@ for line in open(args.loop_closure_positive):
 
 begin=args.range[0]
 end=args.range[1]
+if end > len(pair_indices) or begin < 0:
+    print "Invalid range : provided range [%i,%i] is not within range [%i,%i]" % (begin, end, 0, len(pair_indices))
+    exit(-1)
+
 # Load and display test image
 axes = AxesSequence()
 i=0
-for (id1,id2) in pair_indices:
-    if i > end-begin:
-        break
+for (id1,id2) in pair_indices[begin:end]:
     data1 = dic[id1]
     data2 = dic[id2]
     trans = np.linalg.norm(np.subtract(data1[2], data2[2]))

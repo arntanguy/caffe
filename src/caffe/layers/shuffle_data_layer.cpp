@@ -50,6 +50,7 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
     if(current_id >= idx_.size()) {
         LOG(INFO) << "Restarting data prefetching from start.";
         current_id_ = 0;
+        current_id = 0;
     }
     //
     // XXX: maybe store the labels as int in the dataset.

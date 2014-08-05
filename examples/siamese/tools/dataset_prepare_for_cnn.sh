@@ -12,9 +12,9 @@ COMPUTE_ALL=0
 KEYFRAME_STEP=5
 # Minimal number of keyframes separating two images to be considered as a loop-closure. 
 # This is used to reduce the number of redundant loop-closures detected
-KEYFRAME_DISTANCE=10
-ROTATION=5
-TRANSLATION=0.5
+KEYFRAME_DISTANCE=5
+ROTATION=3
+TRANSLATION=0.1
 DB_BACKEND="lmdb"
 
 echo "Preparing dataset for CNN"
@@ -26,7 +26,7 @@ do
     dir=${dir%%/}
     cd $dir 
     echo "Computing loop-closure dataset for $dir"
-    create_loop_closure_dataset.bin
+    create_loop_closure_dataset.bin $TRANSLATION $ROTATION $KEYFRAME_STEP $KEYFRAME_DISTANCE
     cd ..
 done
 echo "Merging all loop-closure datasets"

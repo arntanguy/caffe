@@ -277,6 +277,9 @@ class SiameseLossLayer : public Layer<Dtype> {
       const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom);
 
   Blob<Dtype> diff_;
+  Dtype Ew;
+  Dtype Q;
+  Dtype *dd;
 };
 
 /* SiameseAccuracyLayer

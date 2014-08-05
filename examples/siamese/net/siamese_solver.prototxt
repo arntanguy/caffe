@@ -2,8 +2,8 @@
 train_net: "siamese_train.prototxt"
 test_net: "siamese_test.prototxt"
 test_iter: 10
-test_interval: 1000
-base_lr: 0.0001
+test_interval: 1
+base_lr: 0.000001
 lr_policy: "step"
 gamma: 0.1
 stepsize: 100000
