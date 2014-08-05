@@ -1,8 +1,10 @@
 #!/bin/bash
 
 echo "This script must be run from the dataset ROOT directory"
-WIDTH=47
-HEIGHT=55
+#WIDTH=47
+#HEIGHT=55
+WIDTH=277
+HEIGHT=277
 RANDOM_SHUFFLE=0
 
 # compute_all = 0 -> only compute new directories
@@ -20,7 +22,6 @@ DB_BACKEND="lmdb"
 echo "Preparing dataset for CNN"
 rm -rf db
 
-
 for dir in */
 do
     dir=${dir%%/}
@@ -30,8 +31,8 @@ do
     cd ..
 done
 echo "Merging all loop-closure datasets"
-merge_loop_closure_dataset.py
+#merge_loop_closure_dataset.py
 echo "Creating the shuffle list"
-lc_create_shuffle_list.py
+#lc_create_shuffle_list.py
 echo "Packing images into leveldb dataset"
 create_imageset_rgbd.bin loop_closures_dataset.txt db db.txt $WIDTH $HEIGHT $DB_BACKEND $RANDOM_SHUFFLE
