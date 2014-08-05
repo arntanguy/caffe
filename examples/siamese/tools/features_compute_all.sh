@@ -6,8 +6,8 @@ HEIGHT=55
 RANDOM_SHUFFLE=0
 
 #NET_TRAINED="/home/arnaud/Internship/code/caffe-veri/examples/verif/verif_iter_4000"
-NET_TRAINED="/home/arnaud/Internship/code/caffe-veri/examples/verif/verif_iter_1000"
-NET_PROTO="/home/arnaud/Internship/code/caffe-veri/examples/verif/arnaud_verif_feature.prototxt"
+NET_TRAINED="/home/arnaud/Internship/code/caffe-veri/examples/siamese/trained/siamese_trained_iter_92000.solverstate"
+NET_PROTO="/home/arnaud/Internship/code/caffe-veri/examples/siamese/net/siamese_test.prototxt"
 BLOB_NAME="ip2"
 
 FEATURES="features"

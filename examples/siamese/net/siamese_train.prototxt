@@ -579,10 +579,10 @@ layers {
 # ===============================================================================
 layers {
   name: "verif_loss"
-  type: SIAMESE_LOSS 
+  type: EUCLIDEAN_LOSS 
 
   bottom: "ip2_l"
   bottom: "ip2_r"
-  bottom: "label_l"
+  #bottom: "label_l"
 }
 

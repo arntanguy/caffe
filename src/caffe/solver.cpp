@@ -172,10 +172,15 @@ void Solver<Dtype>::Test(const int test_net_id) {
     loss /= param_.test_iter(test_net_id);
     LOG(INFO) << "Test loss: " << loss;
   }
+
+  Dtype average_test_score=0;
   for (int i = 0; i < test_score.size(); ++i) {
     LOG(INFO) << "Test score #" << i << ": "
         << test_score[i] / param_.test_iter(test_net_id);
+    average_test_score += test_score[i] / param_.test_iter(test_net_id);
   }
+  average_test_score /= test_score.size();
+  LOG(INFO) << "Average test score: " << average_test_score;
   Caffe::set_phase(Caffe::TRAIN);
 }
 
