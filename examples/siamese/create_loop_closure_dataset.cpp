@@ -25,8 +25,8 @@ class CreateLoopClosures {
   std::vector<Vec3> position_;
   std::vector<Quaternion> quaternion_;
 
-  float rotation_;
   float translation_;
+  float rotation_;
   int keyframe_step_;
   int keyframe_distance_;
   std::ifstream dataset_istream_;
@@ -98,12 +98,9 @@ class CreateLoopClosures {
   }
 
 public:
-  CreateLoopClosures() {
-    rotation_ = 5;
-    translation_ = .5;
-    keyframe_step_ = 5;
-    keyframe_distance_ = 5;
-
+  CreateLoopClosures(Dtype translation = .5, Dtype rotation = 5, Dtype keyframe_step=5, Dtype keyframe_distance=5) 
+      : translation_(translation), rotation_(rotation), keyframe_step_(keyframe_step), keyframe_distance_(keyframe_distance)
+  {
     dataset_istream_.open("dataset.txt");
     CHECK(dataset_istream_.is_open()) << "Could not open input dataset";
     lc_positive_ofstream_.open("loop_closures_positive.txt");
@@ -122,5 +119,19 @@ public:
 
 int main(int argc, char **argv) {
   ::google::InitGoogleLogging(argv[0]);
-  CreateLoopClosures<float> cl;
+  LOG(INFO) << argc;
+  if(argc == 1) {
+    CreateLoopClosures<float> cl;
+  } else if(argc == 5) {
+    float arguments[4];
+    std::istringstream s0(argv[1]), s1(argv[2]), s2(argv[3]), s3(argv[4]);
+    s0 >> arguments[0];
+    s1 >> arguments[1];
+    s2 >> arguments[2];
+    s3 >> arguments[3];
+    std::cout << "Running with arguments: " << arguments[0] << ", " <<  arguments[1] << ", " <<  arguments[2] << ", " <<  arguments[3] << std::endl; 
+    CreateLoopClosures<float> cl(arguments[0], arguments[1], arguments[2], arguments[3]);
+  } else {
+    std::cout << "Usage: create_loop_closure_dataset translation rotation keyframe_step keyframe_distance";
+  }
 }

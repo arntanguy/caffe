@@ -29,14 +29,14 @@ layers {
 
   data_param {
     backend: LMDB
-    source: "../../../data/siamese/small/train/db"
+    source: "../../../data/siamese/test_shuffled/db"
     #mean_file: "../../data_l/ilsvrc12/imagenet_mean.binaryproto"
     batch_size: 64 
     #crop_size: 55 
     #mirror: true
     #
     shuffle_param {
-      source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
+      source_list: "../../../data/siamese/test_shuffled/loop_closures_shuffle_list.txt"
       # Read from channel 0  (data for the left part of the network)
       channel: 0
     }
@@ -48,14 +48,14 @@ layers {
   type: SHUFFLE_DATA
   data_param {
     backend: LMDB
-    source: "../../../data/siamese/small/train/db"
+    source: "../../../data/siamese/test_shuffled/db"
     #mean_file: "../../data_l/ilsvrc12/imagenet_mean.binaryproto"
     batch_size: 64 
     #crop_size: 55 
     #mirror: true
     #
     shuffle_param {
-      source_list: "../../../data/siamese/small/train/loop_closures_shuffle_list.txt"
+      source_list: "../../../data/siamese/test_shuffled/loop_closures_shuffle_list.txt"
       # Read from channel 1 (data for the right side of the network)
       channel: 1
     }
