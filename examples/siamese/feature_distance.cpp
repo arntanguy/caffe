@@ -19,11 +19,26 @@ template<typename Dtype>
 class Distance {
  public:
   typedef Eigen::Matrix<Dtype, Eigen::Dynamic, 1> Descriptor;
+  virtual Dtype operator()(const Descriptor& d1, const Descriptor& d2) = 0;
+};
+
+template<typename Dtype>
+class L1Distance : public Distance<Dtype> {
+ public:
+  typedef Eigen::Matrix<Dtype, Eigen::Dynamic, 1> Descriptor;
+  virtual Dtype operator()(const Descriptor& d1, const Descriptor& d2) {
+    return (d1 - d2).cwiseAbs().sum();
+  }
+};
+
+template<typename Dtype>
+class L2Distance : public Distance<Dtype> {
+ public:
+  typedef Eigen::Matrix<Dtype, Eigen::Dynamic, 1> Descriptor;
   virtual Dtype operator()(const Descriptor& d1, const Descriptor& d2) {
     return (d1 - d2).norm();
   }
 };
-
 
 /**
  * Reads feature database, dataset information
@@ -77,7 +92,7 @@ class ProcessDescriptors {
       Descriptor ev(feature_size);
       Dtype f;
       int i = 0;
-      while (iss >> f) {
+      while (iss >> f && i<feature_size) {
         ev[i++] = f;
       }
       descriptors_.push_back(ev);
@@ -88,25 +103,24 @@ class ProcessDescriptors {
   void read_dataset(const std::string& dataset_path)
   {
     std::ifstream ss(dataset_path);
-    if (ss.is_open()) {
-      // id rgb depth tx ty tz q1 q2 q3 q4
-      int id;
-      std::string rgb, depth;
-      Dtype tx, ty, tz, q1, q2, q3, q4;
-      // discard first line
-      getline(ss, rgb);
-      Vec3 translation;
-      Quaternion quaternion;
-      while(ss >> id >> rgb >> depth >> tx >> ty >> tz >> q1 >> q2 >> q3 >> q4) {
-        ids_.push_back(id);
-        rgb_dataset_.push_back(rgb);
-        translation << tx, ty, tz;
-        quaternion << q1, q2, q3, q4;
-        position_.push_back(translation);
-        quaternion_.push_back(quaternion);
-      }
-      LOG(INFO) << "Read " << position_.size() << " entries.";
+    CHECK(ss.is_open()) << "Dataset description file " << dataset_path << " could not be opened!";
+    // id rgb depth tx ty tz q1 q2 q3 q4
+    int id;
+    std::string rgb, depth;
+    Dtype tx, ty, tz, q1, q2, q3, q4;
+    // discard first line
+    getline(ss, rgb);
+    Vec3 translation;
+    Quaternion quaternion;
+    while(ss >> id >> rgb >> depth >> tx >> ty >> tz >> q1 >> q2 >> q3 >> q4) {
+      ids_.push_back(id);
+      rgb_dataset_.push_back(rgb);
+      translation << tx, ty, tz;
+      quaternion << q1, q2, q3, q4;
+      position_.push_back(translation);
+      quaternion_.push_back(quaternion);
     }
+    LOG(INFO) << "Read " << position_.size() << " entries.";
 
   }
 
@@ -128,7 +142,7 @@ class ProcessDescriptors {
       Dtype feature_dist = d_(ref_desc, d);
       Dtype geometric_dist_t = (pos-ref_pos).norm();
       Dtype geometric_dist = geometric_dist_t * (1 - ref_quaternion.dot(quat) * ref_quaternion.dot(quat));
-      LOG(INFO) << feature_dist << " " << geometric_dist;
+      DLOG(INFO) << feature_dist << " " << geometric_dist;
       rss << geometric_dist << " " << feature_dist << " " << ids_[i] << std::endl;
 
     }
@@ -150,6 +164,7 @@ public:
     read_dataset(dataset_info);
     compute_distances(result_file);
   }
+
   ~ProcessDescriptors() {
     delete it_;
     delete db_;
@@ -168,6 +183,6 @@ int main(int argc, char **argv) {
            "result_txt               file in which the resulting distances are written\n";
     return 1;
   }
-  ProcessDescriptors<float, Distance<float>>(argv[1], argv[2], argv[3]);
+  ProcessDescriptors<float, L2Distance<float>>(argv[1], argv[2], argv[3]);
   return 0;
 }

@@ -1,10 +1,10 @@
 // Copyright 2014 BVLC and contributors.
 
 #include <stdio.h>  // for snprintf
-#include <cuda_runtime.h>
 #include <google/protobuf/text_format.h>
 #include <leveldb/db.h>
 #include <leveldb/write_batch.h>
+#include "lmdb.h"
 #include <string>
 #include <vector>
 #include <sstream>
@@ -21,12 +21,41 @@
 using namespace caffe;
 // NOLINT(build/namespaces)
 
+int count_lmdb_entries(const std::string& db_name);
 template<typename Dtype>
 int feature_extraction_pipeline(int argc, char** argv);
 
-int main(int argc, char** argv) {
-  return feature_extraction_pipeline<float>(argc, argv);
-//  return feature_extraction_pipeline<double>(argc, argv);
+int count_lmdb_entries(const std::string& db_name)
+{
+  // LMDB
+  MDB_env* mdb_env_;
+  MDB_dbi mdb_dbi_;
+  MDB_txn* mdb_txn_;
+  MDB_cursor* mdb_cursor_;
+  MDB_val mdb_key_, mdb_value_;
+
+  CHECK_EQ(mdb_env_create(&mdb_env_), MDB_SUCCESS) << "mdb_env_create failed";
+  CHECK_EQ(mdb_env_set_mapsize(mdb_env_, 1099511627776), MDB_SUCCESS);  // 1TB
+  CHECK_EQ(mdb_env_open(mdb_env_, db_name.c_str(), MDB_RDONLY|MDB_NOTLS, 0664), MDB_SUCCESS) << "mdb_env_open failed";
+  CHECK_EQ(mdb_txn_begin(mdb_env_, NULL, MDB_RDONLY, &mdb_txn_), MDB_SUCCESS)
+      << "mdb_txn_begin failed";
+  CHECK_EQ(mdb_open(mdb_txn_, NULL, 0, &mdb_dbi_), MDB_SUCCESS)
+      << "mdb_open failed";
+  CHECK_EQ(mdb_cursor_open(mdb_txn_, mdb_dbi_, &mdb_cursor_), MDB_SUCCESS)
+      << "mdb_cursor_open failed";
+  LOG(INFO) << "Opening lmdb " << db_name; 
+  CHECK_EQ(mdb_cursor_get(mdb_cursor_, &mdb_key_, &mdb_value_, MDB_FIRST),
+           MDB_SUCCESS) << "mdb_cursor_get failed";
+  int count = 1;
+  while(mdb_cursor_get(mdb_cursor_, &mdb_key_, &mdb_value_, MDB_NEXT) == 0) {
+    ++count;
+  }
+
+  mdb_cursor_close(mdb_cursor_);
+  mdb_close(mdb_env_, mdb_dbi_);
+  mdb_txn_abort(mdb_txn_);
+  mdb_env_close(mdb_env_);
+  return count;
 }
 
 template<typename Dtype>
@@ -117,15 +146,17 @@ int feature_extraction_pipeline(int argc, char** argv) {
       << " in the network " << feature_extraction_proto;
 
   //const shared_ptr<DataLayer<Dtype> >& data_layer =  boost::static_pointer_cast<DataLayer<Dtype>>(feature_extraction_net->layer_by_name("verif_dual_001"));
-  const shared_ptr< Layer<Dtype> >& data_layer =  feature_extraction_net->layer_by_name("data_l");
+  const shared_ptr< Layer<Dtype> >& data_layer =  feature_extraction_net->layer_by_name("data");
   // FIXME: get number of element in dataset!
-  int data_count = 100; //data_layer->layer_param().data_count();
+  //int data_count = 100; //data_layer->layer_param().data_count();
+  int data_count = count_lmdb_entries(source_leveldb);
+  LOG(INFO) << "Data count: " << data_count;
   int batch_size = data_layer->layer_param().data_param().batch_size();
   int num_mini_batches = ceil((float)data_count/(float)batch_size);
   LOG(INFO) << "Data size: " <<  data_count << ", batch size: " << batch_size << ", number of batches: "<< num_mini_batches;
 
   arg_pos++;
-  LOG(INFO)<< "Input leveldb " << save_feature_leveldb_name;
+  LOG(INFO)<< "Output leveldb " << save_feature_leveldb_name;
   leveldb::DB* db;
   leveldb::Options options;
   options.error_if_exists = true;
@@ -148,15 +179,20 @@ int feature_extraction_pipeline(int argc, char** argv) {
     feature_extraction_net->Forward(input_vec);
     const shared_ptr<Blob<Dtype> > feature_blob = feature_extraction_net
         ->blob_by_name(extract_feature_blob_name);
-    int num_features = (data_count/batch_size > 0) ? batch_size : batch_size - data_count % batch_size + 1; //feature_blob->num();
-    int dim_features = feature_blob->count() / num_features;
+    // Extract batch_size features, or less for the last batch
+    const int num_features = (data_count-image_index > batch_size) ? batch_size : data_count-image_index; 
+    // Size of a feature
+    const int dim_features = feature_blob->count() / batch_size;
     Dtype* feature_blob_data;
     DLOG(INFO)<< "dim features: " << dim_features;
+
+    // Extract each feature in the batch
     for (int n = 0; n < num_features; ++n) {
       feature_blob_data = feature_blob->mutable_cpu_data()
           + feature_blob->offset(n);
       std::ostringstream data_stream;
       data_stream.precision(std::numeric_limits<double>::digits10);
+      // Extract feature from batch
       for (int d = 0; d < dim_features - 1; ++d) {
         data_stream << feature_blob_data[d] << " ";
       }
@@ -178,13 +214,21 @@ int feature_extraction_pipeline(int argc, char** argv) {
   // write the last batch
   if (image_index % 1000 != 0) {
     db->Write(leveldb::WriteOptions(), batch);
-    LOG(ERROR)<< "Extracted features of " << image_index <<
+    LOG(INFO)<< "Extracted features of " << image_index <<
     " query images.";
   }
 
   delete batch;
   delete db;
-  LOG(ERROR)<< "Successfully extracted the features!";
+  LOG(INFO)<< "Successfully extracted the features!";
   return 0;
+}
+
+
+
+
+int main(int argc, char** argv) {
+  return feature_extraction_pipeline<float>(argc, argv);
+//  return feature_extraction_pipeline<double>(argc, argv);
 }
 
