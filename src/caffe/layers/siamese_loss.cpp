@@ -93,7 +93,7 @@ void SiameseLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     vector<Blob<Dtype>*>* bottom) {
   
   // What to do here??
-  LOG(INFO) << *(*bottom[0]);
+  LOG(INFO) << *((*bottom)[0]);
   LOG(INFO) << *(top[0]);
   
 }
