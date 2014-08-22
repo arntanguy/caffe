@@ -4,7 +4,7 @@
 name: "CaffeNet"
 layers {
   name: "data"
-  type: DATA
+  type: SHUFFLE_DATA
   top: "data"
 
   data_param {
@@ -14,9 +14,11 @@ layers {
       crop_size: 227
       mirror: false
     }
-    batch_size: 32 
-    #crop_size: 277
-    #mirror: true
+    shuffle_param {
+      source_list: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/loop_closures_shuffle_list.txt"
+      channel: 0
+    }
+    batch_size: 32
   }
 }
 layers {
@@ -24,6 +26,8 @@ layers {
   type: CONVOLUTION
   bottom: "data"
   top: "conv1"
+  param: "conv1_s"
+  param: ""
   convolution_param {
     num_output: 96
     kernel_size: 11

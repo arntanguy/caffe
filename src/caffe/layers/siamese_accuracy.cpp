@@ -15,9 +15,8 @@ using std::max;
 namespace caffe {
 
 template <typename Dtype>
-void SiameseAccuracyLayer<Dtype>::SetUp(
+void SiameseAccuracyLayer<Dtype>::LayerSetUp(
     const vector<Blob<Dtype>*>& bottom, vector<Blob<Dtype>*>* top) {
-  Layer<Dtype>::SetUp(bottom, top);
   CHECK_EQ(bottom[0]->num(), bottom[1]->num())
       << "Both input images should have the same blob configuration!";
   // Checks if label blob has the correct size

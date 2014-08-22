@@ -55,7 +55,7 @@ class DataLayer : public Layer<Dtype>, public InternalThread {
 
   virtual void CreatePrefetchThread();
   virtual void JoinPrefetchThread();
-  
+
   // The thread's function
   virtual void InternalThreadEntry();
 
@@ -88,7 +88,7 @@ class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
   explicit ShuffleDataLayer(const LayerParameter& param)
       : Layer<Dtype>(param) {}
   virtual ~ShuffleDataLayer();
-  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
 
   virtual inline LayerParameter_LayerType type() const {
@@ -146,7 +146,7 @@ class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
   int channel_;
   /**
    * Vectors containing the loop-closure ids.
-   * pair.first : id of the first image 
+   * pair.first : id of the first image
    * pair.second : id of the corresponding image
    **/
   std::vector<int> idx_;

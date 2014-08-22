@@ -301,7 +301,7 @@ class SiameseAccuracyLayer : public Layer<Dtype> {
  public:
   explicit SiameseAccuracyLayer(const LayerParameter& param)
       : Layer<Dtype>(param) {}
-  virtual void SetUp(const vector<Blob<Dtype>*>& bottom,
+  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
 
   virtual inline LayerParameter_LayerType type() const {

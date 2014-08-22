@@ -1,0 +1,17 @@
+# Training parameters for the siamese network
+train_net: "imagenet_siamese_train.prototxt"
+test_net: "imagenet_siamese_test.prototxt"
+test_iter: 10
+test_interval: 1000
+base_lr: 0.000001
+lr_policy: "step"
+gamma: 0.1
+stepsize: 100000
+display: 20
+max_iter: 450000
+#momentum: 0.9
+momentum: 0.
+weight_decay: 0.0005
+snapshot: 10000
+snapshot_prefix: "siamese_trained"
+solver_mode: GPU

@@ -47,7 +47,7 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
   const Dtype* mean = data_mean_.cpu_data();
   for (int item_id = 0; item_id < batch_size_; ++item_id) {
     int current_id = current_id_+item_id;
-    if(current_id >= idx_.size()) {
+    if (current_id >= idx_.size()) {
         LOG(INFO) << "Restarting data prefetching from start.";
         current_id_ = 0;
         current_id = 0;
@@ -60,7 +60,8 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
     std::ostringstream label_ss;
     label_ss << std::setfill('0') << std::setw(8) << id;
     std::string key = label_ss.str();
-    //LOG(INFO) << "Id: " << current_id << ", Image " << key << " from channel " << channel_;
+    //  LOG(INFO) << "Id: " << current_id
+    //            << ", Image " << key << " from channel " << channel_;
 
     // get a blob
     switch (this->layer_param_.data_param().backend()) {
@@ -68,7 +69,8 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
         {
           std::string value;
           leveldb::Status s = db_->Get(leveldb::ReadOptions(), key, &value);
-          CHECK(s.ok()) << "Failed to read image with id " << key << ": " << s.ToString();
+          CHECK(s.ok()) << "Failed to read image with id "
+                        << key << ": " << s.ToString();
           datum.ParseFromString(value);
           break;
         }
@@ -77,7 +79,8 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
           MDB_val mdb_key;
           mdb_key.mv_size = key.size();
           mdb_key.mv_data = reinterpret_cast<void*>(&key[0]);
-          CHECK_EQ(mdb_get(mdb_txn_, mdb_dbi_, &mdb_key, &mdb_value_), MDB_SUCCESS);
+          CHECK_EQ(mdb_get(mdb_txn_, mdb_dbi_, &mdb_key, &mdb_value_),
+                   MDB_SUCCESS);
           datum.ParseFromArray(mdb_value_.mv_data,
                                mdb_value_.mv_size);
           break;
@@ -146,11 +149,11 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
     if (output_labels_) {
       // LOG(INFO) << "Label: " << lc_[current_id];
       top_label[item_id] = lc_[current_id];
-      //if(lc_[current_id] == 0) {
-      //  top_label[item_id] = -1;
-      //} else {
-      //  top_label[item_id] = 1;
-      //}
+      //  if(lc_[current_id] == 0) {
+      //    top_label[item_id] = -1;
+      //  } else {
+      //    top_label[item_id] = 1;
+      //  }
     }
   }
 }
@@ -174,37 +177,31 @@ ShuffleDataLayer<Dtype>::~ShuffleDataLayer<Dtype>() {
 }
 
 template<typename Dtype>
-void ShuffleDataLayer<Dtype>::ReadShuffleList()
-{
-  LOG(INFO) << "Reading Shuffle List from: "<< this->layer_param_.data_param().shuffle_param().source_list();
-  std::ifstream ss(this->layer_param_.data_param().shuffle_param().source_list().c_str());
+void ShuffleDataLayer<Dtype>::ReadShuffleList() {
+  LOG(INFO) << "Reading Shuffle List from: "
+            << this->layer_param_.data_param().shuffle_param().source_list();
+  std::ifstream ss(this->layer_param_.data_param()
+                    .shuffle_param().source_list().c_str());
   CHECK(ss.is_open()) << "Failed to open shuffle list!";
   int npairs = 0;
   ss >> npairs;
-  LOG(INFO) << npairs;
   idx_.reserve(npairs);
   lc_.reserve(npairs);
   int id[2];
   int lc;
-  int ind=0;
-  while(ss >> id[0] >> id[1] >> lc) {
-    // Check if indexes are valid
-    //CHECK_GE(max_index_in_dataset, id1);
-    //CHECK_GE(max_index_in_dataset, id2);
-    //if(id1 < max_index_in_dataset && id2 < max_index_in_dataset) {
-      // Add them to pair list
-      idx_.push_back(id[channel_]);
-      lc_.push_back(lc);
-    //}
+  int ind = 0;
+  while (ss >> id[0] >> id[1] >> lc) {
+    // Add them to pair list
+    idx_.push_back(id[channel_]);
+    lc_.push_back(lc);
     ++ind;
   }
   LOG(INFO) << idx_.size() << " ids added to shuffle list.";
 }
 
 template <typename Dtype>
-void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
+void ShuffleDataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
-  Layer<Dtype>::SetUp(bottom, top);
   if (top->size() == 1) {
     output_labels_ = false;
   } else {
@@ -215,7 +212,8 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 
   // start with channel 0
   channel_ = this->layer_param_.data_param().shuffle_param().channel();
-  CHECK(channel_ == 0 || channel_ == 1) << "shuffle_param.channel must be 0 or 1!";
+  CHECK(channel_ == 0 || channel_ == 1)
+      << "shuffle_param.channel must be 0 or 1!";
   current_id_ = 0;
 
   ReadShuffleList();
@@ -262,24 +260,24 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   // Check if we would need to randomly skip a few data points
   if (this->layer_param_.data_param().rand_skip()) {
     LOG(INFO) << "rand_skip not implemented";
-    //unsigned int skip = caffe_rng_rand() %
-    //                    this->layer_param_.data_param().rand_skip();
-    //LOG(INFO) << "Skipping first " << skip << " data points.";
-    //while (skip-- > 0) {
-    //  switch (this->layer_param_.data_param().backend()) {
-    //  case DataParameter_DB_LEVELDB:
-    //    iter_->Next();
-    //    if (!iter_->Valid()) {
-    //      iter_->SeekToFirst();
+    //  unsigned int skip = caffe_rng_rand() %
+    //                      this->layer_param_.data_param().rand_skip();
+    //  LOG(INFO) << "Skipping first " << skip << " data points.";
+    //  while (skip-- > 0) {
+    //    switch (this->layer_param_.data_param().backend()) {
+    //    case DataParameter_DB_LEVELDB:
+    //      iter_->Next();
+    //      if (!iter_->Valid()) {
+    //        iter_->SeekToFirst();
+    //      }
+    //      break;
+    //    case DataParameter_DB_LMDB:
+    //      LOG(INFO) << "LMDB backend not implemented";
+    //      break;
+    //    default:
+    //      LOG(FATAL) << "Unknown database backend";
     //    }
-    //    break;
-    //  case DataParameter_DB_LMDB:
-    //    LOG(INFO) << "LMDB backend not implemented";
-    //    break;
-    //  default:
-    //    LOG(FATAL) << "Unknown database backend";
     //  }
-    //}
   }
   // Read a data point, and use it to initialize the top blob.
   Datum datum;
@@ -357,7 +355,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 
 template <typename Dtype>
 void ShuffleDataLayer<Dtype>::CreatePrefetchThread() {
-  //LOG(INFO) << "Prefetch from channel " << channel_;
+  //  LOG(INFO) << "Prefetch from channel " << channel_;
   phase_ = Caffe::phase();
   const bool prefetch_needs_rand = (phase_ == Caffe::TRAIN) &&
       (this->layer_param_.data_param().mirror() ||
@@ -373,8 +371,7 @@ void ShuffleDataLayer<Dtype>::CreatePrefetchThread() {
 }
 
 template <typename Dtype>
-void ShuffleDataLayer<Dtype>::JoinPrefetchThread()
-{
+void ShuffleDataLayer<Dtype>::JoinPrefetchThread() {
   CHECK(!WaitForInternalThreadToExit()) << "Pthread joining failed!";
 }
 
