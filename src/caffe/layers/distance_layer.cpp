@@ -14,7 +14,7 @@
 namespace caffe {
 
 template <typename Dtype>
-void DistanceLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
+void DistanceLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
   CHECK_EQ(bottom.size(), 2) << "EM Layer takes two blobs as input.";
 
@@ -81,7 +81,7 @@ void DistanceLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 }
 
 template <typename Dtype>
-Dtype DistanceLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+void DistanceLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
   const Dtype* bottom_data_0 = bottom[0]->cpu_data();
   const Dtype* bottom_data_1 = bottom[1]->cpu_data();
@@ -116,10 +116,8 @@ Dtype DistanceLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
         reinterpret_cast<const Dtype*>(bias_multiplier_->cpu_data()),
         this->blobs_[1]->cpu_data(), (Dtype)1., top_data);
 
-    //LOG(ERROR) << "b: " << this->blobs_[1]->cpu_data()[0];
+    //  LOG(ERROR) << "b: " << this->blobs_[1]->cpu_data()[0];
   }
-
-  return Dtype(0);
 }
 
 template <typename Dtype>
@@ -162,7 +160,7 @@ void DistanceLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
           top_diff, this->blobs_[0]->cpu_data(), (Dtype)0.,
           (*bottom)[1]->mutable_cpu_diff());
 
-   
+
       caffe_mul(count, diff_data, (*bottom)[0]->cpu_diff(),
         (*bottom)[0]->mutable_cpu_diff());
       caffe_mul(count, diff_data, (*bottom)[1]->cpu_diff(),

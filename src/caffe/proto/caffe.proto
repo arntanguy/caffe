@@ -1,4 +1,4 @@
-// Copyright 2014 BVLC and contributors.
+syntax = "proto2";
 
 package caffe;
 
@@ -54,24 +54,55 @@ message NetParameter {
   // If set False, then whether to carry out backward is determined
   // automatically according to the net structure and learning rates.
   optional bool force_backward = 5 [default = false];
+  // The current "state" of the network, including the phase, level, and stage.
+  // Some layers may be included/excluded depending on this state and the states
+  // specified in the layers' include and exclude fields.
+  optional NetState state = 6;
 }
 
+// NOTE
+// Update the next available ID when you add a new SolverParameter field.
+//
+// SolverParameter next available ID: 27 (last added: test_state)
 message SolverParameter {
-  // {train,test}_net specify a path to a file containing the {train,test} net
-  // parameters; {train,test}_net_param specify the net parameters directly
-  // inside the SolverParameter.
+  //////////////////////////////////////////////////////////////////////////////
+  // Specifying the train and test networks
   //
-  // Only either train_net or train_net_param (not both) should be specified.
-  // You may specify 0 or more test_net and/or test_net_param.  All
-  // nets specified using test_net_param will be tested first, followed by all
-  // nets specified using test_net (each processed in the order specified in
-  // the prototxt).
-  optional string train_net = 1; // The proto filename for the train net.
-  repeated string test_net = 2; // The proto filenames for the test nets.
-  optional NetParameter train_net_param = 21; // Full params for the train net.
-  repeated NetParameter test_net_param = 22; // Full params for the test nets.
-  // The number of iterations for each testing phase.
+  // Exactly one train net must be specified using one of the following fields:
+  //     train_net_param, train_net, net_param, net
+  // One or more test nets may be specified using any of the following fields:
+  //     test_net_param, test_net, net_param, net
+  // If more than one test net field is specified (e.g., both net and
+  // test_net are specified), they will be evaluated in the field order given
+  // above: (1) test_net_param, (2) test_net, (3) net_param/net.
+  // A test_iter must be specified for each test_net.
+  // A test_level and/or a test_stage may also be specified for each test_net.
+  //////////////////////////////////////////////////////////////////////////////
+
+  // Proto filename for the train net, possibly combined with one or more
+  // test nets.
+  optional string net = 24;
+  // Inline train net param, possibly combined with one or more test nets.
+  optional NetParameter net_param = 25;
+
+  optional string train_net = 1; // Proto filename for the train net.
+  repeated string test_net = 2; // Proto filenames for the test nets.
+  optional NetParameter train_net_param = 21; // Inline train net params.
+  repeated NetParameter test_net_param = 22; // Inline test net params.
+
+  // The states for the train/test nets. Must be unspecified or
+  // specified once per net.
+  //
+  // By default, all states will have solver = true;
+  // train_state will have phase = TRAIN,
+  // and all test_state's will have phase = TEST.
+  // Other defaults are set according to the NetState defaults.
+  optional NetState train_state = 26;
+  repeated NetState test_state = 27;
+
+  // The number of iterations for each test net.
   repeated int32 test_iter = 3;
+
   // The number of iterations between two testing phases.
   optional int32 test_interval = 4 [default = 0];
   optional bool test_compute_loss = 19 [default = false];
@@ -103,6 +134,13 @@ message SolverParameter {
   // random number generator -- useful for reproducible results. Otherwise,
   // (and by default) initialize using a seed derived from the system clock.
   optional int64 random_seed = 20 [default = -1];
+
+  // If true, print information about the state of the net that may help with
+  // debugging learning problems.
+  optional bool debug_info = 23 [default = false];
+
+  // If false, don't save a snapshot after training finishes.
+  optional bool snapshot_after_train = 28 [default = true];
 }
 
 // A message that stores the solver snapshots
@@ -112,14 +150,56 @@ message SolverState {
   repeated BlobProto history = 3; // The history for sgd solvers
 }
 
+enum Phase {
+   TRAIN = 0;
+   TEST = 1;
+}
+
+message NetState {
+  optional Phase phase = 1 [default = TEST];
+  optional int32 level = 2 [default = 0];
+  repeated string stage = 3;
+}
+
+message NetStateRule {
+  // Set phase to require the NetState have a particular phase (TRAIN or TEST)
+  // to meet this rule.
+  optional Phase phase = 1;
+
+  // Set the minimum and/or maximum levels in which the layer should be used.
+  // Leave undefined to meet the rule regardless of level.
+  optional int32 min_level = 2;
+  optional int32 max_level = 3;
+
+  // Customizable sets of stages to include or exclude.
+  // The net must have ALL of the specified stages and NONE of the specified
+  // "not_stage"s to meet the rule.
+  // (Use multiple NetStateRules to specify conjunctions of stages.)
+  repeated string stage = 4;
+  repeated string not_stage = 5;
+}
+
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available ID: 28 (last added: accuracy_param)
+// LayerParameter next available ID: 36 (last added: loss_weight)
 message LayerParameter {
   repeated string bottom = 2; // the name of the bottom blobs
   repeated string top = 3; // the name of the top blobs
+  // The amount of weight to assign each top blob in the objective.
+  // Each layer assigns a default value, usually of either 0 or 1,
+  // to each top blob.
+  repeated float loss_weight = 35;
   optional string name = 4; // the layer name
+
+  // Rules controlling whether and when a layer is included in the network,
+  // based on the current NetState.  You may specify a non-zero number of rules
+  // to include OR exclude, but not both.  If no include or exclude rules are
+  // specified, the layer is always included.  If the current NetState meets
+  // ANY (i.e., one or more) of the specified rules, the layer is
+  // included/excluded.
+  repeated NetStateRule include = 32;
+  repeated NetStateRule exclude = 33;
 
   // NOTE
   // Add new LayerTypes to the enum below in lexicographical order (other than
@@ -127,12 +207,13 @@ message LayerParameter {
   // line above the enum. Update the next available ID when you add a new
   // LayerType.
   //
-  // LayerType next available ID: 38 (last added: DISTANCE)
+  // LayerType next available ID: 40 (last added: SHUFFLE_DATA)
   enum LayerType {
     // "NONE" layer type is 0th enum element so that we don't cause confusion
     // by defaulting to an existent LayerType (instead, should usually error if
     // the type is unspecified).
     NONE = 0;
+    ABSVAL = 38;
     ACCURACY = 1;
     SIAMESE_ACCURACY = 35;
     ARGMAX = 30;
@@ -141,7 +222,7 @@ message LayerParameter {
     CONVOLUTION = 4;
     DATA = 5;
     DISTANCE = 37;
-    SHUFFLE_DATA = 33;
+    SHUFFLE_DATA = 40;
     DROPOUT = 6;
     DUMMY_DATA = 32;
     EUCLIDEAN_LOSS = 7;
@@ -157,6 +238,7 @@ message LayerParameter {
     LRN = 15;
     MEMORY_DATA = 29;
     MULTINOMIAL_LOGISTIC_LOSS = 16;
+    MVN = 34;
     POOLING = 17;
     POWER = 26;
     RELU = 18;
@@ -164,9 +246,10 @@ message LayerParameter {
     SIGMOID_CROSS_ENTROPY_LOSS = 27;
     SOFTMAX = 20;
     SOFTMAX_LOSS = 21;
-    SIAMESE_LOSS = 34;
+    SIAMESE_LOSS = 39;
     VERIFICATION_LOSS = 36;
     SPLIT = 22;
+    SLICE = 33;
     TANH = 23;
     WINDOW_DATA = 24;
     THRESHOLD = 31;
@@ -198,7 +281,7 @@ message LayerParameter {
   optional ConcatParameter concat_param = 9;
   optional ConvolutionParameter convolution_param = 10;
   optional DataParameter data_param = 11;
-  optional DistanceParameter distance_param = 30;
+  optional DistanceParameter distance_param = 40;
   optional DropoutParameter dropout_param = 12;
   optional DummyDataParameter dummy_data_param = 26;
   optional EltwiseParameter eltwise_param = 24;
@@ -211,9 +294,12 @@ message LayerParameter {
   optional MemoryDataParameter memory_data_param = 22;
   optional PoolingParameter pooling_param = 19;
   optional PowerParameter power_param = 21;
+  optional ReLUParameter relu_param = 30;
   optional WindowDataParameter window_data_param = 20;
   optional ThresholdParameter threshold_param = 25;
   optional HingeLossParameter hinge_loss_param = 29;
+  optional SliceParameter slice_param = 31;
+  optional MVNParameter mvn_param = 34;
 
   // DEPRECATED: The layer parameters specified as a V0LayerParameter.
   // This should never be used by any code except to upgrade to the new
@@ -233,6 +319,7 @@ message AccuracyParameter {
 message ArgMaxParameter {
   // If true produce pairs (argmax, maxval)
   optional bool out_max_val = 1 [default = false];
+  optional uint32 top_k = 2 [default = 1];
 }
 
 // Message that stores parameters used by ConcatLayer
@@ -247,10 +334,18 @@ message ConcatParameter {
 message ConvolutionParameter {
   optional uint32 num_output = 1; // The number of outputs for the layer
   optional bool bias_term = 2 [default = true]; // whether to have bias terms
-  optional uint32 pad = 3 [default = 0]; // The padding size
-  optional uint32 kernel_size = 4; // The kernel size
+  // Pad, kernel size, and stride are all given as a single value for equal
+  // dimensions in height and width or as Y, X pairs.
+  optional uint32 pad = 3 [default = 0]; // The padding size (equal in Y, X)
+  optional uint32 pad_h = 9 [default = 0]; // The padding height
+  optional uint32 pad_w = 10 [default = 0]; // The padding width
+  optional uint32 kernel_size = 4; // The kernel size (square)
+  optional uint32 kernel_h = 11; // The kernel height
+  optional uint32 kernel_w = 12; // The kernel width
   optional uint32 group = 5 [default = 1]; // The group size for group conv
-  optional uint32 stride = 6 [default = 1]; // The stride
+  optional uint32 stride = 6 [default = 1]; // The stride (equal in Y, X)
+  optional uint32 stride_h = 13; // The stride height
+  optional uint32 stride_w = 14; // The stride width
   optional FillerParameter weight_filler = 7; // The filler for the weight
   optional FillerParameter bias_filler = 8; // The filler for the bias
 }
@@ -258,6 +353,20 @@ message ConvolutionParameter {
 message ShuffleDataParameter {
   required string source_list = 1;
   required uint32 channel = 2 [default = 0];
+}
+
+// Message that stores parameters used to apply transformation
+// to the data layer's data
+message TransformationParameter {
+  // For data pre-processing, we can do simple scaling and subtracting the
+  // data mean, if provided. Note that the mean subtraction is always carried
+  // out before scaling.
+  optional float scale = 1 [default = 1];
+  // Specify if we want to randomly mirror data.
+  optional bool mirror = 2 [default = false];
+  // Specify if we would like to randomly crop an image.
+  optional uint32 crop_size = 3 [default = 0];
+  optional string mean_file = 4;
 }
 
 // Message that stores parameters used by DataLayer
@@ -268,17 +377,8 @@ message DataParameter {
   }
   // Specify the data source.
   optional string source = 1;
-  // For data pre-processing, we can do simple scaling and subtracting the
-  // data mean, if provided. Note that the mean subtraction is always carried
-  // out before scaling.
-  optional float scale = 2 [default = 1];
-  optional string mean_file = 3;
   // Specify the batch size.
   optional uint32 batch_size = 4;
-  // Specify if we would like to randomly crop an image.
-  optional uint32 crop_size = 5 [default = 0];
-  // Specify if we want to randomly mirror data.
-  optional bool mirror = 6 [default = false];
   // The rand_skip variable is for the data layer to skip a few data points
   // to avoid all asynchronous sgd clients to start at the same point. The skip
   // point would be set as rand_skip * rand(0,1). Note that rand_skip should not
@@ -286,7 +386,21 @@ message DataParameter {
   optional uint32 rand_skip = 7 [default = 0];
   optional DB backend = 8 [default = LEVELDB];
 
-  optional ShuffleDataParameter shuffle_param = 9;
+  optional ShuffleDataParameter shuffle_param = 10;
+
+  // Parameters for data pre-processing.
+  optional TransformationParameter transform_param = 9;
+  // DEPRECATED. See TransformParameter. For data pre-processing, we can do
+  // simple scaling and subtracting the data mean, if provided. Note that the
+  // mean subtraction is always carried out before scaling.
+  optional float scale = 2 [default = 1];
+  optional string mean_file = 3;
+  // DEPRECATED. See TransformParameter. Specify if we would like to randomly
+  // crop an image.
+  optional uint32 crop_size = 5 [default = 0];
+  // DEPRECATED. See TransformParameter. Specify if we want to randomly mirror
+  // data.
+  optional bool mirror = 6 [default = false];
 }
 
 // Message that stores parameters used by DropoutLayer
@@ -353,17 +467,8 @@ message HingeLossParameter {
 message ImageDataParameter {
   // Specify the data source.
   optional string source = 1;
-  // For data pre-processing, we can do simple scaling and subtracting the
-  // data mean, if provided. Note that the mean subtraction is always carried
-  // out before scaling.
-  optional float scale = 2 [default = 1];
-  optional string mean_file = 3;
   // Specify the batch size.
   optional uint32 batch_size = 4;
-  // Specify if we would like to randomly crop an image.
-  optional uint32 crop_size = 5 [default = 0];
-  // Specify if we want to randomly mirror data.
-  optional bool mirror = 6 [default = false];
   // The rand_skip variable is for the data layer to skip a few data points
   // to avoid all asynchronous sgd clients to start at the same point. The skip
   // point would be set as rand_skip * rand(0,1). Note that rand_skip should not
@@ -374,6 +479,19 @@ message ImageDataParameter {
   // It will also resize images if new_height or new_width are not zero.
   optional uint32 new_height = 9 [default = 0];
   optional uint32 new_width = 10 [default = 0];
+  // Parameters for data pre-processing.
+  optional TransformationParameter transform_param = 11;
+  // DEPRECATED. See TransformParameter. For data pre-processing, we can do
+  // simple scaling and subtracting the data mean, if provided. Note that the
+  // mean subtraction is always carried out before scaling.
+  optional float scale = 2 [default = 1];
+  optional string mean_file = 3;
+  // DEPRECATED. See TransformParameter. Specify if we would like to randomly
+  // crop an image.
+  optional uint32 crop_size = 5 [default = 0];
+  // DEPRECATED. See TransformParameter. Specify if we want to randomly mirror
+  // data.
+  optional bool mirror = 6 [default = false];
 }
 
 // Message that stores parameters InfogainLossLayer
@@ -425,6 +543,15 @@ message MemoryDataParameter {
   optional uint32 width = 4;
 }
 
+// Message that stores parameters used by MVNLayer
+message MVNParameter {
+  // This parameter can be set to false to normalize mean only
+  optional bool normalize_variance = 1 [default = true];
+
+  // This parameter can be set to true to perform DNN-like MVN
+  optional bool across_channels = 2 [default = false];
+}
+
 // Message that stores parameters used by PoolingLayer
 message PoolingParameter {
   enum PoolMethod {
@@ -452,6 +579,26 @@ message PowerParameter {
   optional float power = 1 [default = 1.0];
   optional float scale = 2 [default = 1.0];
   optional float shift = 3 [default = 0.0];
+}
+
+// Message that stores parameters used by ReLULayer
+message ReLUParameter {
+  // Allow non-zero slope for negative inputs to speed up optimization
+  // Described in:
+  // Maas, A. L., Hannun, A. Y., & Ng, A. Y. (2013). Rectifier nonlinearities
+  // improve neural network acoustic models. In ICML Workshop on Deep Learning
+  // for Audio, Speech, and Language Processing.
+  optional float negative_slope = 1 [default = 0];
+}
+
+// Message that stores parameters used by SliceLayer
+message SliceParameter {
+  // SliceLayer needs to know which dimension to slice across.
+  // Currently, SliceLayer only supports slicing across num (dim 0)
+  // and channels (dim 1).
+  // By default, SliceLayer slices across channels.
+  optional uint32 slice_dim = 1 [default = 1];
+  repeated uint32 slice_point = 2;
 }
 
 // Message that stores parameters used by WindowDataLayer

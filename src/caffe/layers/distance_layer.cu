@@ -16,7 +16,7 @@
 namespace caffe {
 
 template <typename Dtype>
-Dtype DistanceLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+void DistanceLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
   return Forward_cpu(bottom, top);
 
@@ -60,7 +60,6 @@ Dtype DistanceLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
 
     //LOG(ERROR) << "b: " << this->blobs_[1]->gpu_data()[0];
   }
-  return Dtype(0);
 }
 
 template <typename Dtype>
@@ -76,7 +75,7 @@ void DistanceLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
 
   int count = (*bottom)[0]->count();
   int num = (*bottom)[0]->num();
- 
+
   switch (this->layer_param_.distance_param().distance()) {
   case DistanceParameter_Distance_Squared:
     // Gradient with respect to weight, squared diff
@@ -87,7 +86,7 @@ void DistanceLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
   default:
     LOG(FATAL) << "Unknown Distance";
   }
- 
+
   if (bias_term_) {
     // Gradient with respect to bias
     caffe_gpu_gemv<Dtype>(CblasTrans, M_, N_, (Dtype)1., top_diff,

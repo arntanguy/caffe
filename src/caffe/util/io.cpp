@@ -1,28 +1,25 @@
-// Copyright 2014 BVLC and contributors.
-
-#include <stdint.h>
 #include <fcntl.h>
-#include <google/protobuf/text_format.h>
-#include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <google/protobuf/io/coded_stream.h>
+#include <google/protobuf/io/zero_copy_stream_impl.h>
+#include <google/protobuf/text_format.h>
+#include <leveldb/db.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/highgui/highgui_c.h>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <stdint.h>
 
 #include <algorithm>
+#include <fstream>  // NOLINT(readability/streams)
 #include <string>
 #include <vector>
-#include <fstream>  // NOLINT(readability/streams)
 
 #include "caffe/common.hpp"
-#include "caffe/util/io.hpp"
 #include "caffe/proto/caffe.pb.h"
+#include "caffe/util/io.hpp"
 
-using std::fstream;
-using std::ios;
-using std::max;
-using std::string;
+namespace caffe {
+
 using google::protobuf::io::FileInputStream;
 using google::protobuf::io::FileOutputStream;
 using google::protobuf::io::ZeroCopyInputStream;
@@ -30,8 +27,6 @@ using google::protobuf::io::CodedInputStream;
 using google::protobuf::io::ZeroCopyOutputStream;
 using google::protobuf::io::CodedOutputStream;
 using google::protobuf::Message;
-
-namespace caffe {
 
 bool ReadProtoFromTextFile(const char* filename, Message* proto) {
   int fd = open(filename, O_RDONLY);
@@ -112,6 +107,14 @@ bool ReadImageToDatum(const string& filename, const int label,
       }
   }
   return true;
+}
+
+leveldb::Options GetLevelDBOptions() {
+  // In default, we will return the leveldb option and set the max open files
+  // in order to avoid using up the operating system's limit.
+  leveldb::Options options;
+  options.max_open_files = 100;
+  return options;
 }
 
 // Verifies format of data stored in HDF5 file and reshapes blob accordingly.

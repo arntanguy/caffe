@@ -61,7 +61,7 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
     label_ss << std::setfill('0') << std::setw(8) << id;
     std::string key = label_ss.str();
     //LOG(INFO) << "Id: " << current_id << ", Image " << key << " from channel " << channel_;
-    
+
     // get a blob
     switch (this->layer_param_.data_param().backend()) {
       case DataParameter_DB_LEVELDB:
@@ -149,7 +149,7 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
       //if(lc_[current_id] == 0) {
       //  top_label[item_id] = -1;
       //} else {
-      //  top_label[item_id] = 1; 
+      //  top_label[item_id] = 1;
       //}
     }
   }
@@ -173,7 +173,7 @@ ShuffleDataLayer<Dtype>::~ShuffleDataLayer<Dtype>() {
   }
 }
 
-template<typename Dtype> 
+template<typename Dtype>
 void ShuffleDataLayer<Dtype>::ReadShuffleList()
 {
   LOG(INFO) << "Reading Shuffle List from: "<< this->layer_param_.data_param().shuffle_param().source_list();
@@ -212,7 +212,7 @@ void ShuffleDataLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   }
   batch_size_ = this->layer_param_.data_param().batch_size();
   LOG(INFO) << "Set batch size: " << batch_size_;
-  
+
   // start with channel 0
   channel_ = this->layer_param_.data_param().shuffle_param().channel();
   CHECK(channel_ == 0 || channel_ == 1) << "shuffle_param.channel must be 0 or 1!";
@@ -387,7 +387,7 @@ unsigned int ShuffleDataLayer<Dtype>::PrefetchRand() {
 }
 
 template <typename Dtype>
-Dtype ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
                                            vector<Blob<Dtype>*>* top) {
   // First, join the thread
   JoinPrefetchThread();
@@ -400,11 +400,10 @@ Dtype ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
                (*top)[1]->mutable_cpu_data());
   }
 
-  current_id_ += batch_size_; 
+  current_id_ += batch_size_;
 
   // Start a new prefetch thread
   CreatePrefetchThread();
-  return Dtype(0.);
 }
 
 INSTANTIATE_CLASS(ShuffleDataLayer);

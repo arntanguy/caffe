@@ -1,5 +1,3 @@
-// Copyright 2014 BVLC and contributors.
-
 #include <vector>
 
 #include "hdf5.h"
@@ -12,10 +10,9 @@
 #include "caffe/vision_layers.hpp"
 
 namespace caffe {
-using std::vector;
 
 template <typename Dtype>
-Dtype HDF5OutputLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+void HDF5OutputLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
   CHECK_GE(bottom.size(), 2);
   CHECK_EQ(bottom[0]->num(), bottom[1]->num());
@@ -29,11 +26,10 @@ Dtype HDF5OutputLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
   for (int i = 0; i < bottom[0]->num(); ++i) {
     caffe_copy(data_datum_dim, &bottom[0]->gpu_data()[i * data_datum_dim],
         &data_blob_.mutable_cpu_data()[i * data_datum_dim]);
-    caffe_copy(label_datum_dim, &bottom[0]->gpu_data()[i * label_datum_dim],
+    caffe_copy(label_datum_dim, &bottom[1]->gpu_data()[i * label_datum_dim],
         &label_blob_.mutable_cpu_data()[i * label_datum_dim]);
   }
   SaveBlobs();
-  return Dtype(0.);
 }
 
 template <typename Dtype>

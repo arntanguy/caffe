@@ -13,9 +13,9 @@ using std::max;
 namespace caffe {
 
 template <typename Dtype>
-Dtype SiameseLossLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+void SiameseLossLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
-  return Forward_cpu(bottom, top);
+  Forward_cpu(bottom, top);
 }
 
 template <typename Dtype>

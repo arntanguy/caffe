@@ -1,18 +1,13 @@
-// Copyright 2014 BVLC and contributors.
-
 #ifndef CAFFE_LAYER_FACTORY_HPP_
 #define CAFFE_LAYER_FACTORY_HPP_
 
 #include <string>
 
 #include "caffe/layer.hpp"
-#include "caffe/vision_layers.hpp"
 #include "caffe/proto/caffe.pb.h"
-
-using std::string;
+#include "caffe/vision_layers.hpp"
 
 namespace caffe {
-
 
 // A function to get a specific layer from the specification given in
 // LayerParameter. Ideally this would be replaced by a factory pattern,
@@ -26,6 +21,8 @@ Layer<Dtype>* GetLayer(const LayerParameter& param) {
     return new AccuracyLayer<Dtype>(param);
   case LayerParameter_LayerType_SIAMESE_ACCURACY:
     return new SiameseAccuracyLayer<Dtype>(param);
+  case LayerParameter_LayerType_ABSVAL:
+    return new AbsValLayer<Dtype>(param);
   case LayerParameter_LayerType_ARGMAX:
     return new ArgMaxLayer<Dtype>(param);
   case LayerParameter_LayerType_BNLL:
@@ -66,6 +63,8 @@ Layer<Dtype>* GetLayer(const LayerParameter& param) {
     return new LRNLayer<Dtype>(param);
   case LayerParameter_LayerType_MEMORY_DATA:
     return new MemoryDataLayer<Dtype>(param);
+  case LayerParameter_LayerType_MVN:
+    return new MVNLayer<Dtype>(param);
   case LayerParameter_LayerType_MULTINOMIAL_LOGISTIC_LOSS:
     return new MultinomialLogisticLossLayer<Dtype>(param);
   case LayerParameter_LayerType_POOLING:
@@ -78,14 +77,14 @@ Layer<Dtype>* GetLayer(const LayerParameter& param) {
     return new SigmoidLayer<Dtype>(param);
   case LayerParameter_LayerType_SIGMOID_CROSS_ENTROPY_LOSS:
     return new SigmoidCrossEntropyLossLayer<Dtype>(param);
+  case LayerParameter_LayerType_SLICE:
+    return new SliceLayer<Dtype>(param);
   case LayerParameter_LayerType_SOFTMAX:
     return new SoftmaxLayer<Dtype>(param);
   case LayerParameter_LayerType_SOFTMAX_LOSS:
     return new SoftmaxWithLossLayer<Dtype>(param);
   case LayerParameter_LayerType_SIAMESE_LOSS:
     return new SiameseLossLayer<Dtype>(param);
-  case LayerParameter_LayerType_VERIFICATION_LOSS:
-    return new VerificationLossLayer<Dtype>(param);
   case LayerParameter_LayerType_SPLIT:
     return new SplitLayer<Dtype>(param);
   case LayerParameter_LayerType_TANH:

@@ -41,23 +41,21 @@ A 4-page report for the ACM Multimedia Open Source competition.
 Tested on Ubuntu, Red Hat, OS X.
 * [Pre-trained models](/getting_pretrained_models.html)<br />
 BVLC provides ready-to-use models for non-commercial use.
-* [Development](/development.html)<br />
+* [Developing & Contributing](/development.html)<br />
 Guidelines for development and contributing to Caffe.
 
 ### Examples
 
-{% for page in site.pages %}
-{% if page.category == 'example' %}
+{% assign examples = site.pages | where:'category','example' | sort: 'priority' %}
+{% for page in examples %}
 - <div><a href="{{page.url}}">{{page.title}}</a><br />{{page.description}}</div>
-{% endif %}
 {% endfor %}
 
 ### Notebook examples
 
-{% for page in site.pages %}
-{% if page.category == 'notebook' %}
+{% assign notebooks = site.pages | where:'category','notebook' %}
+{% for page in notebooks %}
 - <div><a href="http://nbviewer.ipython.org/github/BVLC/caffe/blob/master/{{page.original_path}}">{{page.title}}</a><br />{{page.description}}</div>
-{% endif %}
 {% endfor %}
 
 ## Citing Caffe
@@ -85,4 +83,15 @@ Additionally, the open-source community plays a large and growing role in Caffe'
 Check out the Github [project pulse](https://github.com/BVLC/caffe/pulse) for recent activity, and the [contributors](https://github.com/BVLC/caffe/graphs/contributors) for a sorted list.
 
 We sincerely appreciate your interest and contributions!
-If you'd like to contribute, please read the [development guide](development.html).
+If you'd like to contribute, please read the [developing & contributing](development.html) guide.
+
+## Contacting us
+
+All questions about usage, installation, code, and applications should be searched for and asked on the [caffe-users mailing list](https://groups.google.com/forum/#!forum/caffe-users).
+
+All development discussion should be carried out at [GitHub Issues](https://github.com/BVLC/caffe/issues).
+
+If you have a proposal that may not be suited for public discussion *and an ability to act on it*, please email us [directly](mailto:caffe-dev@googlegroups.com).
+Requests for features, explanations, or personal help will be ignored; post such matters publicly as issues.
+
+The core Caffe developers may be able to provide [consulting services](mailto:caffe-coldpress@googlegroups.com) for appropriate projects.

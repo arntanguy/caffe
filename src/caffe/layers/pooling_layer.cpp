@@ -1,33 +1,21 @@
-// Copyright 2014 BVLC and contributors.
-
 #include <algorithm>
 #include <cfloat>
 #include <vector>
 
 #include "caffe/common.hpp"
 #include "caffe/layer.hpp"
-#include "caffe/vision_layers.hpp"
 #include "caffe/syncedmem.hpp"
 #include "caffe/util/math_functions.hpp"
-
-using std::max;
-using std::min;
+#include "caffe/vision_layers.hpp"
 
 namespace caffe {
 
+using std::min;
+using std::max;
+
 template <typename Dtype>
-void PoolingLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
+void PoolingLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
-  // Set the max number of top blobs before calling base Layer::SetUp.
-  // If doing MAX pooling, we can optionally output an extra top Blob
-  // for the mask.  Otherwise, we only have one top Blob.
-  if (this->layer_param_.pooling_param().pool() ==
-      PoolingParameter_PoolMethod_MAX) {
-    max_top_blobs_ = 2;
-  } else {
-    max_top_blobs_ = 1;
-  }
-  Layer<Dtype>::SetUp(bottom, top);
   PoolingParameter pool_param = this->layer_param_.pooling_param();
   CHECK(!pool_param.has_kernel_size() !=
       !(pool_param.has_kernel_h() && pool_param.has_kernel_w()))
@@ -99,8 +87,8 @@ void PoolingLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   // If max pooling, we will initialize the vector index part.
   if (this->layer_param_.pooling_param().pool() ==
       PoolingParameter_PoolMethod_MAX && top->size() == 1) {
-    max_idx_.reset(new Blob<int>(bottom[0]->num(), channels_,
-                                 pooled_height_, pooled_width_));
+    max_idx_.Reshape(bottom[0]->num(), channels_, pooled_height_,
+        pooled_width_);
   }
   // If stochastic pooling, we will initialize the random index part.
   if (this->layer_param_.pooling_param().pool() ==
@@ -113,7 +101,7 @@ void PoolingLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
 // TODO(Yangqing): Is there a faster way to do pooling in the channel-first
 // case?
 template <typename Dtype>
-Dtype PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+void PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
   const Dtype* bottom_data = bottom[0]->cpu_data();
   Dtype* top_data = (*top)[0]->mutable_cpu_data();
@@ -131,7 +119,7 @@ Dtype PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       top_mask = (*top)[1]->mutable_cpu_data();
       caffe_set(top_count, Dtype(-1), top_mask);
     } else {
-      mask = max_idx_->mutable_cpu_data();
+      mask = max_idx_.mutable_cpu_data();
       caffe_set(top_count, -1, mask);
     }
     caffe_set(top_count, Dtype(-FLT_MAX), top_data);
@@ -212,7 +200,6 @@ Dtype PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   default:
     LOG(FATAL) << "Unknown pooling method.";
   }
-  return Dtype(0.);
 }
 
 template <typename Dtype>
@@ -236,7 +223,7 @@ void PoolingLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     if (use_top_mask) {
       top_mask = top[1]->cpu_data();
     } else {
-      mask = max_idx_->cpu_data();
+      mask = max_idx_.cpu_data();
     }
     for (int n = 0; n < top[0]->num(); ++n) {
       for (int c = 0; c < channels_; ++c) {
@@ -295,6 +282,10 @@ void PoolingLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   }
 }
 
+
+#ifdef CPU_ONLY
+STUB_GPU(PoolingLayer);
+#endif
 
 INSTANTIATE_CLASS(PoolingLayer);
 

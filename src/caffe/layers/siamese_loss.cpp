@@ -17,7 +17,8 @@ namespace caffe {
 template <typename Dtype>
 void SiameseLossLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top) {
-  CHECK_EQ(bottom.size(), 3) << "SiameseLoss Layer takes three blobs as input: 2 images, 1 label.";
+  CHECK_EQ(bottom.size(), 3)
+    << "SiameseLoss Layer takes three blobs as input: 2 images, 1 label.";
   CHECK_EQ(top->size(), 0) << "SiameseLoss Layer takes no blob as output.";
 
   LOG(INFO) << "SetUp";
@@ -29,16 +30,17 @@ void SiameseLossLayer<Dtype>::SetUp(const vector<Blob<Dtype>*>& bottom,
   // Initial energy is null
   Ew = 0;
   // XXX: should be set to the upper bound of Ew
-  // Upper bound: (max_feature_descriptor_value-min_feature_descriptor_value) * feature_size
+  // Upper bound:
+  // (max_feature_descriptor_value-min_feature_descriptor_value) * feature_size
   // Here assumes max=1, min=0
   // ||x+y|| <= ||x||+||y||
-  Q = 2* bottom[0]->channels(); 
+  Q = 2* bottom[0]->channels();
   dd = new Dtype[bottom[0]->channels()*bottom[0]->num()];
   LOG(INFO) << diff_;
 }
 
 template <typename Dtype>
-Dtype SiameseLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+void SiameseLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
                                                 vector<Blob<Dtype>*>* top) {
   /**
    * Loss function as defined in the paper
@@ -50,7 +52,7 @@ Dtype SiameseLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
    * F(X2): output descriptor for input X2
    * TODO
    * Ew(X1, X2) = || F(X1) - F(X2) ||1   : output energy of the network
-   * 
+   *
    **/
 
   DLOG(INFO) << "Number of input blobs: " << bottom.size();
@@ -77,61 +79,62 @@ Dtype SiameseLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   static Dtype min_desc = 0;
   static Dtype max_norm = 0;
 
-  //LOG(INFO) << "Max energy (theory): " << Q;
-  //LOG(INFO) << "Max energy (current): " << max_energy;
-  //LOG(INFO) << "Min desc value (current): " << min_desc;
-  //LOG(INFO) << "Max desc value (current): " << max_desc;
+  //  LOG(INFO) << "Max energy (theory): " << Q;
+  //  LOG(INFO) << "Max energy (current): " << max_energy;
+  //  LOG(INFO) << "Min desc value (current): " << min_desc;
+  //  LOG(INFO) << "Max desc value (current): " << max_desc;
 
   Dtype loss = 0;
-  for(int i=0; i< num; i++) {
+  for (int i = 0; i < num; i++) {
     const int Y = labels[i];
-    
+
     Dtype ddot = caffe_cpu_dot(feature_size, f1, f1);
-    Dtype nnorm = sqrt(ddot); 
+    Dtype nnorm = sqrt(ddot);
     caffe_cpu_scale(feature_size, Dtype(1)/nnorm, f1, f1);
     ddot = caffe_cpu_dot(feature_size, f2, f2);
-    nnorm = sqrt(ddot); 
+    nnorm = sqrt(ddot);
     caffe_cpu_scale(feature_size, Dtype(1)/nnorm, f2, f2);
     max_norm = std::max(nnorm, max_norm);
 
     caffe_sub(feature_size, f1, f2, sub);
 
-    for (int desc=i*feature_size; desc < (i+1)*feature_size; desc++) {
-      max_desc=std::max(F_x1[desc], max_desc);
-      max_desc=std::max(F_x2[desc], max_desc);
-      min_desc=std::min(F_x1[desc], min_desc);
-      min_desc=std::min(F_x2[desc], min_desc);
+    for (int desc = i*feature_size; desc < (i+1)*feature_size; desc++) {
+      max_desc = std::max(F_x1[desc], max_desc);
+      max_desc = std::max(F_x2[desc], max_desc);
+      min_desc = std::min(F_x1[desc], min_desc);
+      min_desc = std::min(F_x2[desc], min_desc);
     }
     // Norm L1 (sum of absolute values)
     // Dtype Ew = caffe_cpu_asum(feature_size, sub);
-    
+
     // Norm L2 (sqrt of dot product absolute values)
     Dtype d_dot = caffe_cpu_dot(feature_size, sub, sub);
     Ew = sqrt(d_dot);
     max_energy = max(max_energy, Ew);
 
-    Dtype L=0;
-    if(Y == 1) {
+    Dtype L = 0;
+    if (Y == 1) {
       L  = Dtype(2)/Q * Ew*Ew;
     } else {
       L = Dtype(2)/Q*exp(Dtype(-2.27)/Q*Ew);
     }
-    //LOG(INFO) << "Output energy (L2) Ew(X1, X2) for label " << Y << " = " << Ew << "/" << max_energy <<", Loss = " << L;
-    //LOG(INFO) << "max norm: " << nnorm;
+    //  LOG(INFO) << "Output energy (L2) Ew(X1, X2) for label " << Y
+    // << " = " << Ew << "/" << max_energy <<", Loss = " << L;
+    //  LOG(INFO) << "max norm: " << nnorm;
     loss += L;
     sub += feature_size;
     f1 += feature_size;
     f2 += feature_size;
   }
   loss /= num;
-  return loss;
+  (*top)[0]->mutable_cpu_data()[0] = loss;
 }
 
 template<typename Dtype>
 void SiameseLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     const vector<bool>& propagate_down,
     vector<Blob<Dtype>*>* bottom) {
-  
+
   // What to do here??
   CHECK_EQ(bottom->size(), 3) << "Bottom size must be 3 blobs for backwards propagation of the siamese loss";
   DLOG(INFO) << "Number of input blobs: " << bottom->size();
@@ -156,34 +159,33 @@ void SiameseLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   const Dtype *d = diff_.cpu_data();
   caffe_mul(count, d, d, dd);
 
-  for(int i=0; i< num; i++) {
+  for (int i = 0; i < num; i++) {
     const int Y = labels[i];
-    if(Y == 1) { // genuine
+    if (Y == 1) {  //  genuine
       caffe_cpu_scale(feature_size, Dtype(4)/Q, d_mult, g1);
       caffe_cpu_scale(feature_size, Dtype(4)/Q, d_mult, g2);
-    } else { // impostor
+    } else {  // impostor
       Dtype d_dot = caffe_cpu_dot(feature_size, d, d);
       const Dtype Ew = sqrt(d_dot);
       const Dtype Ci = Dtype(-4.27)/Ew*exp(Dtype(-2.27/Q)*Ew);
       caffe_cpu_scale(feature_size, Ci, d, g1);
       caffe_cpu_scale(feature_size, Ci, d, g2);
-    } 
+    }
     d_mult += feature_size;
     d += feature_size;
   }
-     //caffe_cpu_axpby(
+     //  caffe_cpu_axpby(
      //    count,              // count
      //    Dtype(1) / num,         // alpha
      //    grad1,                   // a
      //    Dtype(0),                           // beta
      //    grad1);  // b
-     //caffe_cpu_axpby(
+     //  caffe_cpu_axpby(
      //    count,              // count
      //    Dtype(1) / num,         // alpha
      //    grad2,                   // a
      //    Dtype(0),                           // beta
      //    grad2);  // b
-
 }
 
 

@@ -1,19 +1,15 @@
-// Copyright 2014 BVLC and contributors.
-
 #include <algorithm>
 #include <vector>
 
 #include "caffe/layer.hpp"
 #include "caffe/vision_layers.hpp"
 
-using std::min;
-
 namespace caffe {
 
 const float kBNLL_THRESHOLD = 50.;
 
 template <typename Dtype>
-Dtype BNLLLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+void BNLLLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
   const Dtype* bottom_data = bottom[0]->cpu_data();
   Dtype* top_data = (*top)[0]->mutable_cpu_data();
@@ -23,7 +19,6 @@ Dtype BNLLLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
         bottom_data[i] + log(1. + exp(-bottom_data[i])) :
         log(1. + exp(bottom_data[i]));
   }
-  return Dtype(0);
 }
 
 template <typename Dtype>
@@ -37,12 +32,15 @@ void BNLLLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     const int count = (*bottom)[0]->count();
     Dtype expval;
     for (int i = 0; i < count; ++i) {
-      expval = exp(min(bottom_data[i], Dtype(kBNLL_THRESHOLD)));
+      expval = exp(std::min(bottom_data[i], Dtype(kBNLL_THRESHOLD)));
       bottom_diff[i] = top_diff[i] * expval / (expval + 1.);
     }
   }
 }
 
+#ifdef CPU_ONLY
+STUB_GPU(BNLLLayer);
+#endif
 
 INSTANTIATE_CLASS(BNLLLayer);
 

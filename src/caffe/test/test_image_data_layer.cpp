@@ -1,27 +1,23 @@
-// Copyright 2014 BVLC and contributors.
-
-#include <cuda_runtime.h>
-
-#include <iostream>  // NOLINT(readability/streams)
 #include <fstream>  // NOLINT(readability/streams)
+#include <iostream>  // NOLINT(readability/streams)
 #include <map>
 #include <string>
 #include <vector>
 
 #include "gtest/gtest.h"
+
 #include "caffe/blob.hpp"
 #include "caffe/common.hpp"
 #include "caffe/filler.hpp"
-#include "caffe/vision_layers.hpp"
 #include "caffe/proto/caffe.pb.h"
+#include "caffe/vision_layers.hpp"
+
 #include "caffe/test/test_caffe_main.hpp"
 
 using std::map;
 using std::string;
 
 namespace caffe {
-
-extern cudaDeviceProp CAFFE_TEST_CUDA_PROP;
 
 template <typename TypeParam>
 class ImageDataLayerTest : public MultiDeviceTest<TypeParam> {
@@ -41,7 +37,7 @@ class ImageDataLayerTest : public MultiDeviceTest<TypeParam> {
     std::ofstream outfile(filename_->c_str(), std::ofstream::out);
     LOG(INFO) << "Using temporary file " << *filename_;
     for (int i = 0; i < 5; ++i) {
-      outfile << "examples/images/cat.jpg " << i;
+      outfile << EXAMPLES_SOURCE_DIR "images/cat.jpg " << i;
     }
     outfile.close();
   }

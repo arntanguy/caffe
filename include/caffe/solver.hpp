@@ -1,10 +1,10 @@
-// Copyright 2014 BVLC and contributors.
-
 #ifndef CAFFE_OPTIMIZATION_SOLVER_HPP_
 #define CAFFE_OPTIMIZATION_SOLVER_HPP_
 
 #include <string>
 #include <vector>
+
+#include "caffe/net.hpp"
 
 namespace caffe {
 
@@ -14,12 +14,17 @@ class Solver {
   explicit Solver(const SolverParameter& param);
   explicit Solver(const string& param_file);
   void Init(const SolverParameter& param);
+  void InitTrainNet();
+  void InitTestNets();
   // The main entry of the solver function. In default, iter will be zero. Pass
   // in a non-zero iter number to resume training for a pre-trained net.
   virtual void Solve(const char* resume_file = NULL);
   inline void Solve(const string resume_file) { Solve(resume_file.c_str()); }
   virtual ~Solver() {}
   inline shared_ptr<Net<Dtype> > net() { return net_; }
+  inline const vector<shared_ptr<Net<Dtype> > >& test_nets() {
+    return test_nets_;
+  }
 
  protected:
   // PreSolve is run before any solving iteration starts, allowing one to
@@ -41,6 +46,7 @@ class Solver {
   // function that restores the state from a SolverState protocol buffer.
   void Restore(const char* resume_file);
   virtual void RestoreSolverState(const SolverState& state) = 0;
+  void DisplayOutputBlobs(const int net_id);
 
   SolverParameter param_;
   int iter_;

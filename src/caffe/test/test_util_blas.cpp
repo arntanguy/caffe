@@ -1,12 +1,11 @@
-// Copyright 2014 BVLC and contributors.
+#ifndef CPU_ONLY  // CPU-GPU test
 
 #include <cstring>
 
-#include "cuda_runtime.h"
-#include "cublas_v2.h"
-
 #include "gtest/gtest.h"
+
 #include "caffe/blob.hpp"
+#include "caffe/util/device_alternate.hpp"
 #include "caffe/util/math_functions.hpp"
 
 #include "caffe/test/test_caffe_main.hpp"
@@ -131,3 +130,5 @@ TYPED_TEST(GemmTest, TestGemvCPUGPU) {
 }
 
 }  // namespace caffe
+
+#endif  // CPU_ONLY

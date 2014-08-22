@@ -1,24 +1,21 @@
-// Copyright 2014 BVLC and contributors.
-
 #include <string>
 #include <vector>
 
-#include "cuda_runtime.h"
 #include "leveldb/db.h"
 
 #include "gtest/gtest.h"
+
 #include "caffe/blob.hpp"
 #include "caffe/common.hpp"
 #include "caffe/filler.hpp"
-#include "caffe/vision_layers.hpp"
 #include "caffe/proto/caffe.pb.h"
+#include "caffe/vision_layers.hpp"
+
 #include "caffe/test/test_caffe_main.hpp"
 
 using std::string;
 
 namespace caffe {
-
-extern cudaDeviceProp CAFFE_TEST_CUDA_PROP;
 
 template <typename TypeParam>
 class HDF5DataLayerTest : public MultiDeviceTest<TypeParam> {
@@ -34,8 +31,9 @@ class HDF5DataLayerTest : public MultiDeviceTest<TypeParam> {
     blob_top_vec_.push_back(blob_top_label_);
 
     // Check out generate_sample_data.py in the same directory.
-    filename = new string("src/caffe/test/test_data/sample_data_list.txt");
-    LOG(INFO) << "Using sample HDF5 data file " << filename;
+    filename = new string(
+    CMAKE_SOURCE_DIR "caffe/test/test_data/sample_data_list.txt" CMAKE_EXT);
+    LOG(INFO)<< "Using sample HDF5 data file " << filename;
   }
 
   virtual ~HDF5DataLayerTest() {
@@ -89,7 +87,8 @@ TYPED_TEST(HDF5DataLayerTest, TestRead) {
 
     // On even iterations, we're reading the first half of the data.
     // On odd iterations, we're reading the second half of the data.
-    int label_offset = (iter % 2 == 0) ? 0 : batch_size;
+    // NB: label is 1-indexed
+    int label_offset = 1 + ((iter % 2 == 0) ? 0 : batch_size);
     int data_offset = (iter % 2 == 0) ? 0 : batch_size * data_size;
 
     // Every two iterations we are reading the second file,

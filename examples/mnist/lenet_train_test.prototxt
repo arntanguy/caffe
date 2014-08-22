@@ -1,4 +1,18 @@
-name: "LeNet-test"
+name: "LeNet"
+layers {
+  name: "mnist"
+  type: DATA
+  top: "data"
+  top: "label"
+  data_param {
+    source: "mnist-train-leveldb"
+    batch_size: 64
+    transform_param {
+      scale: 0.00390625
+    }
+  }
+  include: { phase: TRAIN }
+}
 layers {
   name: "mnist"
   type: DATA
@@ -6,15 +20,21 @@ layers {
   top: "label"
   data_param {
     source: "mnist-test-leveldb"
-    scale: 0.00390625
     batch_size: 100
+    transform_param {
+      scale: 0.00390625
+    }
   }
+  include: { phase: TEST }
 }
+
 layers {
   name: "conv1"
   type: CONVOLUTION
   bottom: "data"
   top: "conv1"
+  blobs_lr: 1
+  blobs_lr: 2
   convolution_param {
     num_output: 20
     kernel_size: 5
@@ -43,6 +63,8 @@ layers {
   type: CONVOLUTION
   bottom: "pool1"
   top: "conv2"
+  blobs_lr: 1
+  blobs_lr: 2
   convolution_param {
     num_output: 50
     kernel_size: 5
@@ -71,6 +93,8 @@ layers {
   type: INNER_PRODUCT
   bottom: "pool2"
   top: "ip1"
+  blobs_lr: 1
+  blobs_lr: 2
   inner_product_param {
     num_output: 500
     weight_filler {
@@ -92,6 +116,8 @@ layers {
   type: INNER_PRODUCT
   bottom: "ip1"
   top: "ip2"
+  blobs_lr: 1
+  blobs_lr: 2
   inner_product_param {
     num_output: 10
     weight_filler {
@@ -108,6 +134,7 @@ layers {
   bottom: "ip2"
   bottom: "label"
   top: "accuracy"
+  include: { phase: TEST }
 }
 layers {
   name: "loss"
