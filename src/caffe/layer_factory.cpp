@@ -93,6 +93,8 @@ Layer<Dtype>* GetLayer(const LayerParameter& param) {
     return new WindowDataLayer<Dtype>(param);
   case LayerParameter_LayerType_DISTANCE:
     return new DistanceLayer<Dtype>(param);
+  case LayerParameter_LayerType_FV_HINGE_LOSS:
+    return new FvHingeLossLayer<Dtype>(param);
   case LayerParameter_LayerType_NONE:
     LOG(FATAL) << "Layer " << name << " has unspecified type.";
   default:

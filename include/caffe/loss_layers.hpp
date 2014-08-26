@@ -308,7 +308,7 @@ class SiameseAccuracyLayer : public Layer<Dtype> {
     return LayerParameter_LayerType_SIAMESE_ACCURACY;
   }
 
-  virtual inline int ExactNumBottomBlobs() const { return 3; }
+  virtual inline int ExactNumBottomBlobs() const { return 2; }
   virtual inline int ExactNumTopBlobs() const { return 1; }
 
  protected:
@@ -319,6 +319,26 @@ class SiameseAccuracyLayer : public Layer<Dtype> {
     NOT_IMPLEMENTED;
   }
 };
+
+/* FvHingeLossLayer
+ */
+template <typename Dtype>
+class FvHingeLossLayer : public LossLayer<Dtype> {
+ public:
+  explicit FvHingeLossLayer(const LayerParameter& param)
+      : LossLayer<Dtype>(param) {}
+  virtual inline LayerParameter_LayerType type() const {
+    return LayerParameter_LayerType_FV_HINGE_LOSS;
+  }
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+                            vector<Blob<Dtype>*>* top);
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+                            const vector<bool>& propagate_down,
+                            vector<Blob<Dtype>*>* bottom);
+};
+
+
 
 }  // namespace caffe
 
