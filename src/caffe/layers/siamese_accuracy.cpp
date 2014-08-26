@@ -38,6 +38,7 @@ template <typename Dtype>
 void SiameseAccuracyLayer<Dtype>::Forward_cpu(
     const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
+  LOG(INFO) << "Accuracy forward";
   const Dtype* distance = bottom[0]->cpu_data();
   const Dtype* label = bottom[1]->cpu_data();
 

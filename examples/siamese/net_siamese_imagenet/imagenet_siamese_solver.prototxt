@@ -13,4 +13,4 @@ momentum: 0.
 weight_decay: 0.0005
 snapshot: 10000
 snapshot_prefix: "siamese_trained"
-solver_mode: GPU
+solver_mode: CPU
