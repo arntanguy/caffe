@@ -309,7 +309,7 @@ class SiameseAccuracyLayer : public Layer<Dtype> {
   }
 
   virtual inline int ExactNumBottomBlobs() const { return 2; }
-  virtual inline int ExactNumTopBlobs() const { return 1; }
+  virtual inline int ExactNumTopBlobs() const { return 2; }
 
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
@@ -318,6 +318,7 @@ class SiameseAccuracyLayer : public Layer<Dtype> {
       const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom) {
     NOT_IMPLEMENTED;
   }
+
 };
 
 /* FvHingeLossLayer

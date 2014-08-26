@@ -13,7 +13,7 @@ layers {
   data_param {
     backend: LMDB
     source: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/db"
-    batch_size: 256
+    batch_size: 32
 
     transform_param {
       crop_size: 227
@@ -35,7 +35,7 @@ layers {
   data_param {
     backend: LMDB
     source: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/db"
-    batch_size: 256
+    batch_size: 32
 
     transform_param {
       crop_size: 227
@@ -736,6 +736,7 @@ layers {
   bottom: "distance"
   bottom: "label"
   top: "accuracy"
+  top: "threshold"
   include { phase: TEST }
 }
 
@@ -745,5 +746,6 @@ layers {
 
   bottom: "distance"
   bottom: "label"
+  top: "loss"
   include { phase: TRAIN }
 }

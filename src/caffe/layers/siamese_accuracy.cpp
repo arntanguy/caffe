@@ -26,7 +26,10 @@ void SiameseAccuracyLayer<Dtype>::LayerSetUp(
   CHECK_EQ(bottom[1]->channels(), 1);
   CHECK_EQ(bottom[1]->height(), 1);
   CHECK_EQ(bottom[1]->width(), 1);
+  // Accuracy
   (*top)[0]->Reshape(1, 1, 1, 1);
+  // Threshold
+  (*top)[1]->Reshape(1, 1, 1, 1);
 }
 
 /**
@@ -44,18 +47,77 @@ void SiameseAccuracyLayer<Dtype>::Forward_cpu(
 
   const int num = bottom[0]->num();
 
-  for (int i = 0; i < num; ++i) {
-    LOG(INFO) << "Label: " << label[i] << ", Distance: " << distance[i];
-  }
+  static int number_genuine = 0;
+  static int number_impostor = 0;
+  static Dtype distance_genuine = 0;
+  static Dtype distance_impostor = 0;
+  static Dtype correct_genuine = 0;
+  static Dtype incorrect_genuine = 0;
+  static Dtype threshold = 0;
 
-  (*top)[0]->mutable_cpu_data()[0] = 1/num;
-  // // Minimal margin
-  // Dtype epsilon = 0.01;
-  // if (margin > epsilon) {
-  //   (*top)[0]->mutable_cpu_data()[0] = 1/num;  //  accuracy / num;
-  // } else {
-  //    (*top)[0]->mutable_cpu_data()[0] = 0;  //  accuracy / num;
-  // }
+  int correct_genuine_batch = 0;
+  int incorrect_genuine_batch = 0;
+  int number_genuine_batch = 0;
+  int number_impostor_batch = 0;
+  Dtype distance_genuine_batch = 0;
+  Dtype distance_impostor_batch = 0;
+
+
+  for (int i = 0; i < num; ++i) {
+    const Dtype d = fabs(distance[i]);
+    const int l = label[i];
+    //LOG(INFO) << "Label: " << label[i] << ", Distance: " << d;
+    if (l == 1) {
+      number_genuine_batch++;
+      distance_genuine_batch += d;
+      if (threshold != 0) {
+        if (d > threshold) {
+          correct_genuine_batch++;
+        } else {
+          incorrect_genuine_batch++;
+        }
+      }
+    } else {
+      number_impostor_batch++;
+      distance_impostor_batch += d;
+      if (threshold != 0) {
+        if (d > threshold) {
+          incorrect_genuine_batch++;
+        } else {
+          correct_genuine_batch++;
+        }
+      }
+    }
+  }
+  number_genuine += number_genuine_batch;
+  number_impostor += number_impostor_batch;
+  distance_genuine += distance_genuine_batch;
+  distance_impostor += distance_impostor_batch;
+  correct_genuine += correct_genuine_batch;
+  incorrect_genuine += incorrect_genuine_batch;
+
+
+  LOG(INFO) << "Average distance genuine (batch): "
+            << distance_genuine_batch/number_genuine_batch
+            << ", impostors: "
+            << distance_impostor_batch/number_impostor_batch;
+  LOG(INFO) << "Batch accuracy: " << correct_genuine_batch/static_cast<float>(num);
+  LOG(INFO) << "Threshold: " << threshold;
+
+  Dtype accuracy = correct_genuine / (correct_genuine+incorrect_genuine);
+  if (threshold == 0) accuracy = 0;
+  const Dtype average_distance_genuine = distance_genuine/number_genuine;
+  const Dtype average_distance_impostor = distance_impostor/number_impostor;
+  LOG(INFO) << "Average distance genuine: "
+            << distance_genuine/number_genuine
+            << ", impostors: "
+            << distance_impostor/number_impostor;
+
+
+  threshold = average_distance_genuine +
+      fabs(average_distance_genuine-average_distance_impostor)/2;
+  (*top)[0]->mutable_cpu_data()[0] = accuracy;
+  (*top)[1]->mutable_cpu_data()[0] = threshold;
 }
 
 INSTANTIATE_CLASS(SiameseAccuracyLayer);
