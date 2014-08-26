@@ -25,25 +25,13 @@ namespace caffe {
 template <typename Dtype>
 void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
   Datum datum;
-  CHECK(prefetch_data_);
-  Dtype* top_data = prefetch_data_->mutable_cpu_data();
+  Dtype* top_data = prefetch_data_.mutable_cpu_data();
   Dtype* top_label = NULL;  // suppress warnings about uninitialized variables
   if (output_labels_) {
-    top_label = prefetch_label_->mutable_cpu_data();
+    top_label = prefetch_label_.mutable_cpu_data();
   }
-  const Dtype scale = this->layer_param_.data_param().scale();
-  const int crop_size = this->layer_param_.data_param().crop_size();
-  const bool mirror = this->layer_param_.data_param().mirror();
 
-  if (mirror && crop_size == 0) {
-    LOG(FATAL) << "Current implementation requires mirror and crop_size to be "
-        << "set at the same time.";
-  }
   // datum scales
-  const int channels = datum_channels_;
-  const int height = datum_height_;
-  const int width = datum_width_;
-  const int size = datum_size_;
   const Dtype* mean = data_mean_.cpu_data();
   for (int item_id = 0; item_id < batch_size_; ++item_id) {
     int current_id = current_id_+item_id;
@@ -60,8 +48,6 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
     std::ostringstream label_ss;
     label_ss << std::setfill('0') << std::setw(8) << id;
     std::string key = label_ss.str();
-    //  LOG(INFO) << "Id: " << current_id
-    //            << ", Image " << key << " from channel " << channel_;
 
     // get a blob
     switch (this->layer_param_.data_param().backend()) {
@@ -89,71 +75,10 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
         LOG(FATAL) << "Unknown database backend";
     }
 
-    const string& data = datum.data();
-    if (crop_size) {
-      CHECK(data.size()) << "Image cropping only support uint8 data";
-      int h_off, w_off;
-      // We only do random crop when we do training.
-      if (phase_ == Caffe::TRAIN) {
-        h_off = PrefetchRand() % (height - crop_size);
-        w_off = PrefetchRand() % (width - crop_size);
-      } else {
-        h_off = (height - crop_size) / 2;
-        w_off = (width - crop_size) / 2;
-      }
-      if (mirror && PrefetchRand() % 2) {
-        // Copy mirrored version
-        for (int c = 0; c < channels; ++c) {
-          for (int h = 0; h < crop_size; ++h) {
-            for (int w = 0; w < crop_size; ++w) {
-              int top_index = ((item_id * channels + c) * crop_size + h)
-                              * crop_size + (crop_size - 1 - w);
-              int data_index = (c * height + h + h_off) * width + w + w_off;
-              Dtype datum_element =
-                  static_cast<Dtype>(static_cast<uint8_t>(data[data_index]));
-              top_data[top_index] = (datum_element - mean[data_index]) * scale;
-            }
-          }
-        }
-      } else {
-        // Normal copy
-        for (int c = 0; c < channels; ++c) {
-          for (int h = 0; h < crop_size; ++h) {
-            for (int w = 0; w < crop_size; ++w) {
-              int top_index = ((item_id * channels + c) * crop_size + h)
-                              * crop_size + w;
-              int data_index = (c * height + h + h_off) * width + w + w_off;
-              Dtype datum_element =
-                  static_cast<Dtype>(static_cast<uint8_t>(data[data_index]));
-              top_data[top_index] = (datum_element - mean[data_index]) * scale;
-            }
-          }
-        }
-      }
-    } else {
-      // we will prefer to use data() first, and then try float_data()
-      if (data.size()) {
-        for (int j = 0; j < size; ++j) {
-          Dtype datum_element =
-              static_cast<Dtype>(static_cast<uint8_t>(data[j]));
-          top_data[item_id * size + j] = (datum_element - mean[j]) * scale;
-        }
-      } else {
-        for (int j = 0; j < size; ++j) {
-          top_data[item_id * size + j] =
-              (datum.float_data(j) - mean[j]) * scale;
-        }
-      }
-    }
+    data_transformer_.Transform(item_id, datum, mean, top_data);
 
     if (output_labels_) {
-      // LOG(INFO) << "Label: " << lc_[current_id];
       top_label[item_id] = lc_[current_id];
-      //  if(lc_[current_id] == 0) {
-      //    top_label[item_id] = -1;
-      //  } else {
-      //    top_label[item_id] = 1;
-      //  }
     }
   }
 }
@@ -293,20 +218,18 @@ void ShuffleDataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   }
 
   // image
-  int crop_size = this->layer_param_.data_param().crop_size();
+  int crop_size = this->layer_param_.data_param().transform_param().crop_size();
   if (crop_size > 0) {
     (*top)[0]->Reshape(batch_size_,
                        datum.channels(), crop_size, crop_size);
-    prefetch_data_.reset(new Blob<Dtype>(
-        batch_size_, datum.channels(),
-        crop_size, crop_size));
+    prefetch_data_.Reshape(batch_size_, datum.channels(),
+        crop_size, crop_size);
   } else {
     (*top)[0]->Reshape(
         batch_size_, datum.channels(),
         datum.height(), datum.width());
-    prefetch_data_.reset(new Blob<Dtype>(
-        batch_size_, datum.channels(),
-        datum.height(), datum.width()));
+    prefetch_data_.Reshape(batch_size_, datum.channels(),
+        datum.height(), datum.width());
   }
   LOG(INFO) << "output data size: " << (*top)[0]->num() << ","
       << (*top)[0]->channels() << "," << (*top)[0]->height() << ","
@@ -314,8 +237,7 @@ void ShuffleDataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   // label
   if (output_labels_) {
     (*top)[1]->Reshape(batch_size_, 1, 1, 1);
-    prefetch_label_.reset(
-        new Blob<Dtype>(batch_size_, 1, 1, 1));
+    prefetch_label_.Reshape(batch_size_, 1, 1, 1);
   }
   // datum size
   datum_channels_ = datum.channels();
@@ -343,9 +265,9 @@ void ShuffleDataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   // cpu_data calls so that the prefetch thread does not accidentally make
   // simultaneous cudaMalloc calls when the main thread is running. In some
   // GPUs this seems to cause failures if we do not so.
-  prefetch_data_->mutable_cpu_data();
+  prefetch_data_.mutable_cpu_data();
   if (output_labels_) {
-    prefetch_label_->mutable_cpu_data();
+    prefetch_label_.mutable_cpu_data();
   }
   data_mean_.cpu_data();
   DLOG(INFO) << "Initializing prefetch";
@@ -357,15 +279,9 @@ template <typename Dtype>
 void ShuffleDataLayer<Dtype>::CreatePrefetchThread() {
   //  LOG(INFO) << "Prefetch from channel " << channel_;
   phase_ = Caffe::phase();
-  const bool prefetch_needs_rand = (phase_ == Caffe::TRAIN) &&
-      (this->layer_param_.data_param().mirror() ||
-       this->layer_param_.data_param().crop_size());
-  if (prefetch_needs_rand) {
-    const unsigned int prefetch_rng_seed = caffe_rng_rand();
-    prefetch_rng_.reset(new Caffe::RNG(prefetch_rng_seed));
-  } else {
-    prefetch_rng_.reset();
-  }
+
+  data_transformer_.InitRand();
+
   // Create the thread.
   CHECK(!StartInternalThread()) << "Pthread execution failed";
 }
@@ -376,24 +292,16 @@ void ShuffleDataLayer<Dtype>::JoinPrefetchThread() {
 }
 
 template <typename Dtype>
-unsigned int ShuffleDataLayer<Dtype>::PrefetchRand() {
-  CHECK(prefetch_rng_);
-  caffe::rng_t* prefetch_rng =
-      static_cast<caffe::rng_t*>(prefetch_rng_->generator());
-  return (*prefetch_rng)();
-}
-
-template <typename Dtype>
 void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
                                            vector<Blob<Dtype>*>* top) {
   // First, join the thread
   JoinPrefetchThread();
   // Copy the data
-  caffe_copy(prefetch_data_->count(), prefetch_data_->cpu_data(),
+  caffe_copy(prefetch_data_.count(), prefetch_data_.cpu_data(),
              (*top)[0]->mutable_cpu_data());
 
   if (output_labels_) {
-    caffe_copy(prefetch_label_->count(), prefetch_label_->cpu_data(),
+    caffe_copy(prefetch_label_.count(), prefetch_label_.cpu_data(),
                (*top)[1]->mutable_cpu_data());
   }
 

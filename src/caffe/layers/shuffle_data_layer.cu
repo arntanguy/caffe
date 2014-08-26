@@ -24,7 +24,7 @@ void ShuffleDataLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
   // First, join the thread
   WaitForInternalThreadToExit();
   // Copy the data
-  caffe_copy(prefetch_data_->count(), prefetch_data_->cpu_data(),
+  caffe_copy(prefetch_data_.count(), prefetch_data_.cpu_data(),
       (*top)[0]->mutable_gpu_data());
 
 //#if (DEBUG_GUI)
@@ -36,11 +36,11 @@ void ShuffleDataLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
 //#endif
 
   if (output_labels_) {
-    caffe_copy(prefetch_label_->count(), prefetch_label_->cpu_data(),
+    caffe_copy(prefetch_label_.count(), prefetch_label_.cpu_data(),
         (*top)[1]->mutable_gpu_data());
   }
 
-  current_id_ += batch_size_; 
+  current_id_ += batch_size_;
 
   // Start a new prefetch thread
   CreatePrefetchThread();

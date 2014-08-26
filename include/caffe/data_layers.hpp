@@ -86,7 +86,8 @@ template <typename Dtype>
 class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
  public:
   explicit ShuffleDataLayer(const LayerParameter& param)
-      : Layer<Dtype>(param) {}
+      : Layer<Dtype>(param),
+        data_transformer_(param.data_param().transform_param()) {}
   virtual ~ShuffleDataLayer();
   virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       vector<Blob<Dtype>*>* top);
@@ -110,12 +111,11 @@ class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
 
   virtual void CreatePrefetchThread();
   virtual void JoinPrefetchThread();
-  virtual unsigned int PrefetchRand();
   virtual void InternalThreadEntry();
 
   void ReadShuffleList();
 
-  shared_ptr<Caffe::RNG> prefetch_rng_;
+  DataTransformer<Dtype> data_transformer_;
 
   // LEVELDB
   shared_ptr<leveldb::DB> db_;
@@ -133,8 +133,8 @@ class ShuffleDataLayer : public Layer<Dtype>, public InternalThread {
   int datum_width_;
   int datum_size_;
   pthread_t thread_;
-  shared_ptr<Blob<Dtype> > prefetch_data_;
-  shared_ptr<Blob<Dtype> > prefetch_label_;
+  Blob<Dtype> prefetch_data_;
+  Blob<Dtype> prefetch_label_;
   Blob<Dtype> data_mean_;
   bool output_labels_;
   Caffe::Phase phase_;
