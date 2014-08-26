@@ -136,7 +136,8 @@ void SiameseLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     vector<Blob<Dtype>*>* bottom) {
 
   // What to do here??
-  CHECK_EQ(bottom->size(), 3) << "Bottom size must be 3 blobs for backwards propagation of the siamese loss";
+  CHECK_EQ(bottom->size(), 3)
+      << "Bottom size must be 3 blobs for backwards propagation of the siamese loss";
   DLOG(INFO) << "Number of input blobs: " << bottom->size();
   Blob<Dtype> *f1 = (*bottom)[0];
   Blob<Dtype> *f2 = (*bottom)[1];

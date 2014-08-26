@@ -78,7 +78,13 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
     data_transformer_.Transform(item_id, datum, mean, top_data);
 
     if (output_labels_) {
-      top_label[item_id] = lc_[current_id];
+      // XXX: invert labels on the fly
+      if (lc_[current_id] == 0) {
+        top_label[item_id] = 1;
+      } else {
+        top_label[item_id] = 0;
+      }
+      //  top_label[item_id] = lc_[current_id];
     }
   }
 }

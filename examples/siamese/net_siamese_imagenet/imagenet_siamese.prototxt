@@ -12,7 +12,7 @@ layers {
 
   data_param {
     backend: LMDB
-    source: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/db"
+    source: "../../../data/siamese/small/test/db"
     batch_size: 32
 
     transform_param {
@@ -20,7 +20,7 @@ layers {
       mirror: true
     }
    shuffle_param {
-     source_list: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/loop_closures_shuffle_list.txt"
+     source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
      channel: 0
    }
   }
@@ -34,7 +34,7 @@ layers {
 
   data_param {
     backend: LMDB
-    source: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/db"
+    source: "../../../data/siamese/small/test/db"
     batch_size: 32
 
     transform_param {
@@ -42,7 +42,7 @@ layers {
       mirror: true
     }
    shuffle_param {
-     source_list: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/loop_closures_shuffle_list.txt"
+     source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
      channel: 1
    }
   }
@@ -57,13 +57,13 @@ layers {
 
   data_param {
     backend: LMDB
-    source: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/db"
+    source: "../../../data/siamese/small/test/db"
     transform_param {
       crop_size: 227
       mirror: false
     }
    shuffle_param {
-     source_list: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/loop_closures_shuffle_list.txt"
+     source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
      channel: 0
    }
    batch_size: 32
@@ -78,13 +78,13 @@ layers {
 
   data_param {
     backend: LMDB
-    source: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/db"
+    source: "../../../data/siamese/small/test/db"
     transform_param {
       crop_size: 227
       mirror: false
     }
     shuffle_param {
-      source_list: "/home/arnaud/Internship/code/caffe-veri/data/siamese/small/test/loop_closures_shuffle_list.txt"
+      source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
       channel: 1
     }
     batch_size: 32
@@ -114,6 +114,9 @@ layers {
       value: 0
     }
   }
+
+  param: "conv1_sw"
+  param: ""
 }
 layers {
   name: "conv1_s"
@@ -137,6 +140,9 @@ layers {
       value: 0
     }
   }
+
+  param: "conv1_sw"
+  param: ""
 }
 
 layers {
@@ -221,6 +227,8 @@ layers {
       value: 1
     }
   }
+  param: "conv2_sw"
+  param: ""
 }
 layers {
   name: "conv2_s"
@@ -245,6 +253,8 @@ layers {
       value: 1
     }
   }
+  param: "conv2_sw"
+  param: ""
 }
 
 layers {
@@ -328,6 +338,8 @@ layers {
       value: 0
     }
   }
+  param: "conv3_sw"
+  param: ""
 }
 layers {
   name: "conv3_s"
@@ -351,6 +363,8 @@ layers {
       value: 0
     }
   }
+  param: "conv3_sw"
+  param: ""
 }
 
 layers {
@@ -389,6 +403,8 @@ layers {
       value: 1
     }
   }
+  param: "conv4_sw"
+  param: ""
 }
 layers {
   name: "conv4_s"
@@ -413,6 +429,8 @@ layers {
       value: 1
     }
   }
+  param: "conv4_sw"
+  param: ""
 }
 
 layers {
@@ -451,6 +469,8 @@ layers {
       value: 1
     }
   }
+  param: "conv5_sw"
+  param: ""
 }
 layers {
   name: "conv5_s"
@@ -475,6 +495,8 @@ layers {
       value: 1
     }
   }
+  param: "conv5_sw"
+  param: ""
 }
 
 layers {
@@ -608,6 +630,8 @@ layers {
       value: 1
     }
   }
+  param: "fc7_sw"
+  param: ""
 }
 layers {
   name: "fc7_s"
@@ -629,6 +653,8 @@ layers {
       value: 1
     }
   }
+  param: "fc7_sw"
+  param: ""
 }
 
 layers {
@@ -683,6 +709,8 @@ layers {
       value: 0
     }
   }
+  param: "fc8_sw"
+  param: ""
 }
 layers {
   name: "fc8_s"
@@ -704,6 +732,8 @@ layers {
       value: 0
     }
   }
+  param: "fc8_sw"
+  param: ""
 }
 
 

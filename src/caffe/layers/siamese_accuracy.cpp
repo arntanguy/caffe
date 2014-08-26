@@ -47,41 +47,46 @@ void SiameseAccuracyLayer<Dtype>::Forward_cpu(
 
   const int num = bottom[0]->num();
 
-  static int number_genuine = 0;
-  static int number_impostor = 0;
-  static Dtype distance_genuine = 0;
-  static Dtype distance_impostor = 0;
   static Dtype correct_genuine = 0;
   static Dtype incorrect_genuine = 0;
   static Dtype threshold = 0;
 
+  static Dtype average_distance_genuine_ra = 0;
+  static Dtype average_distance_impostor_ra = 0;
+  static Dtype number_genuine_ra = 0;
+  static Dtype number_impostor_ra = 0;
+  static Dtype accuracy_ra = 0;
+
   int correct_genuine_batch = 0;
   int incorrect_genuine_batch = 0;
-  int number_genuine_batch = 0;
-  int number_impostor_batch = 0;
-  Dtype distance_genuine_batch = 0;
-  Dtype distance_impostor_batch = 0;
-
 
   for (int i = 0; i < num; ++i) {
-    const Dtype d = fabs(distance[i]);
+    const Dtype d = distance[i];
     const int l = label[i];
-    //LOG(INFO) << "Label: " << label[i] << ", Distance: " << d;
-    if (l == 1) {
-      number_genuine_batch++;
-      distance_genuine_batch += d;
+    LOG(INFO) << "Label: " << label[i] << ", Distance: " << d;
+    if (l == 0) {
+      // Compute running average of genuine distances
+      average_distance_genuine_ra =
+          (average_distance_genuine_ra * number_genuine_ra + d)
+          / (number_genuine_ra+1);
+      ++number_genuine_ra;
+
       if (threshold != 0) {
-        if (d > threshold) {
+        if (d < threshold) {
           correct_genuine_batch++;
         } else {
           incorrect_genuine_batch++;
         }
       }
     } else {
-      number_impostor_batch++;
-      distance_impostor_batch += d;
+      // Compute running average of impostor distances
+      average_distance_impostor_ra =
+          (average_distance_impostor_ra * number_impostor_ra + d)
+          / (number_impostor_ra+1);
+      ++number_impostor_ra;
+
       if (threshold != 0) {
-        if (d > threshold) {
+        if (d < threshold) {
           incorrect_genuine_batch++;
         } else {
           correct_genuine_batch++;
@@ -89,33 +94,24 @@ void SiameseAccuracyLayer<Dtype>::Forward_cpu(
       }
     }
   }
-  number_genuine += number_genuine_batch;
-  number_impostor += number_impostor_batch;
-  distance_genuine += distance_genuine_batch;
-  distance_impostor += distance_impostor_batch;
   correct_genuine += correct_genuine_batch;
   incorrect_genuine += incorrect_genuine_batch;
 
 
-  LOG(INFO) << "Average distance genuine (batch): "
-            << distance_genuine_batch/number_genuine_batch
-            << ", impostors: "
-            << distance_impostor_batch/number_impostor_batch;
-  LOG(INFO) << "Batch accuracy: " << correct_genuine_batch/static_cast<float>(num);
-  LOG(INFO) << "Threshold: " << threshold;
 
   Dtype accuracy = correct_genuine / (correct_genuine+incorrect_genuine);
   if (threshold == 0) accuracy = 0;
-  const Dtype average_distance_genuine = distance_genuine/number_genuine;
-  const Dtype average_distance_impostor = distance_impostor/number_impostor;
+
   LOG(INFO) << "Average distance genuine: "
-            << distance_genuine/number_genuine
+            << average_distance_genuine_ra
             << ", impostors: "
-            << distance_impostor/number_impostor;
+            << average_distance_impostor_ra;
 
+  threshold = std::min(average_distance_genuine_ra,
+                       average_distance_impostor_ra) +
+      fabs(average_distance_genuine_ra-average_distance_impostor_ra)/2;
+  LOG(INFO) << "Best threshod for current average distances: " << threshold;
 
-  threshold = average_distance_genuine +
-      fabs(average_distance_genuine-average_distance_impostor)/2;
   (*top)[0]->mutable_cpu_data()[0] = accuracy;
   (*top)[1]->mutable_cpu_data()[0] = threshold;
 }
