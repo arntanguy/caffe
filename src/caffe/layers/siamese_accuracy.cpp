@@ -30,6 +30,16 @@ void SiameseAccuracyLayer<Dtype>::LayerSetUp(
   (*top)[0]->Reshape(1, 1, 1, 1);
   // Threshold
   (*top)[1]->Reshape(1, 1, 1, 1);
+
+
+  correct_genuine = 0;
+  incorrect_genuine = 0;
+  threshold = 0;
+
+  average_distance_genuine_ra = 0;
+  average_distance_impostor_ra = 0;
+  number_genuine_ra = 0;
+  number_impostor_ra = 0;
 }
 
 /**
@@ -41,21 +51,10 @@ template <typename Dtype>
 void SiameseAccuracyLayer<Dtype>::Forward_cpu(
     const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
-  LOG(INFO) << "Accuracy forward";
   const Dtype* distance = bottom[0]->cpu_data();
   const Dtype* label = bottom[1]->cpu_data();
 
   const int num = bottom[0]->num();
-
-  static Dtype correct_genuine = 0;
-  static Dtype incorrect_genuine = 0;
-  static Dtype threshold = 0;
-
-  static Dtype average_distance_genuine_ra = 0;
-  static Dtype average_distance_impostor_ra = 0;
-  static Dtype number_genuine_ra = 0;
-  static Dtype number_impostor_ra = 0;
-  static Dtype accuracy_ra = 0;
 
   int correct_genuine_batch = 0;
   int incorrect_genuine_batch = 0;
@@ -63,7 +62,7 @@ void SiameseAccuracyLayer<Dtype>::Forward_cpu(
   for (int i = 0; i < num; ++i) {
     const Dtype d = distance[i];
     const int l = label[i];
-    LOG(INFO) << "Label: " << label[i] << ", Distance: " << d;
+    //  LOG(INFO) << "Label: " << label[i] << ", Distance: " << d;
     if (l == 0) {
       // Compute running average of genuine distances
       average_distance_genuine_ra =
@@ -102,15 +101,15 @@ void SiameseAccuracyLayer<Dtype>::Forward_cpu(
   Dtype accuracy = correct_genuine / (correct_genuine+incorrect_genuine);
   if (threshold == 0) accuracy = 0;
 
-  LOG(INFO) << "Average distance genuine: "
-            << average_distance_genuine_ra
-            << ", impostors: "
-            << average_distance_impostor_ra;
+  // LOG(INFO) << "Average distance genuine: "
+  //           << average_distance_genuine_ra
+  //           << ", impostors: "
+  //           << average_distance_impostor_ra;
 
   threshold = std::min(average_distance_genuine_ra,
                        average_distance_impostor_ra) +
       fabs(average_distance_genuine_ra-average_distance_impostor_ra)/2;
-  LOG(INFO) << "Best threshod for current average distances: " << threshold;
+  // LOG(INFO) << "Best threshod for current average distances: " << threshold;
 
   (*top)[0]->mutable_cpu_data()[0] = accuracy;
   (*top)[1]->mutable_cpu_data()[0] = threshold;
