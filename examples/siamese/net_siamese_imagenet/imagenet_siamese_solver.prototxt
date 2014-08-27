@@ -11,6 +11,6 @@ max_iter: 450000
 #momentum: 0.9
 momentum: 0.
 weight_decay: 0.0005
-snapshot: 100
+snapshot: 1000
 snapshot_prefix: "siamese_trained"
-solver_mode: CPU
+solver_mode: GPU

@@ -13,7 +13,7 @@ layers {
   data_param {
     backend: LMDB
     source: "../../../data/siamese/small/test/db"
-    batch_size: 32
+    batch_size: 16
 
     transform_param {
       crop_size: 227
@@ -35,7 +35,7 @@ layers {
   data_param {
     backend: LMDB
     source: "../../../data/siamese/small/test/db"
-    batch_size: 32
+    batch_size: 16
 
     transform_param {
       crop_size: 227
@@ -66,7 +66,7 @@ layers {
      source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
      channel: 0
    }
-   batch_size: 32
+   batch_size: 16
   }
   include { phase: TEST }
 }
@@ -87,7 +87,7 @@ layers {
       source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
       channel: 1
     }
-    batch_size: 32
+    batch_size: 16
   }
   include { phase: TEST }
 }
@@ -757,6 +757,7 @@ layers {
       type: "constant"
     }
   }
+  include { phase: TEST }
 }
 
 layers {
@@ -771,10 +772,11 @@ layers {
 }
 
 layers {
-  name: "fv_hinge_loss"
-  type: FV_HINGE_LOSS
+  name: "contrastive_loss"
+  type: CONTRASTIVE_LOSS
 
-  bottom: "distance"
+  bottom: "fc8"
+  bottom: "fc8_s"
   bottom: "label"
   top: "loss"
   include { phase: TRAIN }

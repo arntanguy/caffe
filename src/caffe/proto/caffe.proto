@@ -207,7 +207,7 @@ message LayerParameter {
   // line above the enum. Update the next available ID when you add a new
   // LayerType.
   //
-  // LayerType next available ID: 42 (last added: FV_HINGE_LOSS)
+  // LayerType next available ID: 43 (last added: CONTRASTIVE_LOSS)
   enum LayerType {
     // "NONE" layer type is 0th enum element so that we don't cause confusion
     // by defaulting to an existent LayerType (instead, should usually error if
@@ -219,6 +219,7 @@ message LayerParameter {
     ARGMAX = 30;
     BNLL = 2;
     CONCAT = 3;
+    CONTRASTIVE_LOSS = 42;
     CONVOLUTION = 4;
     DATA = 5;
     DISTANCE = 37;
@@ -280,6 +281,7 @@ message LayerParameter {
   optional AccuracyParameter accuracy_param = 27;
   optional ArgMaxParameter argmax_param = 23;
   optional ConcatParameter concat_param = 9;
+  optional ContrastiveLossParameter contrastive_loss_param = 36;
   optional ConvolutionParameter convolution_param = 10;
   optional DataParameter data_param = 11;
   optional DistanceParameter distance_param = 40;
@@ -329,6 +331,12 @@ message ConcatParameter {
   // the other dimensions must be the same for all the bottom blobs
   // By default it will concatenate blobs along channels dimension
   optional uint32 concat_dim = 1 [default = 1];
+}
+
+// Message that stores parameters used by ContrastiveLossLayer
+message ContrastiveLossParameter {
+  //margin for dissimilar pair
+  optional float margin = 1 [default = 1.0];
 }
 
 // Message that stores parameters used by ConvolutionLayer
@@ -435,6 +443,10 @@ message EltwiseParameter {
   }
   optional EltwiseOp operation = 1 [default = SUM]; // element-wise operation
   repeated float coeff = 2; // blob-wise coefficient for SUM operation
+
+  // Whether to use an asymptotically slower (for >2 inputs) but stabler method
+  // of computing the gradient for the PROD operation. (No effect for SUM op.)
+  optional bool stable_prod_grad = 3 [default = true];
 }
 
 // Message that stores parameters used by ThresholdLayer
@@ -717,7 +729,7 @@ message V0LayerParameter {
   // It will also resize images if new_height or new_width are not zero.
   optional bool shuffle_images = 64 [default = false];
 
-  // For ConcatLayer, one needs to specify the dimension for concatenation, and
+  // FooncatLayer, one needs to specify the dimension for concatenation, and
   // the other dimensions must be the same for all the bottom blobs.
   // By default it will concatenate blobs along the channels dimension.
   optional uint32 concat_dim = 65 [default = 1];

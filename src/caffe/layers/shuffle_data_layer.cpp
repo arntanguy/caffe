@@ -79,12 +79,12 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
 
     if (output_labels_) {
       // XXX: invert labels on the fly
-      if (lc_[current_id] == 0) {
-        top_label[item_id] = 1;
-      } else {
-        top_label[item_id] = 0;
-      }
-      //  top_label[item_id] = lc_[current_id];
+      // if (lc_[current_id] == 0) {
+      //   top_label[item_id] = 1;
+      // } else {
+      //   top_label[item_id] = 0;
+      // }
+       top_label[item_id] = lc_[current_id];
     }
   }
 }

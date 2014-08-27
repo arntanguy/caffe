@@ -77,6 +77,45 @@ class LossLayer : public Layer<Dtype> {
   }
 };
 
+/* ContrastiveLossLayer
+  Compute the contrastive loss between the two inputs.
+  d = \sum_i (a_i - b_i)^2
+  loss = 1/2 (y d + (1-y) \max(margin-d, 0))
+  the gradient is propagated to a and b
+*/
+template <typename Dtype>
+class ContrastiveLossLayer : public LossLayer<Dtype> {
+ public:
+  explicit ContrastiveLossLayer(const LayerParameter& param)
+      : LossLayer<Dtype>(param), diff_() {}
+  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+
+  virtual inline int ExactNumBottomBlobs() const { return 3; }
+  virtual inline LayerParameter_LayerType type() const {
+    return LayerParameter_LayerType_CONTRASTIVE_LOSS;
+  }
+  // The ContrastiveLossLayer we can backpropagate to a and b but not y
+  virtual inline bool AllowForceBackward(const int bottom_index) const {
+    return bottom_index != 2;
+  }
+
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+      vector<Blob<Dtype>*>* top);
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom);
+  virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, vector<Blob<Dtype>*>* bottom);
+
+  Blob<Dtype> diff_;  // cached for backward pass
+  Blob<Dtype> dist_sq_;  // cached for backward pass
+  Blob<Dtype> diff_sq_;  // tmp storage for gpu forward pass
+  Blob<Dtype> summer_vec_;  // tmp storage for gpu forward pass
+};
+
 /* EuclideanLossLayer
   Compute the L_2 distance between the two inputs.
 

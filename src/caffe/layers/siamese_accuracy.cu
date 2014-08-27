@@ -9,7 +9,6 @@ namespace caffe {
 template <typename Dtype>
 void SiameseAccuracyLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
     vector<Blob<Dtype>*>* top) {
-  LOG(INFO) << "GPU Forward!";
   Forward_cpu(bottom, top);
 }
 

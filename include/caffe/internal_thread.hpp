@@ -1,3 +1,5 @@
+// Copyright 2014 BVLC and contributors
+
 #ifndef CAFFE_INTERNAL_THREAD_HPP_
 #define CAFFE_INTERNAL_THREAD_HPP_
 
