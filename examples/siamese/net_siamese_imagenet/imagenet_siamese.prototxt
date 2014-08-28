@@ -766,9 +766,10 @@ layers {
   bottom: "distance"
   bottom: "label"
   top: "accuracy"
+  top: "margin"
   top: "threshold"
-  top: "genuine_average"
-  top: "impostor_average"
+  top: "distance_genuine"
+  top: "distance_impostor"
   include { phase: TEST }
 }
 

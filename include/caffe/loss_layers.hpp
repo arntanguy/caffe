@@ -348,7 +348,7 @@ class SiameseAccuracyLayer : public Layer<Dtype> {
   }
 
   virtual inline int ExactNumBottomBlobs() const { return 2; }
-  virtual inline int ExactNumTopBlobs() const { return 4; }
+  virtual inline int ExactNumTopBlobs() const { return 5; }
 
  protected:
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,

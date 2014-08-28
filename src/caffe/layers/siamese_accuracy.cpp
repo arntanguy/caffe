@@ -28,13 +28,16 @@ void SiameseAccuracyLayer<Dtype>::LayerSetUp(
   CHECK_EQ(bottom[1]->width(), 1);
   // Accuracy
   (*top)[0]->Reshape(1, 1, 1, 1);
-  // Threshold
+  // Average margin
   (*top)[1]->Reshape(1, 1, 1, 1);
-  // Genuine average
+  // Threshold
   (*top)[2]->Reshape(1, 1, 1, 1);
-  // Impostor average
+  // Genuine average
   (*top)[3]->Reshape(1, 1, 1, 1);
+  // Impostor average
+  (*top)[4]->Reshape(1, 1, 1, 1);
 
+  LOG(INFO) << "LayerSetUp: reinitialising threshold, distances...";
   correct_genuine = 0;
   incorrect_genuine = 0;
   threshold = 0;
@@ -106,8 +109,8 @@ void SiameseAccuracyLayer<Dtype>::Forward_cpu(
   //       static_cast<Dtype>(correct_genuine_batch+incorrect_genuine_batch);
   // }
 
-  Dtype accuracy = correct_genuine /
-      static_cast<Dtype>(correct_genuine+incorrect_genuine);
+  Dtype accuracy = correct_genuine_batch /
+      static_cast<Dtype>(correct_genuine_batch+incorrect_genuine_batch);
   if (threshold == 0) accuracy = 0;
 
   // LOG(INFO) << "Average distance genuine: "
@@ -120,10 +123,12 @@ void SiameseAccuracyLayer<Dtype>::Forward_cpu(
       fabs(average_distance_genuine_ra-average_distance_impostor_ra)/2;
   // LOG(INFO) << "Best threshod for current average distances: " << threshold;
 
+  Dtype margin = fabs(average_distance_impostor_ra-average_distance_genuine_ra);
   (*top)[0]->mutable_cpu_data()[0] = accuracy;
-  (*top)[1]->mutable_cpu_data()[0] = threshold;
-  (*top)[2]->mutable_cpu_data()[0] = average_distance_genuine_ra;
-  (*top)[3]->mutable_cpu_data()[0] = average_distance_impostor_ra;
+  (*top)[1]->mutable_cpu_data()[0] = margin;
+  (*top)[2]->mutable_cpu_data()[0] = threshold;
+  (*top)[3]->mutable_cpu_data()[0] = average_distance_genuine_ra;
+  (*top)[4]->mutable_cpu_data()[0] = average_distance_impostor_ra;
 }
 
 INSTANTIATE_CLASS(SiameseAccuracyLayer);
