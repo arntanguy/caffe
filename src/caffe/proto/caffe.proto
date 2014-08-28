@@ -362,6 +362,7 @@ message ConvolutionParameter {
 message ShuffleDataParameter {
   required string source_list = 1;
   required uint32 channel = 2 [default = 0];
+  optional int32 skip_batches = 3 [default = 0];
 }
 
 // Message that stores parameters used to apply transformation

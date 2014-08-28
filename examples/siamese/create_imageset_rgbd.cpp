@@ -50,14 +50,14 @@ int main(int argc, char** argv) {
         "random_shuffle\n";
     return 0;
   }
-  
+
   std::string input_file = argv[1];
   std::string save_db_name = argv[2];
   std::string extra_db_str = argv[3];
   std::string width_str = argv[4];
   std::string height_str = argv[5];
   std::string db_backend = argv[6];
-  
+
   std::cout << "Converting " << input_file << " to " << db_backend << " " << save_db_name << std::endl;
 
   std::istringstream ssw(width_str), ssh(height_str);

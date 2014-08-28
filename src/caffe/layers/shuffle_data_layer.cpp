@@ -44,7 +44,7 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
     // XXX: maybe store the labels as int in the dataset.
     // However, if done that way it would depend on the encoding used for
     // int (endian...).
-    const int id = idx_[current_id];
+    int id = idx_[current_id];
     std::ostringstream label_ss;
     label_ss << std::setfill('0') << std::setw(8) << id;
     std::string key = label_ss.str();
@@ -84,7 +84,7 @@ void ShuffleDataLayer<Dtype>::InternalThreadEntry() {
       // } else {
       //   top_label[item_id] = 0;
       // }
-       top_label[item_id] = lc_[current_id];
+      top_label[item_id] = lc_[current_id];
     }
   }
 }
@@ -311,7 +311,10 @@ void ShuffleDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
                (*top)[1]->mutable_cpu_data());
   }
 
-  current_id_ += batch_size_;
+  int skip_batches =
+      this->layer_param_.data_param().shuffle_param().skip_batches();
+  if (skip_batches == 0) skip_batches++;
+  current_id_ += skip_batches * batch_size_;
 
   // Start a new prefetch thread
   CreatePrefetchThread();

@@ -17,7 +17,8 @@ layers {
 
     transform_param {
       crop_size: 227
-      mirror: true
+      mirror: false
+      scale: 0.00390625
     }
    shuffle_param {
      source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
@@ -39,7 +40,8 @@ layers {
 
     transform_param {
       crop_size: 227
-      mirror: true
+      mirror: false
+      scale: 0.00390625
     }
    shuffle_param {
      source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
@@ -61,10 +63,12 @@ layers {
     transform_param {
       crop_size: 227
       mirror: false
+      scale: 0.00390625
     }
    shuffle_param {
      source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
      channel: 0
+     skip_batches: 3
    }
    batch_size: 16
   }
@@ -82,10 +86,13 @@ layers {
     transform_param {
       crop_size: 227
       mirror: false
+      scale: 0.00390625
     }
     shuffle_param {
       source_list: "../../../data/siamese/small/test/loop_closures_shuffle_list.txt"
       channel: 1
+      # Skip 3 batches. Helps to go through more random parts of the test dataset
+      skip_batches: 3
     }
     batch_size: 16
   }
@@ -116,7 +123,7 @@ layers {
   }
 
   param: "conv1_sw"
-  param: ""
+  param: "conv1_bw"
 }
 layers {
   name: "conv1_s"
@@ -142,7 +149,7 @@ layers {
   }
 
   param: "conv1_sw"
-  param: ""
+  param: "conv1_bw"
 }
 
 layers {
@@ -228,7 +235,7 @@ layers {
     }
   }
   param: "conv2_sw"
-  param: ""
+  param: "conv2_bw"
 }
 layers {
   name: "conv2_s"
@@ -254,7 +261,7 @@ layers {
     }
   }
   param: "conv2_sw"
-  param: ""
+  param: "conv2_bw"
 }
 
 layers {
@@ -339,7 +346,7 @@ layers {
     }
   }
   param: "conv3_sw"
-  param: ""
+  param: "conv3_bw"
 }
 layers {
   name: "conv3_s"
@@ -364,7 +371,7 @@ layers {
     }
   }
   param: "conv3_sw"
-  param: ""
+  param: "conv3_bw"
 }
 
 layers {
@@ -404,7 +411,7 @@ layers {
     }
   }
   param: "conv4_sw"
-  param: ""
+  param: "conv4_bw"
 }
 layers {
   name: "conv4_s"
@@ -430,7 +437,7 @@ layers {
     }
   }
   param: "conv4_sw"
-  param: ""
+  param: "conv4_bw"
 }
 
 layers {
@@ -470,7 +477,7 @@ layers {
     }
   }
   param: "conv5_sw"
-  param: ""
+  param: "conv5_bw"
 }
 layers {
   name: "conv5_s"
@@ -496,7 +503,7 @@ layers {
     }
   }
   param: "conv5_sw"
-  param: ""
+  param: "conv5_bw"
 }
 
 layers {
@@ -631,7 +638,7 @@ layers {
     }
   }
   param: "fc7_sw"
-  param: ""
+  param: "fc7_bw"
 }
 layers {
   name: "fc7_s"
@@ -654,7 +661,7 @@ layers {
     }
   }
   param: "fc7_sw"
-  param: ""
+  param: "fc7_bw"
 }
 
 layers {
@@ -690,50 +697,42 @@ layers {
 }
 
 layers {
-  name: "fc8"
+  name: "feat"
   type: INNER_PRODUCT
   bottom: "fc7"
-  top: "fc8"
+  top: "feat"
   blobs_lr: 1
   blobs_lr: 2
-  weight_decay: 1
-  weight_decay: 0
   inner_product_param {
-    num_output: 1000
+    num_output: 2
     weight_filler {
-      type: "gaussian"
-      std: 0.01
+      type: "xavier"
     }
     bias_filler {
       type: "constant"
-      value: 0
     }
   }
   param: "fc8_sw"
-  param: ""
+  param: "fc8_bw"
 }
 layers {
-  name: "fc8_s"
+  name: "feat_s"
   type: INNER_PRODUCT
   bottom: "fc7_s"
-  top: "fc8_s"
+  top: "feat_s"
   blobs_lr: 1
   blobs_lr: 2
-  weight_decay: 1
-  weight_decay: 0
   inner_product_param {
-    num_output: 1000
+    num_output: 2
     weight_filler {
-      type: "gaussian"
-      std: 0.01
+      type: "xavier"
     }
     bias_filler {
       type: "constant"
-      value: 0
     }
   }
   param: "fc8_sw"
-  param: ""
+  param: "fc8_bw"
 }
 
 
@@ -741,8 +740,8 @@ layers {
 layers {
   name: "distance"
   type: DISTANCE
-  bottom: "fc8"
-  bottom: "fc8_s"
+  bottom: "feat"
+  bottom: "feat_s"
   top: "distance"
 
   distance_param {
@@ -768,6 +767,8 @@ layers {
   bottom: "label"
   top: "accuracy"
   top: "threshold"
+  top: "genuine_average"
+  top: "impostor_average"
   include { phase: TEST }
 }
 
@@ -775,8 +776,8 @@ layers {
   name: "contrastive_loss"
   type: CONTRASTIVE_LOSS
 
-  bottom: "fc8"
-  bottom: "fc8_s"
+  bottom: "feat"
+  bottom: "feat_s"
   bottom: "label"
   top: "loss"
   include { phase: TRAIN }
